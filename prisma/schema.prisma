@@ -1,0 +1,185 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model AdminUser {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  role         String    @default("EDITOR") // "SUPER_ADMIN" or "EDITOR"
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  lastLoginAt  DateTime?
+
+  revisions    SiteRevision[]
+}
+
+model SiteSettings {
+  id                    String   @id @default("global")
+  siteTitle             String   @default("UFY — Youth-Led Action & Learning")
+  siteDescription       String   @default("A youth-focused platform dedicated to knowledge, community action, health education, and youth-led initiatives.")
+  logoUrl               String?
+  logoHeight            Int      @default(36)
+  logoWidth             Int      @default(120)
+  primaryCtaLabel       String   @default("Propose an Idea")
+  primaryCtaUrl         String   @default("#submit-idea")
+  primaryCtaVisible     Boolean  @default(true)
+  footerMissionText     String   @default("UFY connects young changemakers with real tools, workshops, and community-driven initiatives to shape healthier and more informed neighborhoods.")
+  contactEmail          String?
+  socialInstagram       String?
+  socialTwitter         String?
+  socialLinkedin        String?
+  socialYoutube         String?
+  socialGithub          String?
+  copyrightText         String   @default("© 2026 UFY. All rights reserved.")
+  privacyNotice         String   @default("We respect youth privacy. We never share your personal information or sell data.")
+  enableReducedMotion   Boolean  @default(false)
+  teamDisplayCount      Int      @default(6)
+  teamPresentationStyle String   @default("editorial") // "editorial", "grid", "offset"
+  isPublished           Boolean  @default(true)
+  publishedAt           DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model ThemeSettings {
+  id                String   @id @default("global")
+  headingFont       String   @default("Space Grotesk") // "Space Grotesk", "Syne", "Outfit", "Plus Jakarta Sans", "Inter"
+  bodyFont          String   @default("Inter")         // "Inter", "Plus Jakarta Sans", "Space Grotesk"
+  primaryColor      String   @default("#7629f0")
+  secondaryColor    String   @default("#ffffff")
+  buttonRadius      String   @default("14px")          // "0px", "8px", "14px", "24px", "9999px"
+  buttonStyle       String   @default("solid")         // "solid", "outline", "soft"
+  typeScale         String   @default("expressive")    // "compact", "balanced", "expressive"
+  baseSpacing       String   @default("balanced")      // "compact", "balanced", "relaxed"
+  containerMaxWidth String   @default("1240px")
+  animationLevel    String   @default("playful")       // "subtle", "playful", "minimal"
+  updatedAt         DateTime @updatedAt
+}
+
+model NavigationItem {
+  id           String   @id @default(uuid())
+  label        String
+  path         String
+  target       String   @default("_self")
+  displayOrder Int      @default(0)
+  isVisible    Boolean  @default(true)
+  isCta        Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model PageSection {
+  id              String   @id @default(uuid())
+  sectionKey      String   @unique // "hero", "mission", "programs", "team", "community-idea", "accepted-ideas", "footer", or custom
+  title           String
+  subtitle        String?
+  contentJson     String   // Stores structured components, text blocks, highlights, settings
+  layoutVariation String   @default("default")
+  displayOrder    Int      @default(0)
+  isVisible       Boolean  @default(true)
+  backgroundMode  String   @default("white") // "white", "purple", "subtle-tint", "dark-purple"
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model TeamMember {
+  id           String   @id @default(uuid())
+  name         String
+  role         String
+  bio          String
+  pronouns     String?
+  department   String?
+  photoUrl     String?
+  focalPointX  Int      @default(50)
+  focalPointY  Int      @default(50)
+  linkUrl      String?
+  linkType     String?  // "linkedin", "portfolio", "email"
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Program {
+  id           String   @id @default(uuid())
+  title        String
+  category     String
+  summary      String
+  description  String
+  imageUrl     String?
+  status       String   @default("active") // "active", "upcoming", "completed", "proposed"
+  dateLabel    String?
+  externalUrl  String?
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model MediaAsset {
+  id           String   @id @default(uuid())
+  filename     String
+  originalName String
+  mimeType     String
+  sizeBytes    Int
+  url          String
+  altText      String   @default("")
+  caption      String?
+  credit       String?
+  width        Int?
+  height       Int?
+  focalPointX  Int      @default(50)
+  focalPointY  Int      @default(50)
+  usageCount   Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model IdeaSubmission {
+  id                  String    @id @default(uuid())
+  title               String
+  category            String
+  description         String
+  problemAddressed    String
+  proposedApproach    String?
+  submitterEmail      String?
+  status              String    @default("NEW") // NEW, UNDER_REVIEW, NEEDS_CLARIFICATION, ACCEPTED, IN_PROGRESS, COMPLETED, DECLINED
+  internalNotes       String?
+  linkedOutcome       String?
+  isPubliclyDisplayed Boolean   @default(false)
+  ipHash              String?
+  reviewedAt          DateTime?
+  reviewedBy          String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+model AnalyticsEvent {
+  id             String   @id @default(uuid())
+  eventType      String   // page_view, section_view, cta_click, idea_form_start, idea_form_submit
+  path           String   @default("/")
+  sectionId      String?
+  targetLabel    String?
+  sessionId      String
+  deviceCategory String   @default("desktop") // desktop, mobile, tablet
+  referrer       String?
+  timestamp      DateTime @default(now())
+}
+
+model SiteRevision {
+  id             String     @id @default(uuid())
+  revisionNumber Int        @default(1)
+  title          String
+  description    String?
+  snapshotJson   String     // Complete JSON snapshot of sections, team, programs, theme, nav, settings
+  createdById    String?
+  createdBy      AdminUser? @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt      DateTime   @default(now())
+}

@@ -1,0 +1,408 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700;800&display=swap');
+
+:root {
+  /* Exclusive UFY Brand Colors: #7629f0 and #ffffff */
+  --ufy-primary: #7629f0;
+  --ufy-primary-hover: #651ed6;
+  --ufy-primary-active: #5416b3;
+  --ufy-white: #ffffff;
+
+  /* Controlled Tonal Variations of UFY Purple */
+  --ufy-purple-950: #140529;
+  --ufy-purple-900: #200843;
+  --ufy-purple-850: #2d0b60;
+  --ufy-purple-800: #3c0f7f;
+  --ufy-purple-700: #5416b3;
+  --ufy-purple-600: #651ed6;
+  --ufy-purple-500: #7629f0;
+  --ufy-purple-400: #9353f4;
+  --ufy-purple-300: #b483f8;
+  --ufy-purple-200: #d4b8fc;
+  --ufy-purple-100: #ebdffe;
+  --ufy-purple-50: #f8f4fe;
+  --ufy-purple-25: #fcfbfe;
+
+  /* Semantic mappings adhering strictly to purple & white */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f4fe;
+  --bg-tertiary: #ebdffe;
+  --bg-hero: #7629f0;
+  --bg-card: #ffffff;
+
+  --text-primary: #200843;
+  --text-secondary: #5416b3;
+  --text-muted: #7629f0;
+  --text-inverse: #ffffff;
+  --text-inverse-muted: #ebdffe;
+
+  --border-subtle: #ebdffe;
+  --border-strong: #d4b8fc;
+  --border-focus: #7629f0;
+
+  /* UI Tokens */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --shadow-subtle: 0 4px 16px rgba(118, 41, 240, 0.06);
+  --shadow-card: 0 8px 30px rgba(118, 41, 240, 0.08);
+  --shadow-hover: 0 14px 40px rgba(118, 41, 240, 0.16);
+  --shadow-glow: 0 0 35px rgba(118, 41, 240, 0.28);
+
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Skip to Content Accessibility */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background-color: var(--ufy-primary);
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  z-index: 9999;
+  transition: top 0.2s ease;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
+/* Base Styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: inherit;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+/* Accessibility Focus States */
+:focus-visible {
+  outline: 3px solid var(--ufy-primary);
+  outline-offset: 3px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Shared Utility Classes */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.section-padding {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+/* Distinctive UFY Badges */
+.ufy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ufy-badge.badge-purple {
+  background: var(--ufy-purple-100);
+  color: var(--ufy-purple-800);
+  border: 1px solid var(--ufy-purple-200);
+}
+
+.ufy-badge.badge-white {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border-radius: var(--radius-lg);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--ufy-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(118, 41, 240, 0.28);
+}
+
+.btn-primary:hover {
+  background: var(--ufy-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(118, 41, 240, 0.38);
+}
+
+.btn-primary:active {
+  background: var(--ufy-primary-active);
+  transform: translateY(0);
+}
+
+.btn-white {
+  background: #ffffff;
+  color: var(--ufy-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.btn-white:hover {
+  background: var(--ufy-purple-50);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+}
+
+.btn-outline-white {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.btn-outline-white:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-outline-purple {
+  background: transparent;
+  color: var(--ufy-primary);
+  border: 2px solid var(--ufy-primary);
+}
+
+.btn-outline-purple:hover {
+  background: var(--ufy-purple-50);
+  border-color: var(--ufy-primary-hover);
+  transform: translateY(-2px);
+}
+
+.btn-ghost-purple {
+  background: transparent;
+  color: var(--ufy-primary);
+}
+
+.btn-ghost-purple:hover {
+  background: var(--ufy-purple-50);
+}
+
+/* Custom Purple Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ufy-purple-25);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ufy-purple-200);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ufy-purple-400);
+}
+
+/* Form Styles */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-label.label-white {
+  color: #ffffff;
+}
+
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-subtle);
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--ufy-primary);
+  box-shadow: 0 0 0 3px rgba(118, 41, 240, 0.18);
+}
+
+.form-input.input-white, .form-textarea.input-white, .form-select.input-white {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.form-input.input-white:focus, .form-textarea.input-white:focus, .form-select.input-white:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35);
+}
+
+/* Geometric UFY Pattern Backgrounds */
+.bg-ufy-pattern {
+  position: relative;
+  background-color: var(--ufy-primary);
+  background-image: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.12) 0%, transparent 45%);
+}
+
+.bg-ufy-subtle-pattern {
+  background-color: var(--ufy-purple-50);
+  background-image: radial-gradient(#d4b8fc 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Comprehensive Responsive Rules */
+@media (max-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  .hero-composition {
+    margin-top: 10px;
+  }
+  .hero-composition div {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+  .inbox-split {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .overview-split, .media-split, .nav-split, .revisions-split, .publish-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-nav-toggle {
+    display: block !important;
+  }
+  .theme-grid, .analytics-split {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .programs-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .idea-form-card {
+    padding: 32px 20px !important;
+  }
+  .form-grid-row {
+    grid-template-columns: 1fr !important;
+  }
+}
+
