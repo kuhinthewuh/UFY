@@ -1,8 +1,8 @@
 import React from "react";
-import ReadymagPage from "@/components/readymag/ReadymagPage";
+import UfyMainPage from "@/components/ufy/UfyMainPage";
 
 export const dynamic = "force-dynamic";
 
 export default function HomePage() {
-  return <ReadymagPage />;
+  return <UfyMainPage />;
 }

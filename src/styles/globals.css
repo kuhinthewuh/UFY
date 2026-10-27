@@ -2,21 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap');
 
 :root {
-  /* Readymag 1:1 Color Tokens */
-  --rm-bg: #e5e5e5;
-  --rm-dark-green: #003227;
-  --rm-red: #D51F1F;
-  --rm-grass-green: #2B9209;
-  --rm-dark-footer: #282828;
-  --rm-card-white: #ffffff;
-
-  /* UFY Signature Tokens (For Phase 2) */
-  --ufy-purple: #7629f0;
-  --ufy-purple-bright: #8e48ff;
-  --ufy-purple-glow: rgba(118, 41, 240, 0.45);
+  /* UFY Core Color Palette */
+  --ufy-bg: #f7f4fc;
+  --ufy-dark-violet: #140529;
+  --ufy-primary-purple: #7629f0;
+  --ufy-bright-violet: #8e48ff;
+  --ufy-footer-obsidian: #0d0519;
+  --ufy-white: #ffffff;
 }
 
 /* Reset and Base */
@@ -28,23 +23,23 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: var(--rm-bg);
-  color: var(--rm-dark-green);
+  background-color: var(--ufy-bg);
+  color: var(--ufy-dark-violet);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--rm-bg);
-  color: var(--rm-dark-green);
+  background-color: var(--ufy-bg);
+  color: var(--ufy-dark-violet);
   line-height: 1.5;
   overflow-x: hidden;
 }
 
 /* Custom Selection */
 ::selection {
-  background: var(--rm-red);
+  background: var(--ufy-primary-purple);
   color: #ffffff;
 }
 
@@ -53,9 +48,47 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #dcdcdc;
+  background: #ede7f6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #003227;
+  background: #7629f0;
   border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5c18c9;
+}
+
+/* Left-to-Right Scrolling Marquee for Hero Cut-Out Words */
+@keyframes marqueeLeftToRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee-lr {
+  display: flex;
+  width: max-content;
+  animation: marqueeLeftToRight 28s linear infinite;
+}
+
+.animate-marquee-lr:hover {
+  animation-play-state: paused;
+}
+
+/* Artsy Duotone Filters for Youth Leader Portraits */
+.ufy-duotone-purple {
+  filter: grayscale(100%) brightness(95%) sepia(100%) hue-rotate(225deg) saturate(320%) contrast(115%);
+  transition: filter 0.3s ease;
+}
+
+.ufy-duotone-purple:hover {
+  filter: grayscale(0%) contrast(100%);
+}
+
+.ufy-duotone-violet {
+  filter: grayscale(100%) brightness(95%) sepia(100%) hue-rotate(245deg) saturate(360%) contrast(115%);
+  transition: filter 0.3s ease;
+}
+
+.ufy-duotone-violet:hover {
+  filter: grayscale(0%) contrast(100%);
 }
