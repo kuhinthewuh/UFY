@@ -40,7 +40,8 @@ export default function CutoutTypography({
   return (
     <svg
       viewBox={`0 0 ${totalWidth} ${height}`}
-      className={`overflow-visible select-none h-[${height}px] w-auto ${className}`}
+      style={{ height: `${height}px`, width: "auto", display: "inline-block" }}
+      className={`overflow-visible select-none ${className}`}
       role="img"
       aria-label={text}
     >

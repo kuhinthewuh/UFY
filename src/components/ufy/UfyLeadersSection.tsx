@@ -24,12 +24,12 @@ export default function UfyLeadersSection({ onOpenModal }: UfyLeadersSectionProp
       </div>
 
       {/* Large Dashed Box Container (Closer Spacing) */}
-      <div className="border-2 border-dashed border-[#7629f0]/45 p-6 sm:p-12 relative bg-transparent">
+      <div className="ufy-dashed-box p-6 sm:p-12 relative bg-transparent rounded-[2px]">
         {/* Top Leader: Sophia Chen (Centered) */}
         <div className="max-w-[480px] mx-auto mb-16 text-center sm:text-left">
           <div className="flex justify-center mb-5">
             {/* Artsy Diagonalized Photo Card */}
-            <div className="transform -rotate-5 hover:-rotate-2 transition-transform duration-300 inline-block bg-white p-2.5 shadow-md">
+            <div className="ufy-polaroid-frame ufy-tilt-neg5">
               <div className="w-[190px] h-[190px] sm:w-[210px] sm:h-[210px] overflow-hidden bg-[#7629f0]">
                 <img
                   src="/readymag_assets/speaker_1_giovanna.png"
@@ -62,7 +62,7 @@ export default function UfyLeadersSection({ onOpenModal }: UfyLeadersSectionProp
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 mb-16">
           {/* Leader 2: Alex Tremblay & Laura Sauchelli (Left, tilted -6deg) */}
           <div className="max-w-[460px]">
-            <div className="mb-5 transform -rotate-6 hover:-rotate-2 transition-transform duration-300 inline-block bg-white p-2.5 shadow-md">
+            <div className="mb-5 ufy-polaroid-frame ufy-tilt-neg6">
               <div className="w-[190px] h-[190px] sm:w-[220px] sm:h-[220px] overflow-hidden bg-[#140529]">
                 <img
                   src="/readymag_assets/speaker_2_lino_laura.png"
@@ -96,7 +96,7 @@ export default function UfyLeadersSection({ onOpenModal }: UfyLeadersSectionProp
 
           {/* Leader 3: Amina Diallo (Right, tilted +5deg) */}
           <div className="max-w-[460px] md:ml-auto">
-            <div className="mb-5 transform rotate-5 hover:rotate-1 transition-transform duration-300 inline-block bg-white p-2.5 shadow-md">
+            <div className="mb-5 ufy-polaroid-frame ufy-tilt-pos5">
               <div className="w-[190px] h-[190px] sm:w-[220px] sm:h-[220px] overflow-hidden bg-[#7629f0]">
                 <img
                   src="/readymag_assets/speaker_3_helena.png"
@@ -124,10 +124,10 @@ export default function UfyLeadersSection({ onOpenModal }: UfyLeadersSectionProp
           </div>
         </div>
 
-        {/* Bottom Leader: Liam Patel & Esenia (Centered, tilted +4deg) */}
+        {/* Bottom Leader: Liam Patel & Esenia (Centered, tilted +6deg) */}
         <div className="max-w-[480px] mx-auto text-center sm:text-left">
           <div className="flex justify-center mb-5">
-            <div className="transform rotate-4 hover:rotate-1 transition-transform duration-300 inline-block bg-white p-2.5 shadow-md">
+            <div className="ufy-polaroid-frame ufy-tilt-pos6">
               <div className="w-[190px] h-[190px] sm:w-[210px] sm:h-[210px] overflow-hidden bg-[#8e48ff]">
                 <img
                   src="/readymag_assets/speaker_4_esenia.png"

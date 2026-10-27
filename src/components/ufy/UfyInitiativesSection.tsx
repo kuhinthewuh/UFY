@@ -19,7 +19,7 @@ export default function UfyInitiativesSection({ onOpenModal }: UfyInitiativesSec
         "We mobilize students and young volunteers across Montreal to design, illustrate, and write personalized, encouraging cards for children in pediatric wards. Each letter is crafted with care to bring warmth, human connection, and joy during extended hospital stays.",
       impact: "1,250+ cards delivered across 4 regional pediatric centers",
       cta: "write a letter with us",
-      tilt: "transform -rotate-4 hover:-rotate-1",
+      tilt: "ufy-tilt-neg3",
       icon: Mail,
       accentColor: "#7629f0",
       bgColor: "bg-[#7629f0]",
@@ -33,7 +33,7 @@ export default function UfyInitiativesSection({ onOpenModal }: UfyInitiativesSec
         "Hands-on, zero-jargon first-aid workshops designed and taught by certified student instructors for teenagers, student athletes, and families. Participants gain real tactile confidence with pediatric CPR mannequins, choking relief techniques, and rapid wound management.",
       impact: "540+ youth certified with life-saving emergency training",
       cta: "request a workshop",
-      tilt: "transform rotate-4 hover:rotate-1",
+      tilt: "ufy-tilt-pos3",
       icon: HeartPulse,
       accentColor: "#140529",
       bgColor: "bg-[#140529]",
@@ -47,7 +47,7 @@ export default function UfyInitiativesSection({ onOpenModal }: UfyInitiativesSec
         "Running year-round youth book drives and installing curated public health, science, and creative literature into public libraries and neighborhood Little Free Libraries. We eliminate book deserts so every young person has direct, free access to inspiring books.",
       impact: "3,200+ books collected and placed in community access stations",
       cta: "donate books / sponsor library",
-      tilt: "transform -rotate-3 hover:rotate-0",
+      tilt: "ufy-tilt-neg1",
       icon: BookOpen,
       accentColor: "#8e48ff",
       bgColor: "bg-[#8e48ff]",
@@ -69,7 +69,7 @@ export default function UfyInitiativesSection({ onOpenModal }: UfyInitiativesSec
       </div>
 
       {/* Large Dashed Box Container (Closer Spacing) */}
-      <div className="border-2 border-dashed border-[#7629f0]/45 p-6 sm:p-12 relative bg-transparent">
+      <div className="ufy-dashed-box p-6 sm:p-12 relative bg-transparent rounded-[2px]">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-8">
           {initiatives.map((init) => {
             const Icon = init.icon;

@@ -25,7 +25,7 @@ export default function UfyImpactSection({ onOpenModal }: UfyImpactSectionProps)
       </div>
 
       {/* Large Dashed Box Container (Closer Spacing) */}
-      <div className="border-2 border-dashed border-[#7629f0]/45 p-6 sm:p-12 text-center relative bg-transparent">
+      <div className="ufy-dashed-box p-6 sm:p-12 text-center relative bg-transparent rounded-[2px]">
         {/* Giant Cut-Out Typography */}
         <div className="flex flex-col items-center justify-center my-6 space-y-2">
           <CutoutTypography
