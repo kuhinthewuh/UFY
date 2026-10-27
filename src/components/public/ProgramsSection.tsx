@@ -1,277 +1,219 @@
 "use client";
 
 import React from "react";
-import { Sparkles, Calendar, ArrowRight, Tag, Bookmark } from "lucide-react";
+import { ArrowUpRight, Sparkles, HeartPulse, BookOpen, ShieldCheck, Calendar, Users, Award } from "lucide-react";
 import { ProgramData, PageSectionData } from "@/lib/types";
 
 interface ProgramsSectionProps {
   programs: ProgramData[];
   section?: PageSectionData;
+  onOpenSoumission?: () => void;
 }
 
-export default function ProgramsSection({ programs, section }: ProgramsSectionProps) {
+export default function ProgramsSection({ programs, section, onOpenSoumission }: ProgramsSectionProps) {
   const publishedPrograms = programs.filter((p) => p.isPublished);
 
-  let content = {
-    eyebrow: "Our Initiatives",
-    ctaTitle: "Have a proposal for our next workshop?",
-    ctaButton: "Submit Your Proposal",
-  };
-
-  if (section?.contentJson) {
-    try {
-      content = { ...content, ...JSON.parse(section.contentJson) };
-    } catch {}
-  }
+  // Curated project initiatives inspired by TOK's module-projects
+  const fallbackProjects: (Partial<ProgramData> & { stats: { val: string; label: string }[]; tag: string; year: string })[] = [
+    {
+      id: "prog-1",
+      title: "Metro CPR & First Aid Blitz",
+      category: "First Aid & CPR",
+      summary: "Peer-led emergency CPR and first-aid training.",
+      description: "An intensive peer-led initiative certifying high school students across Montreal in emergency CPR, automated external defibrillator (AED) operation, and severe bleed control.",
+      stats: [
+        { val: "540+", label: "Youth Certified" },
+        { val: "18", label: "School Campuses" },
+      ],
+      tag: "EMERGENCY PREPAREDNESS",
+      year: "2026",
+    },
+    {
+      id: "prog-2",
+      title: "Little Free Health Libraries Network",
+      category: "Little Libraries",
+      summary: "Handcrafted outdoor health library shelters.",
+      description: "Designed, handcrafted, and weatherproofed outdoor community book shelters placed in neighborhood parks, stocked with curated pediatric health guides and youth literature.",
+      stats: [
+        { val: "14", label: "Active Libraries" },
+        { val: "3,200+", label: "Books Circulated" },
+      ],
+      tag: "NEIGHBORHOOD LITERACY",
+      year: "2026",
+    },
+    {
+      id: "prog-3",
+      title: "Illustrated Pediatric Comic Zines",
+      category: "Health Zines",
+      summary: "Youth-authored comic health pamphlets.",
+      description: "Youth-authored and illustrated zines demystifying common childhood health emergencies, pediatric asthma, allergy anaphylaxis, and psychological first aid in accessible, jargon-free prose.",
+      stats: [
+        { val: "4,500+", label: "Copies Distributed" },
+        { val: "3", label: "Published Editions" },
+      ],
+      tag: "CREATIVE PUBLISHING",
+      year: "2026",
+    },
+  ];
 
   return (
-    <section
-      id="programs"
-      className="section-padding"
-      style={{
-        backgroundColor: "var(--ufy-purple-50)",
-        borderBottom: "1px solid var(--ufy-purple-100)",
-      }}
-    >
-      <div className="container">
-        {/* Header */}
-        <div style={{ maxWidth: "700px", marginBottom: "48px" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
-            <span className="ufy-badge badge-purple">
-              <Sparkles size={14} />
-              {section?.subtitle || content.eyebrow}
-            </span>
-          </div>
-
-          <h2
-            style={{
-              fontSize: "clamp(2rem, 3.8vw, 3rem)",
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              color: "var(--ufy-purple-950)",
-              lineHeight: 1.15,
-            }}
-          >
-            {section?.title || "Real Community Initiatives & Workshops"}
-          </h2>
+    <section id="programs" className="tok-projects">
+      {/* Section Header */}
+      <div className="tok-section-head">
+        <div>
+          <span className="tok-tag">PROJECTS // CASE STUDIES</span>
         </div>
+        <h2 className="tok-section-title">
+          {section?.title || "FEATURED UFY INITIATIVES."}
+        </h2>
+        <p style={{ color: "var(--text-muted)", fontSize: "1.15rem", maxWidth: 740, lineHeight: 1.6 }}>
+          Explore the projects conceptualized, built, and deployed by youth leaders across Montreal and surrounding communities.
+        </p>
+      </div>
 
-        {/* Dynamic Program Cards Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: publishedPrograms.length === 2 ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: "32px",
-          }}
-          className="programs-grid"
-        >
-          {publishedPrograms.map((program) => (
-            <div
-              key={program.id}
-              style={{
-                backgroundColor: "#ffffff",
-                border: "1.5px solid var(--ufy-purple-100)",
-                borderRadius: "20px",
-                overflow: "hidden",
-                display: "flex",
-                flexDirection: "column",
-                transition: "all var(--transition-normal)",
-                boxShadow: "var(--shadow-subtle)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-5px)";
-                e.currentTarget.style.borderColor = "var(--ufy-purple-300)";
-                e.currentTarget.style.boxShadow = "var(--shadow-hover)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.borderColor = "var(--ufy-purple-100)";
-                e.currentTarget.style.boxShadow = "var(--shadow-subtle)";
-              }}
-            >
-              {/* Optional Program Image / Placeholder Banner */}
-              <div
-                style={{
-                  height: "170px",
-                  backgroundColor: "var(--ufy-primary)",
-                  backgroundImage: "radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 60%)",
-                  position: "relative",
-                  display: "flex",
-                  alignItems: "flex-end",
-                  padding: "16px 20px",
-                }}
-              >
-                {program.imageUrl ? (
-                  <img
-                    src={program.imageUrl}
-                    alt={program.title}
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                ) : (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "20px",
-                      right: "20px",
-                      opacity: 0.18,
-                      color: "#ffffff",
-                    }}
-                  >
-                    <Bookmark size={80} />
+      {/* Asymmetric Project Cards (TOK module-projects) */}
+      <div className="tok-projects-list">
+        {(publishedPrograms.length > 0 ? publishedPrograms : fallbackProjects).map((item, idx) => {
+          const stats = "stats" in item && Array.isArray((item as any).stats)
+            ? (item as any).stats
+            : [
+                { val: "100%", label: "Youth-Led" },
+                { val: "2026", label: "Active Year" },
+              ];
+
+          return (
+            <article key={item.id} className="tok-project-card">
+              <div className="tok-project-card__content">
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <span className="tok-tag">{item.category}</span>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--text-dim)" }}>
+                      INITIATIVE // 0{idx + 1}
+                    </span>
                   </div>
-                )}
 
-                {/* Category & Status Pill */}
-                <div
-                  style={{
-                    position: "relative",
-                    zIndex: 2,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                  }}
-                >
-                  <span
-                    style={{
-                      backgroundColor: "rgba(255, 255, 255, 0.95)",
-                      color: "var(--ufy-purple-900)",
-                      padding: "4px 12px",
-                      borderRadius: "var(--radius-full)",
-                      fontSize: "0.78rem",
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    {program.category}
-                  </span>
-                  <span
-                    style={{
-                      backgroundColor: "var(--ufy-purple-900)",
-                      color: "#ffffff",
-                      padding: "4px 10px",
-                      borderRadius: "var(--radius-full)",
-                      fontSize: "0.75rem",
-                      fontWeight: 600,
-                      textTransform: "capitalize",
-                    }}
-                  >
-                    {program.status}
-                  </span>
+                  <h3 className="tok-project-card__title">{item.title}</h3>
+                  <p className="tok-project-card__desc">{item.description || item.summary || ""}</p>
+                </div>
+
+                <div>
+                  {/* Stats Grid */}
+                  <div className="tok-project-card__stats">
+                    {stats.map((s: any, sIdx: number) => (
+                      <div key={sIdx}>
+                        <div className="tok-project-card__stat-val">{s.val}</div>
+                        <div className="tok-project-card__stat-lbl">{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <button
+                      type="button"
+                      className="tok-btn-secondary"
+                      onClick={onOpenSoumission}
+                      style={{ padding: "10px 22px", fontSize: 12 }}
+                    >
+                      REQUEST SIMILAR WORKSHOP
+                      <ArrowUpRight size={14} style={{ marginLeft: 6 }} />
+                    </button>
+                    <span style={{ fontSize: 12, fontFamily: "var(--font-mono)", color: "var(--ufy-purple-bright)" }}>
+                      COMMUNITY VERIFIED
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Content Body */}
-              <div
-                style={{
-                  padding: "26px",
-                  display: "flex",
-                  flexDirection: "column",
-                  flexGrow: 1,
-                  gap: "14px",
-                }}
-              >
-                {program.dateLabel && (
+              {/* Graphic Visual Panel */}
+              <div className="tok-project-card__visual">
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "radial-gradient(circle at 60% 40%, rgba(118, 41, 240, 0.25), transparent 70%)",
+                  }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 16,
+                    zIndex: 1,
+                    padding: 40,
+                    textAlign: "center",
+                  }}
+                >
                   <div
                     style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: "50%",
+                      background: "rgba(118, 41, 240, 0.15)",
+                      border: "2px solid var(--ufy-purple)",
                       display: "flex",
                       alignItems: "center",
-                      gap: "6px",
-                      fontSize: "0.85rem",
-                      color: "var(--ufy-purple-700)",
-                      fontWeight: 600,
+                      justifyContent: "center",
+                      boxShadow: "0 0 35px var(--ufy-purple-glow)",
                     }}
                   >
-                    <Calendar size={14} />
-                    <span>{program.dateLabel}</span>
+                    {idx === 0 ? (
+                      <HeartPulse size={42} color="#ffffff" />
+                    ) : idx === 1 ? (
+                      <BookOpen size={42} color="#ffffff" />
+                    ) : (
+                      <Award size={42} color="#ffffff" />
+                    )}
                   </div>
-                )}
 
-                <h3
-                  style={{
-                    fontSize: "1.3rem",
-                    fontWeight: 700,
-                    color: "var(--ufy-purple-950)",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {program.title}
-                </h3>
-
-                <p
-                  style={{
-                    fontSize: "0.96rem",
-                    lineHeight: 1.6,
-                    color: "var(--ufy-purple-800)",
-                    flexGrow: 1,
-                  }}
-                >
-                  {program.summary}
-                </p>
-
-                {program.externalUrl && (
-                  <div style={{ marginTop: "8px" }}>
-                    <a
-                      href={program.externalUrl}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        fontSize: "0.92rem",
-                        fontWeight: 700,
-                        color: "var(--ufy-primary)",
-                        transition: "gap var(--transition-fast)",
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.gap = "10px")}
-                      onMouseLeave={(e) => (e.currentTarget.style.gap = "6px")}
-                    >
-                      <span>Participate or Learn More</span>
-                      <ArrowRight size={16} />
-                    </a>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-muted)", letterSpacing: "0.1em" }}>
+                    UFY CASE STUDY // 0{idx + 1}
                   </div>
-                )}
+                  <div style={{ fontFamily: "var(--font-heading)", fontSize: 18, fontWeight: 800 }}>
+                    {item.title}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            </article>
+          );
+        })}
+      </div>
+
+      {/* Bottom CTA to propose */}
+      <div
+        style={{
+          marginTop: 60,
+          background: "var(--bg-deep)",
+          border: "1px solid var(--border-glass-bright)",
+          borderRadius: "var(--radius-xl)",
+          padding: "50px 40px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 24,
+        }}
+      >
+        <div>
+          <span className="tok-tag" style={{ marginBottom: 12 }}>COLLABORATION CALL</span>
+          <h3 style={{ fontFamily: "var(--font-heading)", fontSize: "2rem", fontWeight: 800, marginTop: 8 }}>
+            HAVE AN IDEA FOR YOUR NEIGHBORHOOD?
+          </h3>
+          <p style={{ color: "var(--text-muted)", maxWidth: 540, marginTop: 6 }}>
+            Pitch your workshop or installation concept. UFY provides materials, medical certification, and logistical support.
+          </p>
         </div>
 
-        {/* Bottom CTA Banner */}
-        <div
-          style={{
-            marginTop: "56px",
-            backgroundColor: "#ffffff",
-            border: "1.5px solid var(--ufy-purple-200)",
-            borderRadius: "18px",
-            padding: "32px 36px",
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "20px",
-          }}
+        <button
+          type="button"
+          className="tok-btn-primary"
+          onClick={onOpenSoumission}
         >
-          <div>
-            <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--ufy-purple-950)", marginBottom: "4px" }}>
-              {content.ctaTitle}
-            </h3>
-            <p style={{ fontSize: "0.95rem", color: "var(--ufy-purple-800)" }}>
-              We review community ideas every week and allocate materials and mentor hours to viable youth initiatives.
-            </p>
-          </div>
-          <a href="#submit-idea" className="btn btn-primary">
-            <span>{content.ctaButton}</span>
-            <ArrowRight size={16} />
-          </a>
-        </div>
+          SUBMIT INITIATIVE PROPOSAL
+          <Sparkles size={16} style={{ marginLeft: 8 }} />
+        </button>
       </div>
     </section>
   );
 }
-

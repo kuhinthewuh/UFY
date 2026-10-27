@@ -2,15 +2,16 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowUpRight, Sparkles, X, Volume2 } from "lucide-react";
 import { NavigationItemData, SiteSettingsData } from "@/lib/types";
 
 interface HeaderProps {
   settings: SiteSettingsData;
   navItems: NavigationItemData[];
+  onOpenSoumission?: () => void;
 }
 
-export default function Header({ settings, navItems }: HeaderProps) {
+export default function Header({ settings, navItems, onOpenSoumission }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -23,170 +24,160 @@ export default function Header({ settings, navItems }: HeaderProps) {
   }, []);
 
   const visibleNav = navItems.filter((i) => i.isVisible && !i.isCta);
-  const ctaNav = navItems.find((i) => i.isCta && i.isVisible);
 
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        backgroundColor: scrolled ? "rgba(255, 255, 255, 0.94)" : "rgba(255, 255, 255, 1)",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: scrolled ? "1px solid var(--ufy-purple-100)" : "1px solid transparent",
-        transition: "all var(--transition-normal)",
-      }}
-    >
-      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "80px" }}>
-        {/* Brand / Logo */}
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-          {settings.logoUrl ? (
-            <img
-              src={settings.logoUrl}
-              alt="UFY Logo"
-              style={{ height: `${settings.logoHeight || 36}px`, width: "auto", objectFit: "contain" }}
-            />
-          ) : (
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <div
-                style={{
-                  width: "38px",
-                  height: "38px",
-                  borderRadius: "10px",
-                  backgroundColor: "var(--ufy-primary)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#ffffff",
-                  fontWeight: 800,
-                  fontSize: "1.1rem",
-                  letterSpacing: "-0.03em",
-                  boxShadow: "0 4px 12px rgba(118, 41, 240, 0.25)",
-                }}
-              >
-                U
-              </div>
-              <span
-                style={{
-                  fontSize: "1.5rem",
-                  fontWeight: 800,
-                  letterSpacing: "-0.04em",
-                  color: "var(--ufy-purple-900)",
-                }}
-              >
-                UFY
-              </span>
-            </div>
-          )}
+    <>
+      <header className={`tok-header ${scrolled ? "tok-header--scrolled" : ""}`}>
+        {/* Brand Wordmark (TOK-styled ufy) */}
+        <Link href="/" className="tok-header__logo" aria-label="UFY Homepage">
+          ufy<span className="tok-header__logo-dot">.</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav
-          style={{ display: "flex", alignItems: "center", gap: "32px" }}
-          aria-label="Main Navigation"
-          className="desktop-nav"
-        >
-          {visibleNav.map((item) => (
-            <a
-              key={item.id}
-              href={item.path}
-              target={item.target}
-              rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
-              style={{
-                fontSize: "0.95rem",
-                fontWeight: 600,
-                color: "var(--ufy-purple-900)",
-                transition: "color var(--transition-fast)",
-                padding: "8px 0",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ufy-primary)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ufy-purple-900)")}
-            >
-              {item.label}
-            </a>
-          ))}
-
-          {/* Primary CTA */}
-          {settings.primaryCtaVisible && (
-            <a
-              href={settings.primaryCtaUrl || "#submit-idea"}
-              className="btn btn-primary"
-              data-cta="true"
-              style={{ padding: "10px 22px", fontSize: "0.9rem" }}
-            >
-              <Sparkles size={16} />
-              <span>{settings.primaryCtaLabel || "Propose an Idea"}</span>
-            </a>
-          )}
+        {/* Floating Center Nav Pills */}
+        <nav className="tok-header__nav" aria-label="Main Navigation">
+          <Link href="#mission" className="tok-header__link">
+            AGENCY // 360°
+          </Link>
+          <Link href="#programs" className="tok-header__link">
+            PROJECTS
+          </Link>
+          <Link href="#team" className="tok-header__link">
+            CREW
+          </Link>
+          <Link href="#accepted-ideas" className="tok-header__link">
+            COMMUNITY
+          </Link>
+          <Link href="/admin/login" className="tok-header__link" style={{ opacity: 0.7 }}>
+            ADMIN
+          </Link>
         </nav>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle navigation menu"
-          style={{
-            display: "none",
-            padding: "8px",
-            color: "var(--ufy-purple-900)",
-            borderRadius: "8px",
-          }}
-          className="mobile-nav-toggle"
-        >
-          {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
-        </button>
-      </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: "80px",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(255, 255, 255, 0.98)",
-            backdropFilter: "blur(16px)",
-            padding: "32px 24px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-            zIndex: 49,
-            borderTop: "1px solid var(--ufy-purple-100)",
-          }}
-        >
-          {visibleNav.map((item) => (
-            <a
-              key={item.id}
-              href={item.path}
-              target={item.target}
-              onClick={() => setMobileMenuOpen(false)}
+        {/* Right Actions */}
+        <div className="tok-header__actions">
+          {/* Status pill indicator */}
+          <div
+            className="tok-tag-white"
+            style={{ display: "none", alignItems: "center", gap: 6, cursor: "default" }}
+          >
+            <span
               style={{
-                fontSize: "1.25rem",
-                fontWeight: 700,
-                color: "var(--ufy-purple-900)",
-                padding: "12px 0",
-                borderBottom: "1px solid var(--ufy-purple-50)",
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                background: "var(--ufy-purple-bright)",
+                boxShadow: "0 0 10px var(--ufy-purple-bright)",
               }}
-            >
-              {item.label}
-            </a>
-          ))}
+            />
+            <span style={{ fontSize: 10 }}>ONLINE // YOUTH</span>
+          </div>
 
-          {settings.primaryCtaVisible && (
-            <a
-              href={settings.primaryCtaUrl || "#submit-idea"}
-              onClick={() => setMobileMenuOpen(false)}
-              className="btn btn-primary"
-              style={{ marginTop: "16px", width: "100%", padding: "14px", justifyContent: "center" }}
-            >
-              <Sparkles size={18} />
-              <span>{settings.primaryCtaLabel || "Propose an Idea"}</span>
-            </a>
-          )}
+          {/* TOK Signature "SOUMISSION / PROPOSE AN IDEA" Pill Button */}
+          <button
+            type="button"
+            className="tok-btn-primary"
+            onClick={onOpenSoumission}
+            style={{ padding: "12px 24px", fontSize: "13px" }}
+          >
+            PROPOSE AN IDEA
+            <Sparkles size={14} style={{ marginLeft: 8 }} />
+          </button>
+
+          {/* Hamburger toggle */}
+          <button
+            type="button"
+            className="tok-header__burger"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle Navigation Menu"
+          >
+            <div
+              className="tok-header__burger-line"
+              style={{
+                transform: mobileMenuOpen ? "rotate(45deg) translate(2.5px, 2.5px)" : "none",
+              }}
+            />
+            <div
+              className="tok-header__burger-line"
+              style={{
+                transform: mobileMenuOpen ? "rotate(-45deg) translate(2.5px, -2.5px)" : "none",
+              }}
+            />
+          </button>
         </div>
-      )}
-    </header>
+      </header>
+
+      {/* Fullscreen Mobile / Flyout Menu Overlay */}
+      <div className={`tok-menu-overlay ${mobileMenuOpen ? "tok-menu-overlay--open" : ""}`}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span className="tok-tag">UFY // MENU</span>
+          <button
+            type="button"
+            className="tok-header__burger"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close Menu"
+          >
+            <X size={20} color="#ffffff" />
+          </button>
+        </div>
+
+        <div className="tok-menu-overlay__links">
+          <Link
+            href="#mission"
+            className="tok-menu-overlay__link"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span>01</span> AGENCY // 360°
+          </Link>
+          <Link
+            href="#programs"
+            className="tok-menu-overlay__link"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span>02</span> PROJECTS
+          </Link>
+          <Link
+            href="#team"
+            className="tok-menu-overlay__link"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span>03</span> YOUTH CREW
+          </Link>
+          <Link
+            href="#accepted-ideas"
+            className="tok-menu-overlay__link"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span>04</span> ACCEPTED IDEAS
+          </Link>
+          <Link
+            href="/admin/login"
+            className="tok-menu-overlay__link"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span>05</span> PORTAL // CMS
+          </Link>
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 16 }}>
+          <div>
+            <div style={{ color: "var(--text-muted)", fontSize: 13, marginBottom: 4 }}>
+              YOUTH HEADQUARTERS
+            </div>
+            <div style={{ fontSize: 15, fontWeight: 700 }}>MONTREAL, QC // CANADA</div>
+          </div>
+
+          <button
+            type="button"
+            className="tok-btn-primary"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenSoumission?.();
+            }}
+          >
+            PROPOSE AN IDEA
+            <ArrowUpRight size={16} style={{ marginLeft: 8 }} />
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
-

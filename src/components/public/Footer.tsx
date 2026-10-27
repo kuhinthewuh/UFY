@@ -1,216 +1,159 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { Lock, Heart, ArrowUp } from "lucide-react";
+import { ArrowUpRight, ArrowUp, Sparkles, Send, Check } from "lucide-react";
 import { SiteSettingsData, NavigationItemData } from "@/lib/types";
 
 interface FooterProps {
   settings: SiteSettingsData;
   navItems: NavigationItemData[];
+  onOpenSoumission?: () => void;
 }
 
-export default function Footer({ settings, navItems }: FooterProps) {
+export default function Footer({ settings, navItems, onOpenSoumission }: FooterProps) {
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleNewsletter = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail.trim()) return;
+    setSubscribed(true);
+  };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const visibleNav = navItems.filter((i) => i.isVisible && !i.isCta);
-
   return (
-    <footer
-      style={{
-        backgroundColor: "var(--ufy-purple-950)",
-        color: "#ffffff",
-        paddingTop: "72px",
-        paddingBottom: "40px",
-        borderTop: "1px solid var(--ufy-purple-900)",
-      }}
-    >
-      <div className="container">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.4fr 1fr 1fr",
-            gap: "48px",
-            marginBottom: "56px",
-          }}
-          className="footer-grid"
-        >
-          {/* Brand Info */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <div
-                style={{
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "10px",
-                  backgroundColor: "var(--ufy-primary)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: 800,
-                  fontSize: "1.1rem",
-                  color: "#ffffff",
-                }}
-              >
-                U
-              </div>
-              <span style={{ fontSize: "1.4rem", fontWeight: 800, letterSpacing: "-0.03em", color: "#ffffff" }}>
-                UFY
-              </span>
-            </div>
+    <footer className="tok-footer">
+      {/* 3-Column TOK Agency Grid */}
+      <div className="tok-footer__grid">
+        {/* Col 1: Newsletter & Mission */}
+        <div>
+          <span className="tok-footer__tag">NEWSLETTER // DISPATCH</span>
+          <h3 className="tok-footer__heading">
+            STAY TUNED TO YOUTH HEALTH INNOVATION.
+          </h3>
+          <p style={{ color: "var(--text-muted)", fontSize: "1rem", maxWidth: 440, marginBottom: 28, lineHeight: 1.6 }}>
+            Receive monthly updates on newly certified workshops, Little Library installations, and open youth leadership calls.
+          </p>
 
-            <p style={{ fontSize: "0.95rem", lineHeight: 1.65, color: "var(--ufy-purple-100)", maxWidth: "380px" }}>
-              {settings.footerMissionText ||
-                "Equipping young changemakers with real first-aid training, interactive health learning kits, and community mini-libraries."}
-            </p>
-
-            {settings.contactEmail && (
-              <p style={{ fontSize: "0.9rem", color: "var(--ufy-purple-200)" }}>
-                Contact:{" "}
-                <a
-                  href={`mailto:${settings.contactEmail}`}
-                  style={{ color: "#ffffff", textDecoration: "underline", textUnderlineOffset: "4px" }}
-                >
-                  {settings.contactEmail}
-                </a>
-              </p>
-            )}
-          </div>
-
-          {/* Quick Links */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-            <h4
+          {subscribed ? (
+            <div
               style={{
-                fontSize: "1rem",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                background: "rgba(118, 41, 240, 0.15)",
+                border: "1px solid var(--ufy-purple)",
+                padding: "12px 20px",
+                borderRadius: "var(--radius-pill)",
+                color: "#ffffff",
+                fontFamily: "var(--font-heading)",
+                fontSize: 13,
                 fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                color: "var(--ufy-purple-200)",
               }}
             >
-              Navigation
-            </h4>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              {visibleNav.map((item) => (
-                <a
-                  key={item.id}
-                  href={item.path}
-                  style={{
-                    fontSize: "0.92rem",
-                    color: "var(--ufy-purple-100)",
-                    transition: "color var(--transition-fast)",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ufy-purple-100)")}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <a
-                href="#submit-idea"
-                style={{
-                  fontSize: "0.92rem",
-                  color: "var(--ufy-purple-200)",
-                  fontWeight: 600,
-                }}
-              >
-                Propose a Community Idea →
-              </a>
+              <Check size={16} color="var(--ufy-purple-bright)" />
+              WELCOME TO THE UFY COMMUNITY
             </div>
-          </div>
-
-          {/* Privacy & Organization Notes */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-            <h4
-              style={{
-                fontSize: "1rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                color: "var(--ufy-purple-200)",
-              }}
-            >
-              Youth Privacy
-            </h4>
-
-            <p style={{ fontSize: "0.9rem", lineHeight: 1.6, color: "var(--ufy-purple-100)" }}>
-              {settings.privacyNotice ||
-                "We strictly uphold youth privacy. We do not sell data, track invasive identifiers, or require unnecessary personal details."}
-            </p>
-
-            {settings.socialGithub && (
-              <a
-                href={settings.socialGithub}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  fontSize: "0.88rem",
-                  color: "var(--ufy-purple-200)",
-                  textDecoration: "underline",
-                }}
+          ) : (
+            <form onSubmit={handleNewsletter} style={{ display: "flex", gap: 10, maxWidth: 460 }}>
+              <input
+                type="email"
+                className="tok-input"
+                placeholder="Enter your email address..."
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                required
+                style={{ padding: "14px 20px", borderRadius: "var(--radius-pill)" }}
+              />
+              <button
+                type="submit"
+                className="tok-btn-primary"
+                style={{ flexShrink: 0, padding: "14px 24px" }}
               >
-                View Project on GitHub
-              </a>
-            )}
+                JOIN
+                <Send size={14} style={{ marginLeft: 6 }} />
+              </button>
+            </form>
+          )}
+        </div>
+
+        {/* Col 2: Navigation & Tracks */}
+        <div>
+          <span className="tok-footer__tag">INDEX // NAVIGATION</span>
+          <div className="tok-footer__links">
+            <Link href="#mission" className="tok-footer__link">
+              360° SERVICES <ArrowUpRight size={14} />
+            </Link>
+            <Link href="#programs" className="tok-footer__link">
+              FEATURED PROJECTS <ArrowUpRight size={14} />
+            </Link>
+            <Link href="#team" className="tok-footer__link">
+              YOUTH CREW <ArrowUpRight size={14} />
+            </Link>
+            <Link href="#accepted-ideas" className="tok-footer__link">
+              COMMUNITY PROPOSALS <ArrowUpRight size={14} />
+            </Link>
+            <Link href="/admin/login" className="tok-footer__link" style={{ opacity: 0.6 }}>
+              ADMIN PORTAL <ArrowUpRight size={14} />
+            </Link>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div
-          style={{
-            borderTop: "1px solid var(--ufy-purple-900)",
-            paddingTop: "28px",
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "16px",
-            fontSize: "0.85rem",
-            color: "var(--ufy-purple-300)",
-          }}
-        >
-          <div>{settings.copyrightText || `© ${new Date().getFullYear()} UFY. All rights reserved.`}</div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-            <button
-              onClick={scrollToTop}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                color: "var(--ufy-purple-200)",
-                fontSize: "0.85rem",
-              }}
-            >
-              <span>Back to Top</span>
-              <ArrowUp size={14} />
-            </button>
-
-            {/* Admin Portal Entry Link */}
-            <Link
-              href="/admin"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                color: "var(--ufy-purple-200)",
-                padding: "4px 10px",
-                borderRadius: "6px",
-                backgroundColor: "rgba(255, 255, 255, 0.08)",
-                fontSize: "0.8rem",
-                fontWeight: 600,
-              }}
-            >
-              <Lock size={12} />
-              <span>Admin Portal</span>
-            </Link>
+        {/* Col 3: Information & Soumission CTA */}
+        <div>
+          <span className="tok-footer__tag">CONTACT // MONTREAL HQ</span>
+          <div style={{ color: "var(--text-muted)", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 24 }}>
+            <p style={{ color: "#ffffff", fontWeight: 700, marginBottom: 4 }}>UFY YOUTH ACTION</p>
+            <p>Montreal, Quebec, Canada</p>
+            <p>hello@ufy.org</p>
+            <p>+1 (514) 840-0000</p>
           </div>
+
+          <button
+            type="button"
+            className="tok-btn-primary"
+            onClick={onOpenSoumission}
+            style={{ width: "100%", padding: "14px 24px" }}
+          >
+            REQUEST A PROPOSAL
+            <Sparkles size={16} style={{ marginLeft: 8 }} />
+          </button>
+        </div>
+      </div>
+
+      {/* Massive TOK-Style Animated Brand Wordmark */}
+      <div className="tok-footer__giant-brand" aria-hidden="true">
+        <div className="tok-footer__giant-text">
+          UFY
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="tok-footer__bottom">
+        <div>
+          © 2026 UFY Organization — All Youth Rights Reserved. Registered Canadian Non-Profit.
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>
+            MONTREAL • QUEBEC • CANADA
+          </span>
+
+          <button
+            type="button"
+            onClick={scrollToTop}
+            className="tok-btn-secondary"
+            style={{ width: 40, height: 40, padding: 0, borderRadius: "50%" }}
+            aria-label="Scroll back to top"
+          >
+            <ArrowUp size={18} />
+          </button>
         </div>
       </div>
     </footer>
   );
 }
-

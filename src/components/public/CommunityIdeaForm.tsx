@@ -2,14 +2,15 @@
 
 import React, { useState } from "react";
 import confetti from "canvas-confetti";
-import { Sparkles, Send, ShieldAlert, CheckCircle, Info, Heart } from "lucide-react";
+import { Sparkles, Send, CheckCircle, AlertCircle, ArrowUpRight } from "lucide-react";
 import { PageSectionData } from "@/lib/types";
 
 interface CommunityIdeaFormProps {
   section?: PageSectionData;
+  onOpenSoumission?: () => void;
 }
 
-export default function CommunityIdeaForm({ section }: CommunityIdeaFormProps) {
+export default function CommunityIdeaForm({ section, onOpenSoumission }: CommunityIdeaFormProps) {
   const [formData, setFormData] = useState({
     title: "",
     category: "First Aid & Health Workshop",
@@ -17,7 +18,7 @@ export default function CommunityIdeaForm({ section }: CommunityIdeaFormProps) {
     problemAddressed: "",
     proposedApproach: "",
     submitterEmail: "",
-    honeypot: "", // hidden spam trap
+    honeypot: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -60,362 +61,224 @@ export default function CommunityIdeaForm({ section }: CommunityIdeaFormProps) {
       });
 
       const data = await res.json();
-
       if (!res.ok) {
-        throw new Error(data.error || "Failed to submit proposal");
+        throw new Error(data.error || "Submission failed. Please check required fields.");
       }
 
       setSubmitted(true);
-
-      // Playful celebration confetti burst in UFY purple and white tones!
-      try {
-        confetti({
-          particleCount: 90,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ["#7629f0", "#ffffff", "#b483f8", "#ebdffe"],
-        });
-      } catch {}
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred. Please try again.");
+      confetti({
+        particleCount: 70,
+        spread: 60,
+        origin: { y: 0.7 },
+        colors: ["#7629f0", "#8e48ff", "#ffffff"],
+      });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Something went wrong.";
+      setError(message);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleFormStart = () => {
-    // Track form start in analytics once
-    if (!window.sessionStorage.getItem("ufy_form_started")) {
-      window.sessionStorage.setItem("ufy_form_started", "true");
-      const sessionId = window.sessionStorage.getItem("ufy_session_id") || "anon";
-      fetch("/api/analytics/event", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          eventType: "idea_form_start",
-          path: "/",
-          sectionId: "community-idea",
-          sessionId,
-        }),
-      }).catch(() => {});
-    }
-  };
-
   return (
-    <section
-      id="submit-idea"
-      className="section-padding bg-ufy-pattern"
-      style={{
-        backgroundColor: "var(--ufy-primary)",
-        color: "#ffffff",
-        position: "relative",
-      }}
-    >
-      <div className="container">
-        <div
-          style={{
-            maxWidth: "840px",
-            margin: "0 auto",
-            backgroundColor: "#ffffff",
-            color: "var(--ufy-purple-950)",
-            borderRadius: "28px",
-            padding: "48px 40px",
-            boxShadow: "0 24px 60px rgba(20, 5, 41, 0.28)",
-          }}
-          className="idea-form-card"
-        >
-          {submitted ? (
-            <div
-              style={{
-                textAlign: "center",
-                padding: "40px 20px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "20px",
-              }}
-            >
-              <div
-                style={{
-                  width: "72px",
-                  height: "72px",
-                  borderRadius: "50%",
-                  backgroundColor: "var(--ufy-purple-100)",
-                  color: "var(--ufy-primary)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <CheckCircle size={44} />
+    <section id="community-idea" className="tok-services" style={{ background: "var(--bg-surface)" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        {/* Banner with 2-column layout */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
+          <div>
+            <span className="tok-tag" style={{ marginBottom: 16 }}>MODULE // PROPOSALS</span>
+            <h2 className="tok-section-title" style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)" }}>
+              HAVE A VISION FOR YOUTH HEALTH?
+            </h2>
+            <p style={{ color: "var(--text-muted)", fontSize: "1.1rem", marginTop: 20, lineHeight: 1.6 }}>
+              Whether you are a student, teacher, or community advocate, UFY partners with you to provide materials, medical expertise, and funding to bring your ideas to life.
+            </p>
+
+            <div style={{ marginTop: 36, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--ufy-purple-bright)" }} />
+                <span style={{ color: "#ffffff", fontWeight: 600 }}>Reviewed within 48 hours by our youth council</span>
               </div>
-
-              <h2 style={{ fontSize: "2rem", fontWeight: 800, color: "var(--ufy-purple-950)" }}>
-                Proposal Received! Thank You!
-              </h2>
-
-              <p
-                style={{
-                  fontSize: "1.1rem",
-                  lineHeight: 1.65,
-                  color: "var(--ufy-purple-800)",
-                  maxWidth: "540px",
-                }}
-              >
-                Your proposal has been logged to the UFY moderation inbox. Our youth coordinators review every submission
-                during our weekly planning circle to evaluate feasibility, safety, and community impact.
-              </p>
-
-              <div
-                style={{
-                  backgroundColor: "var(--ufy-purple-50)",
-                  border: "1.5px solid var(--ufy-purple-150, #e6d8fd)",
-                  borderRadius: "14px",
-                  padding: "16px 24px",
-                  fontSize: "0.92rem",
-                  color: "var(--ufy-purple-850)",
-                  maxWidth: "500px",
-                }}
-              >
-                💡 <strong>Privacy Reminder:</strong> Your submission remains strictly private during internal review.
-                Only accepted proposals without personal details may ever appear in the public showcase.
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--ufy-purple-bright)" }} />
+                <span style={{ color: "#ffffff", fontWeight: 600 }}>Full logistical & micro-grant seed support</span>
               </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--ufy-purple-bright)" }} />
+                <span style={{ color: "#ffffff", fontWeight: 600 }}>Public recognition or complete anonymity</span>
+              </div>
+            </div>
 
+            <div style={{ marginTop: 40 }}>
               <button
                 type="button"
-                onClick={() => {
-                  setSubmitted(false);
-                  setFormData({
-                    title: "",
-                    category: "First Aid & Health Workshop",
-                    description: "",
-                    problemAddressed: "",
-                    proposedApproach: "",
-                    submitterEmail: "",
-                    honeypot: "",
-                  });
-                }}
-                className="btn btn-outline-purple"
-                style={{ marginTop: "12px" }}
+                className="tok-btn-primary"
+                onClick={onOpenSoumission}
               >
-                Submit Another Proposal
+                OPEN FULL 3-STEP PROPOSAL DRAWER
+                <ArrowUpRight size={16} style={{ marginLeft: 8 }} />
               </button>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} onFocus={handleFormStart}>
-              {/* Form Header */}
-              <div style={{ textAlign: "center", marginBottom: "36px" }}>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
-                  <span className="ufy-badge badge-purple">
-                    <Sparkles size={14} />
-                    Community Proposals
-                  </span>
-                </div>
+          </div>
 
-                <h2
-                  style={{
-                    fontSize: "clamp(1.8rem, 3.4vw, 2.5rem)",
-                    fontWeight: 800,
-                    letterSpacing: "-0.03em",
-                    color: "var(--ufy-purple-950)",
-                    marginBottom: "10px",
-                  }}
-                >
-                  {section?.title || "Have an Idea for UFY?"}
-                </h2>
-
-                <p style={{ fontSize: "1.05rem", color: "var(--ufy-purple-800)", maxWidth: "600px", margin: "0 auto" }}>
-                  {section?.subtitle ||
-                    "Help shape what comes next. Propose an activity, workshop topic, book drive, or health resource for our community."}
-                </p>
-              </div>
-
-              {/* Privacy Notice Alert */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "12px",
-                  backgroundColor: "var(--ufy-purple-50)",
-                  border: "1.5px solid var(--ufy-purple-200)",
-                  borderRadius: "14px",
-                  padding: "16px 20px",
-                  marginBottom: "28px",
-                  fontSize: "0.88rem",
-                  lineHeight: 1.5,
-                  color: "var(--ufy-purple-900)",
-                }}
-              >
-                <ShieldAlert size={20} style={{ color: "var(--ufy-primary)", flexShrink: 0, marginTop: "2px" }} />
-                <div>
-                  <strong>Youth Privacy Notice:</strong> We do not require your real name, phone number, address, or
-                  school. Please do not submit medical histories, health conditions, or private information about
-                  yourself or other individuals.
-                </div>
-              </div>
-
-              {/* Error Feedback */}
-              {error && (
+          {/* Quick submission card on page */}
+          <div
+            style={{
+              background: "var(--bg-deep)",
+              border: "1px solid var(--border-glass-bright)",
+              borderRadius: "var(--radius-xl)",
+              padding: "40px",
+              boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
+            }}
+          >
+            {submitted ? (
+              <div style={{ textAlign: "center", padding: "40px 10px" }}>
                 <div
                   style={{
-                    backgroundColor: "var(--ufy-purple-100)",
-                    border: "1.5px solid var(--ufy-purple-400)",
-                    color: "var(--ufy-purple-950)",
-                    borderRadius: "12px",
-                    padding: "14px 18px",
-                    marginBottom: "24px",
-                    fontSize: "0.92rem",
-                    fontWeight: 600,
+                    width: 64,
+                    height: 64,
+                    borderRadius: "50%",
+                    background: "rgba(118, 41, 240, 0.2)",
+                    border: "2px solid var(--ufy-purple)",
+                    color: "var(--ufy-purple-bright)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto 20px",
                   }}
                 >
-                  {error}
+                  <CheckCircle size={32} />
                 </div>
-              )}
+                <h3 style={{ fontFamily: "var(--font-heading)", fontSize: "1.8rem", fontWeight: 800, marginBottom: 10 }}>
+                  IDEA TRANSMITTED
+                </h3>
+                <p style={{ color: "var(--text-muted)", fontSize: "0.95rem", marginBottom: 24 }}>
+                  Thank you! Our youth leads will review your idea and reach out soon.
+                </p>
+                <button
+                  type="button"
+                  className="tok-btn-secondary"
+                  onClick={() => setSubmitted(false)}
+                >
+                  SUBMIT ANOTHER IDEA
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-muted)" }}>
+                    QUICK TRANSMISSION FORM
+                  </span>
+                  <span className="tok-tag" style={{ fontSize: 9 }}>DIRECT PITCH</span>
+                </div>
 
-              {/* Spam Trap Field (Hidden from real users) */}
-              <input
-                type="text"
-                name="ufy_hp"
-                value={formData.honeypot}
-                onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
-                tabIndex={-1}
-                autoComplete="off"
-                style={{ display: "none" }}
-                aria-hidden="true"
-              />
+                {error && (
+                  <div
+                    style={{
+                      background: "rgba(239, 68, 68, 0.12)",
+                      border: "1px solid rgba(239, 68, 68, 0.35)",
+                      borderRadius: "var(--radius-sm)",
+                      padding: "10px 14px",
+                      color: "#fca5a5",
+                      fontSize: 13,
+                      marginBottom: 16,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <AlertCircle size={16} />
+                    <span>{error}</span>
+                  </div>
+                )}
 
-              {/* Title & Category Grid */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1.2fr 0.8fr",
-                  gap: "20px",
-                }}
-                className="form-grid-row"
-              >
-                <div className="form-group">
-                  <label htmlFor="idea-title" className="form-label">
-                    Idea Title <span style={{ color: "var(--ufy-primary)" }}>*</span>
-                  </label>
+                {/* Spam trap */}
+                <input
+                  type="text"
+                  name="honeypot"
+                  value={formData.honeypot}
+                  onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
+                  style={{ display: "none" }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+
+                <div className="tok-input-group">
+                  <label className="tok-input-label">Idea Title *</label>
                   <input
-                    id="idea-title"
                     type="text"
-                    className="form-input"
-                    placeholder="e.g. Neighborhood Bicycle First Aid Station"
+                    className="tok-input"
+                    placeholder="e.g. Hands-on Epinephrine & Allergy Training"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     required
                   />
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="idea-category" className="form-label">
-                    Category <span style={{ color: "var(--ufy-primary)" }}>*</span>
-                  </label>
+                <div className="tok-input-group">
+                  <label className="tok-input-label">Category</label>
                   <select
-                    id="idea-category"
-                    className="form-select"
+                    className="tok-input"
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   >
-                    {categories.map((cat) => (
-                      <option key={cat} value={cat}>
-                        {cat}
+                    {categories.map((c) => (
+                      <option key={c} value={c} style={{ background: "#0c0d14", color: "#fff" }}>
+                        {c}
                       </option>
                     ))}
                   </select>
                 </div>
-              </div>
 
-              {/* Problem Addressed */}
-              <div className="form-group">
-                <label htmlFor="idea-problem" className="form-label">
-                  What problem does this address or who could it help?{" "}
-                  <span style={{ color: "var(--ufy-primary)" }}>*</span>
-                </label>
-                <textarea
-                  id="idea-problem"
-                  className="form-textarea"
-                  rows={3}
-                  placeholder="Describe the community need or student challenge you noticed..."
-                  value={formData.problemAddressed}
-                  onChange={(e) => setFormData({ ...formData, problemAddressed: e.target.value })}
-                  required
-                />
-              </div>
+                <div className="tok-input-group">
+                  <label className="tok-input-label">Community Need *</label>
+                  <input
+                    type="text"
+                    className="tok-input"
+                    placeholder="Who does this help?"
+                    value={formData.problemAddressed}
+                    onChange={(e) => setFormData({ ...formData, problemAddressed: e.target.value })}
+                    required
+                  />
+                </div>
 
-              {/* Proposal Description */}
-              <div className="form-group">
-                <label htmlFor="idea-description" className="form-label">
-                  Proposal Description <span style={{ color: "var(--ufy-primary)" }}>*</span>
-                </label>
-                <textarea
-                  id="idea-description"
-                  className="form-textarea"
-                  rows={4}
-                  placeholder="Share details of what you'd like UFY to create, organize, or build..."
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  required
-                />
-              </div>
+                <div className="tok-input-group">
+                  <label className="tok-input-label">Description *</label>
+                  <textarea
+                    className="tok-input"
+                    style={{ minHeight: 90 }}
+                    placeholder="Brief details of your vision..."
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    required
+                  />
+                </div>
 
-              {/* Optional Implementation Approach */}
-              <div className="form-group">
-                <label htmlFor="idea-approach" className="form-label">
-                  Proposed Approach / Ideas on How to Execute (Optional)
-                </label>
-                <textarea
-                  id="idea-approach"
-                  className="form-textarea"
-                  rows={2}
-                  placeholder="e.g. Location ideas, materials needed, or partner groups you're familiar with..."
-                  value={formData.proposedApproach}
-                  onChange={(e) => setFormData({ ...formData, proposedApproach: e.target.value })}
-                />
-              </div>
+                <div className="tok-input-group">
+                  <label className="tok-input-label">Contact Email (Optional)</label>
+                  <input
+                    type="email"
+                    className="tok-input"
+                    placeholder="you@domain.ca"
+                    value={formData.submitterEmail}
+                    onChange={(e) => setFormData({ ...formData, submitterEmail: e.target.value })}
+                  />
+                </div>
 
-              {/* Optional Submitter Email */}
-              <div className="form-group">
-                <label htmlFor="idea-email" className="form-label">
-                  Your Email Address (Optional — only if you'd like updates on this proposal)
-                </label>
-                <input
-                  id="idea-email"
-                  type="email"
-                  className="form-input"
-                  placeholder="your.email@example.com"
-                  value={formData.submitterEmail}
-                  onChange={(e) => setFormData({ ...formData, submitterEmail: e.target.value })}
-                />
-                <span style={{ fontSize: "0.82rem", color: "var(--ufy-purple-700)", marginTop: "4px" }}>
-                  Your email is strictly confidential and will never be shared, published, or sold.
-                </span>
-              </div>
-
-              {/* Submit Button */}
-              <div style={{ marginTop: "28px" }}>
                 <button
                   type="submit"
+                  className="tok-btn-primary"
+                  style={{ width: "100%", marginTop: 8 }}
                   disabled={loading}
-                  className="btn btn-primary"
-                  style={{
-                    width: "100%",
-                    padding: "16px",
-                    fontSize: "1.05rem",
-                    justifyContent: "center",
-                    opacity: loading ? 0.7 : 1,
-                  }}
                 >
-                  <Send size={18} />
-                  <span>{loading ? "Submitting Proposal..." : "Submit Proposal to UFY"}</span>
+                  {loading ? "TRANSMITTING..." : "SUBMIT COMMUNITY IDEA"}
+                  <Send size={14} style={{ marginLeft: 8 }} />
                 </button>
-              </div>
-            </form>
-          )}
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </section>
   );
 }
-
