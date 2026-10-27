@@ -26,7 +26,7 @@ export async function GET() {
     "Submitter Contact",
   ];
 
-  const rows = ideas.map((i) => [
+  const rows = ideas.map((i: any) => [
     `"${i.id}"`,
     `"${i.createdAt.toISOString()}"`,
     `"${i.status}"`,
@@ -40,7 +40,7 @@ export async function GET() {
     `"${(i.submitterEmail || "Not provided").replace(/"/g, '""')}"`,
   ]);
 
-  const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+  const csv = [headers.join(","), ...rows.map((r: string[]) => r.join(","))].join("\n");
 
   return new NextResponse(csv, {
     status: 200,

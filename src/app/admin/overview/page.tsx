@@ -227,7 +227,7 @@ export default async function AdminOverviewPage() {
                   No proposals submitted yet. Visitors can submit ideas through the public portal!
                 </div>
               ) : (
-                data.latestIdeas.map((idea) => (
+                data.latestIdeas.map((idea: any) => (
                   <div
                     key={idea.id}
                     style={{

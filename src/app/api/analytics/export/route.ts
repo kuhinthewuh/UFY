@@ -14,7 +14,7 @@ export async function GET() {
   });
 
   const headers = ["Timestamp", "Event Type", "Path", "Section", "Target Label", "Device Category", "Referrer"];
-  const rows = events.map((e) => [
+  const rows = events.map((e: any) => [
     e.timestamp.toISOString(),
     `"${(e.eventType || "").replace(/"/g, '""')}"`,
     `"${(e.path || "").replace(/"/g, '""')}"`,
@@ -24,7 +24,7 @@ export async function GET() {
     `"${(e.referrer || "").replace(/"/g, '""')}"`,
   ]);
 
-  const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+  const csv = [headers.join(","), ...rows.map((r: string[]) => r.join(","))].join("\n");
 
   return new NextResponse(csv, {
     status: 200,

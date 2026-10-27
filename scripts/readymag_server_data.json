@@ -1,0 +1,1497 @@
+{
+  "mags": {
+    "mag": {
+      "isProjectEmailPrivate": {
+        "isEnabled": false,
+        "allowedEmails": [],
+        "allowedDomains": []
+      },
+      "opts": {
+        "arrows": false,
+        "menubutton": false,
+        "sharebutton": false,
+        "pagecounter": false,
+        "controlsontop": false,
+        "branding": false,
+        "endpage": false,
+        "endpagetype": "join",
+        "viewertype": "horizontal",
+        "slidein": false,
+        "scalewidth": 3600,
+        "projectinfo": false,
+        "ga_id": "G-4MHCHDVPXV",
+        "gtm_id": "GTM-NPR9HT7",
+        "hidden": true,
+        "allowindex": false,
+        "scalableviewer": true,
+        "lqip": false,
+        "phoneVerticalAlign": "top",
+        "useCustomCursor": false
+      },
+      "textStyles": {
+        "global": [
+          {
+            "name": "style-c33cfbf2-e0de-48ba-970c-b5689f4a78bd",
+            "label": "Header 1 (Px Grotesk)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_157067",
+              "fontWeight": "400",
+              "fontSize": 60,
+              "lineHeight": 52,
+              "letterSpacing": -2,
+              "fontStyle": "normal",
+              "color": "00000064",
+              "fontFeatureSettings": "\"liga\"",
+              "textDecoration": "none",
+              "textTransform": "none",
+              "textAlign": "left"
+            },
+            "_id": "692ed6830058bd7e4f08533b"
+          },
+          {
+            "name": "style-dbcb2465-0c64-410b-b237-6034bec0fcd0",
+            "label": "Header 2 (Px Grotesk)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_157067",
+              "fontWeight": "400",
+              "fontSize": 40,
+              "lineHeight": 38,
+              "textAlign": "left",
+              "fontStyle": "normal",
+              "letterSpacing": -1.8
+            },
+            "_id": "692ed7187310da7de03248e0"
+          },
+          {
+            "name": "style-843b675e-e07c-43f5-b42d-020e6d8d97a7",
+            "label": "Header 3 (Px Grotesk)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_157067",
+              "fontWeight": "400",
+              "fontSize": 28,
+              "lineHeight": 28,
+              "letterSpacing": -1,
+              "textAlign": "left",
+              "fontStyle": "normal"
+            },
+            "_id": "692ed76b06f037fdbde3cd16"
+          },
+          {
+            "name": "style-abc25478-ea12-4e5b-839c-847991496979",
+            "label": "Header 1 (Inter)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "Inter",
+              "fontWeight": "400",
+              "fontSize": 38,
+              "lineHeight": 40,
+              "letterSpacing": -1.3,
+              "fontStyle": "normal",
+              "color": "00000064",
+              "fontVariationSettings": "'wght' 550",
+              "textDecoration": "none",
+              "textTransform": "none",
+              "textAlign": "left"
+            },
+            "_id": "692eff81422763a800cb5560"
+          },
+          {
+            "name": "style-ca2afc1a-094b-46f7-af59-0c63d4f72d10",
+            "label": "Header 2 (Inter)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "Inter",
+              "fontWeight": "400",
+              "fontSize": 16,
+              "lineHeight": 20,
+              "letterSpacing": -0.2,
+              "fontStyle": "normal",
+              "color": "00000064",
+              "fontVariationSettings": "'wght' 550",
+              "textDecoration": "none",
+              "textTransform": "none",
+              "textAlign": "left"
+            },
+            "_id": "692effa40058bd7e4f197d83"
+          },
+          {
+            "name": "style-d0e3550b-5d9b-4f82-914d-6c3a961e62f7",
+            "label": "Body 1 (Px Grotesk)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_157067",
+              "fontWeight": 400,
+              "fontSize": 21,
+              "lineHeight": 24,
+              "letterSpacing": -1,
+              "textAlign": "left",
+              "fontStyle": "normal"
+            },
+            "_id": "692ed76b06f037fdbde3cd15"
+          },
+          {
+            "name": "style-3f35fe9d-0b9d-47a0-bc6a-ac2d3a35afc2",
+            "label": "Body 2 (Px Grotesk)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_157067",
+              "fontWeight": 400,
+              "fontSize": 18,
+              "lineHeight": 20,
+              "fontStyle": "normal",
+              "color": "00000064",
+              "letterSpacing": -0.8,
+              "textAlign": "left"
+            },
+            "_id": "692ed7f9540ece9d0e2e2daf"
+          },
+          {
+            "name": "style-eb08cb29-f0b6-40fe-966a-7ac0a6ca5501",
+            "label": "Body 3 (Px Grostesk)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_157067",
+              "fontWeight": "400",
+              "fontSize": 16,
+              "lineHeight": 18,
+              "fontStyle": "normal",
+              "color": "00000064",
+              "textAlign": "left",
+              "fontVariationSettings": "'wght' 550",
+              "paddingRight": 5
+            },
+            "_id": "694d44365ad629cd33fb7b80"
+          },
+          {
+            "name": "style-40cf242f-bb38-450b-807a-2203d6352c60",
+            "label": "Body 1 (Inter)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "Inter",
+              "fontWeight": "400",
+              "fontSize": 12,
+              "lineHeight": 14,
+              "fontStyle": "normal",
+              "color": "00000064",
+              "textAlign": "left",
+              "fontVariationSettings": "'wght' 550"
+            },
+            "_id": "692f002c4949f5bbccb4b727"
+          },
+          {
+            "name": "style-53feaeaf-7b69-40d0-90cb-8b3026815a3a",
+            "label": "Body 2 (Inter)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "Inter",
+              "fontWeight": "400",
+              "fontSize": 10,
+              "lineHeight": 10,
+              "letterSpacing": 0,
+              "fontStyle": "normal",
+              "color": "00000064",
+              "fontVariationSettings": "'wght' 550",
+              "textDecoration": "none",
+              "textTransform": "none",
+              "textAlign": "left"
+            },
+            "_id": "692f006c9cd0e3b597eef886"
+          },
+          {
+            "name": "style-fbaddaa8-da70-4bc4-bffa-921a378eee8b",
+            "label": "Body 3 (Inter)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "Inter",
+              "fontWeight": "400",
+              "fontSize": 14,
+              "lineHeight": 16,
+              "fontStyle": "normal",
+              "color": "00000064",
+              "textAlign": "left",
+              "fontVariationSettings": "'wght' 550"
+            },
+            "_id": "694abf2a8a98610c191f5eac"
+          },
+          {
+            "name": "style-6a1e617b-0869-448e-b656-a8043b8ed426",
+            "label": "Caption 1 (Px Grotesk)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_162036",
+              "fontWeight": "700",
+              "fontSize": 14,
+              "lineHeight": 16,
+              "letterSpacing": -0.2,
+              "color": "00000064",
+              "textAlign": "left",
+              "fontStyle": "normal"
+            },
+            "_id": "692ed82106f037fdbde41048"
+          },
+          {
+            "name": "style-5edefd1e-0648-4923-b91b-a5e9d3b2d45e",
+            "label": "Caption 2 (Px Grotesk)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_162036",
+              "fontWeight": 700,
+              "fontSize": 12,
+              "lineHeight": 14,
+              "letterSpacing": 0,
+              "color": "00000064",
+              "textAlign": "left",
+              "fontStyle": "normal"
+            },
+            "_id": "692ed82106f037fdbde41047"
+          },
+          {
+            "name": "style-efbb8d22-8870-4388-8f20-4fb0ecc1e4eb",
+            "label": "Caption 1 (Inter)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "Inter",
+              "fontWeight": "400",
+              "fontSize": 9,
+              "lineHeight": 12,
+              "letterSpacing": -0.1,
+              "fontStyle": "normal",
+              "color": "00000064",
+              "fontVariationSettings": "'wght' 450",
+              "textDecoration": "none",
+              "textTransform": "none",
+              "textAlign": "left"
+            },
+            "_id": "692f00ba8820760691dc3035"
+          },
+          {
+            "name": "style-daf26d6b-3ab4-4cce-b392-880f4c7e0714",
+            "label": "Caption 2 (Inter)",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "Inter",
+              "fontWeight": "400",
+              "fontSize": 8,
+              "lineHeight": 10,
+              "letterSpacing": 0.2,
+              "fontStyle": "normal",
+              "color": "00000064",
+              "fontVariationSettings": "'wght' 550",
+              "textDecoration": "none",
+              "textTransform": "none",
+              "textAlign": "left"
+            },
+            "_id": "692f0108f1a0011579e19edd"
+          },
+          {
+            "name": "style-6d304872-684f-437c-b49b-aadffbeeff29",
+            "label": "Hotspot (Px Grotesk)",
+            "tag": "p",
+            "cssProperties": {
+              "color": "00000064",
+              "fontFamily": "custom_37866",
+              "fontStyle": "normal",
+              "textAlign": "left",
+              "fontSize": 8,
+              "lineHeight": 10,
+              "letterSpacing": 0,
+              "fontWeight": "400",
+              "paddingTop": 7,
+              "paddingRight": 7,
+              "paddingBottom": 7,
+              "paddingLeft": 7
+            },
+            "_id": "63907dfd897f8a002fc648fd"
+          }
+        ],
+        "project": [
+          {
+            "name": "style-ad2490c6-be13-48c9-9e01-b59f028a1cbd",
+            "label": "H1",
+            "tag": "h1",
+            "cssProperties": {
+              "color": "22222264",
+              "fontFamily": "Roboto",
+              "fontStyle": "normal",
+              "textAlign": "left",
+              "fontSize": 48,
+              "fontWeight": 700,
+              "letterSpacing": 0,
+              "lineHeight": 60,
+              "paddingTop": 0,
+              "paddingRight": 0,
+              "paddingBottom": 0,
+              "paddingLeft": 0
+            },
+            "_id": "67ceacb2d4f101017d5625fa"
+          },
+          {
+            "name": "style-b9c979c6-0c1e-4fbe-b511-38f1849a45fe",
+            "label": "H2",
+            "tag": "h2",
+            "cssProperties": {
+              "color": "22222264",
+              "fontFamily": "Georgia",
+              "fontStyle": "normal",
+              "textAlign": "left",
+              "fontSize": 24,
+              "fontWeight": 400,
+              "letterSpacing": 0,
+              "lineHeight": 30,
+              "paddingTop": 0,
+              "paddingRight": 0,
+              "paddingBottom": 0,
+              "paddingLeft": 0
+            },
+            "_id": "67ceacb2d4f101017d5625fb"
+          },
+          {
+            "name": "style-680f35dc-696c-4b6c-9d5f-65bbabe40268",
+            "label": "Text",
+            "tag": "p",
+            "cssProperties": {
+              "color": "22222264",
+              "fontFamily": "Georgia",
+              "fontStyle": "normal",
+              "textAlign": "left",
+              "fontSize": 18,
+              "fontWeight": 400,
+              "letterSpacing": 0,
+              "lineHeight": 23,
+              "paddingTop": 0,
+              "paddingRight": 0,
+              "paddingBottom": 0,
+              "paddingLeft": 0
+            },
+            "_id": "67ceacb2d4f101017d5625fc"
+          },
+          {
+            "name": "style-7bdd8f7f-eae5-4afd-879b-ff8c0d38d01b",
+            "label": "Caption",
+            "tag": "p",
+            "cssProperties": {
+              "color": "22222232",
+              "fontFamily": "Georgia",
+              "fontStyle": "italic",
+              "textAlign": "left",
+              "fontSize": 14,
+              "lineHeight": 18,
+              "letterSpacing": 0,
+              "fontWeight": 400,
+              "paddingTop": 0,
+              "paddingRight": 0,
+              "paddingBottom": 0,
+              "paddingLeft": 0
+            },
+            "_id": "67ceacb2d4f101017d5625fd"
+          },
+          {
+            "name": "style-e9d38580-11bc-41a3-b740-ddb605c91c2d",
+            "label": "H1",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_132147",
+              "fontWeight": 400,
+              "fontSize": 34,
+              "lineHeight": 35,
+              "letterSpacing": -2.4,
+              "fontStyle": "normal",
+              "color": "D3E9FF64",
+              "fontVariationSettings": "'wght' 500",
+              "textDecoration": "none",
+              "textAlign": "center"
+            },
+            "_id": "67cea4b54a55a3809f008a8e"
+          },
+          {
+            "name": "style-33dbce98-995a-4114-b9ba-bd4aca0ff058",
+            "label": "H2",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_132147",
+              "fontWeight": 400,
+              "fontSize": 50,
+              "lineHeight": 35,
+              "letterSpacing": -2.8,
+              "fontStyle": "normal",
+              "color": "003a7364",
+              "fontVariationSettings": "'wght' 400",
+              "textDecoration": "none",
+              "textTransform": "lowercase",
+              "textAlign": "left"
+            },
+            "_id": "67cea89fa385b01693ec7025"
+          },
+          {
+            "name": "style-c1b46aa1-2a90-43b2-81c2-28dfc976277d",
+            "label": "text",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_137669",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "lineHeight": 18,
+              "letterSpacing": 0.2,
+              "fontStyle": "normal",
+              "color": "003a7364",
+              "fontVariationSettings": "'wght' 570",
+              "textDecoration": "none",
+              "textTransform": "lowercase",
+              "textAlign": "left"
+            },
+            "_id": "67cea7ccd4f101017d55883a"
+          },
+          {
+            "name": "style-0f71a5e1-225c-4e22-b1dc-7a5fb913179c",
+            "label": "caption",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_137669",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "lineHeight": 26,
+              "letterSpacing": 0.1,
+              "fontStyle": "normal",
+              "color": "4b7bff64",
+              "fontVariationSettings": "'wght' 550",
+              "textDecoration": "none",
+              "textTransform": "lowercase",
+              "textAlign": "left"
+            },
+            "_id": "67cea835621e155cd8e35732"
+          },
+          {
+            "name": "style-e1bea516-5150-4dd5-a0cd-5a3f08377085",
+            "label": "H1-mob",
+            "tag": "p",
+            "cssProperties": {
+              "fontFamily": "custom_132147",
+              "fontWeight": 400,
+              "fontSize": 22,
+              "lineHeight": 24,
+              "letterSpacing": -1.5,
+              "fontStyle": "normal",
+              "color": "D3E9FF64",
+              "fontVariationSettings": "'wght' 500",
+              "textDecoration": "none",
+              "textAlign": "center"
+            },
+            "_id": "67d804544f30acb89482bde5"
+          }
+        ]
+      },
+      "listStyles": {
+        "global": [],
+        "project": []
+      },
+      "linkStyles": {
+        "global": [],
+        "project": [
+          {
+            "style": {
+              "link": {
+                "textColor": "0080FF64",
+                "type": "Solid",
+                "color": "0080FF64",
+                "size": 1,
+                "padding": 0
+              },
+              "hover": {
+                "textColor": "0080FF64",
+                "type": "None",
+                "color": "0080FF64",
+                "size": 1,
+                "padding": 0
+              },
+              "current": {
+                "textColor": "0080FF64",
+                "type": "None",
+                "color": "0080FF64",
+                "size": 1,
+                "padding": 0
+              }
+            },
+            "name": "link-1",
+            "label": "Default Link Style",
+            "_id": "67ceacb29ae44dc6ffa48599"
+          },
+          {
+            "style": {
+              "link": {
+                "textColor": "D51F1F64",
+                "type": "Solid",
+                "color": "D51F1F64",
+                "size": 2,
+                "padding": -11
+              },
+              "hover": {
+                "textColor": "D51F1F64",
+                "type": "None",
+                "color": "00000064",
+                "size": 2,
+                "padding": -2
+              },
+              "current": {
+                "textColor": "4B7BFF64",
+                "type": "Solid",
+                "color": "00000064",
+                "size": 1,
+                "padding": 0
+              }
+            },
+            "name": "link-style-db8f8be7-f048-4462-9d1d-1a54e6dccf3b",
+            "label": "style 2",
+            "_id": "67cea87d42754485adefb87b"
+          },
+          {
+            "style": {
+              "link": {
+                "textColor": "D51F1F64",
+                "type": "Solid",
+                "color": "D51F1F64",
+                "size": 1,
+                "padding": 0
+              },
+              "hover": {
+                "textColor": "D51F1F64",
+                "type": "None",
+                "color": "00000064",
+                "size": 1,
+                "padding": 0
+              },
+              "current": {
+                "textColor": "003A7364",
+                "type": "Solid",
+                "color": "00000064",
+                "size": 1,
+                "padding": 0
+              }
+            },
+            "name": "link-style-43b51b8e-c8eb-406e-9a0b-795d1cab7cb8",
+            "label": "Link Style from Figma (Copy)",
+            "_id": "67cea87d42754485adefb87c"
+          },
+          {
+            "style": {
+              "link": {
+                "textColor": "00322764",
+                "type": "Solid",
+                "color": "00322764",
+                "size": 1,
+                "padding": 0
+              },
+              "hover": {
+                "textColor": "00322764",
+                "type": "None",
+                "color": "00000064",
+                "size": 1,
+                "padding": 0
+              },
+              "current": {
+                "textColor": "003A7364",
+                "type": "Solid",
+                "color": "00000064",
+                "size": 1,
+                "padding": 0
+              }
+            },
+            "name": "link-style-2634c798-12d3-4b59-9940-f0e024293b01",
+            "label": "Link Style from Figma",
+            "_id": "67cea87d42754485adefb87c"
+          },
+          {
+            "style": {
+              "link": {
+                "textColor": "E5E5E564",
+                "type": "Solid",
+                "color": "E5E5E564",
+                "size": 2,
+                "padding": -4
+              },
+              "hover": {
+                "textColor": "E5E5E564",
+                "type": "Solid",
+                "color": "E5E5E564",
+                "size": 2,
+                "padding": -4
+              },
+              "current": {
+                "textColor": "00000064",
+                "type": "Solid",
+                "color": "00000064",
+                "size": 1,
+                "padding": 0
+              }
+            },
+            "name": "link-style-d631c7b7-6f83-4f14-9092-5efdbdd2564a",
+            "label": "New Style",
+            "_id": "67d7eaf59c270f5677ac5637"
+          },
+          {
+            "style": {
+              "link": {
+                "textColor": "E5E5E564",
+                "type": "Solid",
+                "color": "E5E5E564",
+                "size": 1,
+                "padding": 0
+              },
+              "hover": {
+                "textColor": "E5E5E550",
+                "type": "Solid",
+                "color": "E5E5E564",
+                "size": 1,
+                "padding": 0
+              },
+              "current": {
+                "textColor": "00000064",
+                "type": "Solid",
+                "color": "00000064",
+                "size": 1,
+                "padding": 0
+              }
+            },
+            "name": "link-style-83e48a70-91cb-4a88-9c99-a1b252fc468d",
+            "label": "mob-card-link",
+            "_id": "6841afc9a2908fe7116e1610"
+          }
+        ]
+      },
+      "_id": "6839dbf5127591667af9b474",
+      "num_id": 5577714,
+      "__v": 0,
+      "aboveAllWidgets": [
+        {
+          "_id": "68396a901b75f56c88743af2",
+          "wid": "68396a901b75f56c88743af2",
+          "mag_num_id": 5577714,
+          "type": "rmheader",
+          "x": 0,
+          "y": 0,
+          "w": 1304,
+          "h": 72,
+          "activeLink": "none",
+          "full_width_initial_w": 480,
+          "full_width_initial_x": 0,
+          "full_width_margin": 0,
+          "is_full_width": true,
+          "fixed_position": "n",
+          "is_above": true,
+          "is_global": true,
+          "z": 379,
+          "name": "",
+          "viewport_phone_portrait": {
+            "x": 0,
+            "y": -0.5,
+            "w": 320,
+            "h": 60,
+            "is_full_width": false,
+            "fixed_position": "n",
+            "z": 379,
+            "_z": [
+              {
+                "pid": "68396a901b75f56c88743ad5",
+                "value": 379
+              },
+              {
+                "pid": "default",
+                "value": 379
+              }
+            ]
+          },
+          "_z": [
+            {
+              "pid": "68396a901b75f56c88743ad5",
+              "value": 379
+            },
+            {
+              "pid": "default",
+              "value": 379
+            }
+          ],
+          "__v": 0
+        }
+      ],
+      "allow_iframe_embed": false,
+      "categories": [],
+      "changed": false,
+      "copyStatus": "finished",
+      "coverPid": "68396a901b75f56c88743ad5",
+      "creation_date": "2025-05-30T08:21:36.774Z",
+      "description": "Join us in Milan on June 26 and hear from Readymag ambassadors and team",
+      "desktopWidth": 1440,
+      "edit_params": {
+        "fonts": [
+          {
+            "provider": "system",
+            "css_name": "Arial",
+            "name": "Arial",
+            "variations": [
+              "n4",
+              "i4",
+              "n7",
+              "i7"
+            ]
+          },
+          {
+            "provider": "system",
+            "css_name": "Courier New",
+            "name": "Courier New",
+            "variations": [
+              "n4",
+              "i4",
+              "n7",
+              "i7"
+            ]
+          },
+          {
+            "provider": "system",
+            "css_name": "Georgia",
+            "name": "Georgia",
+            "variations": [
+              "n4",
+              "i4",
+              "n7",
+              "i7"
+            ]
+          },
+          {
+            "provider": "system",
+            "css_name": "Times New Roman",
+            "name": "Times New Roman",
+            "variations": [
+              "n4",
+              "i4",
+              "n7",
+              "i7"
+            ]
+          },
+          {
+            "provider": "system",
+            "css_name": "Trebuchet MS",
+            "name": "Trebuchet MS",
+            "variations": [
+              "n4",
+              "i4",
+              "n7",
+              "i7"
+            ]
+          },
+          {
+            "provider": "system",
+            "css_name": "Verdana",
+            "name": "Verdana",
+            "variations": [
+              "n4",
+              "i4",
+              "n7",
+              "i7"
+            ]
+          },
+          {
+            "provider": "system",
+            "css_name": "Tahoma",
+            "name": "Tahoma",
+            "variations": [
+              "n4",
+              "n7"
+            ]
+          },
+          {
+            "name": "Px Grotesk",
+            "css_name": "custom_125029",
+            "css_url": "/api/fonts/67165444e6a4569464a253c4/css",
+            "variations": [
+              "n4"
+            ],
+            "provider": "custom",
+            "is_personal": true,
+            "_id": "67165444e6a4569464a253c4",
+            "external_css": false,
+            "hidden": true,
+            "users": [
+              "50dad5df6b52d70000000006"
+            ]
+          },
+          {
+            "name": "Px",
+            "css_name": "custom_132147",
+            "css_url": "/api/fonts/677ba56f4a73b0fc7369b7c0/css",
+            "variations": [
+              "n4"
+            ],
+            "provider": "custom",
+            "is_personal": true,
+            "_id": "677ba56f4a73b0fc7369b7c0",
+            "external_css": false,
+            "hidden": true,
+            "users": [
+              "50dad5df6b52d70000000006"
+            ]
+          },
+          {
+            "name": "Inter Display",
+            "css_name": "custom_137669",
+            "css_url": "/api/fonts/67b5b5d702a9b25e2d267a27/css",
+            "variations": [
+              "n4",
+              "n5",
+              "n6",
+              "n7",
+              "n8",
+              "n9"
+            ],
+            "provider": "custom",
+            "is_personal": true,
+            "_id": "67b5b5d702a9b25e2d267a27",
+            "external_css": false,
+            "hidden": true,
+            "users": [
+              "50dad5df6b52d70000000006"
+            ]
+          }
+        ],
+        "paragraph_styles": [],
+        "link_styles": []
+      },
+      "first_published": "2025-05-30T16:25:25.284Z",
+      "folder": "68d0ed410b36d9f3c4a1709e",
+      "globalWidgets": [],
+      "hasSummary": true,
+      "hasTextWidgetsV3": true,
+      "hasWidgetsWithVerticalOnscrollAnimation": false,
+      "hasYoutube": false,
+      "isArchived": false,
+      "isPrivatePages": false,
+      "isPublishedAsTemplate": false,
+      "is_mag_use_minimal_viewport": true,
+      "is_mag_use_page_order": true,
+      "is_private": false,
+      "is_published": true,
+      "last_changed": "2026-09-17T10:44:00.974Z",
+      "last_published": "2025-05-30T16:25:25.284Z",
+      "likers": [],
+      "master_share_pid": "68396a901b75f56c88743ad5",
+      "pages": [
+        {
+          "seo": {
+            "title": "",
+            "description": "",
+            "keywords": ""
+          },
+          "custom_shares": {
+            "title": "Readymag in Milan",
+            "description": "Join us in Milan on June 26 and hear from Readymag ambassadors and team",
+            "image": "https://c-p.rmcdn.net/67692731b91ef9dcf7e7bad0/Image-648878fa-b0e9-40cd-9c1e-65ea235370ec.jpg",
+            "tweet": "Readymag in Milan"
+          },
+          "_id": "68396a901b75f56c88743ad5",
+          "mid": "68396a901b75f56c88743ad0",
+          "wids": [
+            "68396a901b75f56c88743ad8",
+            "68396a901b75f56c88743ad9",
+            "68396a901b75f56c88743ada",
+            "68396a901b75f56c88743adb",
+            "68396a901b75f56c88743adc",
+            "68396a901b75f56c88743add",
+            "68396a901b75f56c88743ade",
+            "68396a901b75f56c88743adf",
+            "68396a901b75f56c88743ae0",
+            "68396a901b75f56c88743ae2",
+            "68396a901b75f56c88743ae4",
+            "68396a901b75f56c88743ae5",
+            "68396a901b75f56c88743ae6",
+            "68396a901b75f56c88743ae7",
+            "68396a901b75f56c88743ae8",
+            "68396a901b75f56c88743ae9",
+            "68396a901b75f56c88743aea",
+            "68396a901b75f56c88743aeb",
+            "68396a901b75f56c88743aec",
+            "68396a901b75f56c88743aed",
+            "68396a901b75f56c88743aee",
+            "68396a901b75f56c88743aef",
+            "68396a901b75f56c88743af1",
+            "68396a901b75f56c88743af2",
+            "68396a901b75f56c88743af3",
+            "68396a901b75f56c88743af4",
+            "68396a901b75f56c88743af5",
+            "68396a901b75f56c88743b03",
+            "68396a901b75f56c88743b04",
+            "68396a901b75f56c88743b05",
+            "68396a901b75f56c88743b11",
+            "68396a901b75f56c88743b17",
+            "6839a32cd108a36054eead6d",
+            "6839a59b5f9806e462b2cd12",
+            "6839a59b973efe0e9f326f7a",
+            "6839a59cf90be58af2eb41f4",
+            "6839a59c52ff320c2dd7aae9",
+            "6839a59c276b5521bc696730",
+            "6839ad874df3c40d164891c6",
+            "6839af29f4d7291860296b24",
+            "6839afbf635082645f554f1d",
+            "6839b2ec75e545b0d05a5c54",
+            "6839b2ec2213bdcecf86b6a0",
+            "6839b2ecbfa126d0e3a93a20",
+            "6839d69c2b8e7d32e35c98e5",
+            "6839d77be2b9b2a7d643cc6c",
+            "6839d77b4d772b619226bf9f",
+            "6839d77bf12413edfbc22d6f",
+            "6839d94965b796a97ff84b53",
+            "6839da7b2b8e7d32e35d5b6c",
+            "68556d2537fbbdd868d4c6a9",
+            "68556d32670cf01c0049557b",
+            "68556e8b03ae804461bc9382",
+            "68556ec6a2786196aca6e706",
+            "68556ec6670cf01c0049934a",
+            "68556ec724bb0865e71568cb",
+            "68556f5678afc342bcdae102",
+            "6855729f24bb0865e7160a7f",
+            "68f34e7da9773b9b6303cb21"
+          ],
+          "num": 1,
+          "type": "scroll",
+          "height": 3619,
+          "uri": "",
+          "hidden": false,
+          "isPrivate": false,
+          "sectionscroll": false,
+          "used_autolayout": false,
+          "viewport_phone_portrait": {
+            "enabled": true,
+            "height": 4635,
+            "type": "scroll",
+            "screenshot": "https://c-p.rmcdn.net/50dad5df6b52d70000000006/5577714/Screenshot-df221241-d5ce-4007-8097-3c0fea758ccd.jpg"
+          },
+          "arrows_color": "white",
+          "num_id": 26246185,
+          "parentPage": null,
+          "screenshot": "https://c-p.rmcdn.net/50dad5df6b52d70000000006/5577714/Screenshot-fbd79ade-fb37-4175-a254-89d5c0a14157_readyscr.jpg",
+          "children": [],
+          "pagePath": "1",
+          "pageNestedNum": "1",
+          "htmlUrl": "https://c-p.rmcdn.net/50dad5df6b52d70000000006/5577714/HtmlSnippet-ab91b2dd-9b36-41ca-8724-03fbd6447da6.html"
+        }
+      ],
+      "pages_count": 1,
+      "pass_last_changed": "2025-05-30T16:27:49.378Z",
+      "phoneWidth": 320,
+      "prevPubVersionId": "68f34ec8a9773b9b6303ed44",
+      "published": "2025-05-30T16:25:25.284Z",
+      "selected_for_featured": 0,
+      "setForRemoval": false,
+      "showAsNew": false,
+      "submitted_for_featured": 0,
+      "tags": [],
+      "title": "Readymag in Milan",
+      "updated": "2026-09-17T10:44:01.246Z",
+      "uri": "milan",
+      "usedWidgetTypes": [
+        "background",
+        "shape",
+        "text",
+        "form",
+        "rmheader",
+        "picture",
+        "rmfooter"
+      ],
+      "used_custom_fonts": [
+        "custom_132147",
+        "custom_137669",
+        "custom_125029"
+      ],
+      "used_google_fonts": [],
+      "used_typekit_fonts": [],
+      "used_typetoday_fonts": [],
+      "used_webtype_fonts": [],
+      "user": {
+        "_id": "50dad5df6b52d70000000006",
+        "num_id": 2,
+        "ua": "UA-110571495-2",
+        "uri": "readymag",
+        "permissions": {
+          "can_make_mag_private_by_email": false,
+          "can_use_analytics": true,
+          "must_show_branding": false,
+          "can_use_gtm": true,
+          "white_label": true,
+          "can_use_custom_analytics": false,
+          "can_use_beta_testing": true,
+          "can_use_e_commerce": true,
+          "can_use_forms_file_upload": true,
+          "forms_file_upload_limit": 31457280,
+          "forms_file_upload_count": 10,
+          "allow_index": true,
+          "can_use_iframe": true
+        }
+      },
+      "version": 2,
+      "widgetAddCounter": 144,
+      "hasAnimations": true,
+      "usedAnimationTypes": {
+        "hover": true,
+        "load": true
+      },
+      "analytics_data": {
+        "pass_last_removed": "2025-06-02T08:41:53.144Z"
+      },
+      "cover": "https://c-p.rmcdn.net/50dad5df6b52d70000000006/5577714/Screenshot-fbd79ade-fb37-4175-a254-89d5c0a14157_readyscr.jpg",
+      "is_trusted_gtm": true,
+      "isInternal": true,
+      "templateSet": null
+    }
+  },
+  "userPermissions": {
+    "can_make_mag_private_by_email": false,
+    "can_use_analytics": true,
+    "must_show_branding": false,
+    "can_use_gtm": true,
+    "white_label": true,
+    "can_use_custom_analytics": false,
+    "can_use_beta_testing": true,
+    "can_use_e_commerce": true,
+    "can_use_forms_file_upload": true,
+    "forms_file_upload_limit": 31457280,
+    "forms_file_upload_count": 10,
+    "allow_index": true,
+    "can_use_iframe": true
+  },
+  "stripe_live": true,
+  "fonts": {
+    "webtype": "/api/fonts/webtype/css",
+    "typetoday": "/api/fonts/typetoday/css",
+    "google": []
+  },
+  "featureFlags": {
+    "experiment.subscriptionAddons": true,
+    "widget.anomalyMonitoring": false,
+    "constructor.onboardingSurvey": false,
+    "viewer.nextPreview": false,
+    "viewer.monitorForLoopBlocks": false,
+    "billing.localCurrency": {
+      "name": "disabled",
+      "enabled": false
+    },
+    "constructor.onboardingSurveyAfter15MinInEditor": false,
+    "constructor.onboardingSurveyLearnPanelToYoutube": false,
+    "constructor.activateNewStackPanel": false,
+    "widget.putNotPatch": true,
+    "viewer.nextCaching": true,
+    "constructor.onboardingSurveyLearnPanelToHelp": false,
+    "constructor.onboardingSurveyProductTourComplete": false,
+    "constructor.deselectWidgetOnEsc": false,
+    "constructor.onboardingSurveyProductTourIncomplete": false,
+    "widget.viewportProxyNoUnsetEqual": true,
+    "integration.emailProvider.postmark": true,
+    "promo.blackFriday": false,
+    "integration.entriSellVersionV3": false,
+    "viewer.nextSwitcher": true,
+    "constructor.disableViewportBackgroundCascading": true,
+    "constructor.borderAlwaysVisible": true,
+    "viewer.figmaPluginMentions": true,
+    "widget.transactionalRasterize": true,
+    "homepage.blackFriday": false,
+    "promo.cyberMonday": false,
+    "integration.emailProvider.database": false,
+    "constructor.guidesPerUser": true,
+    "viewer.brokenLegacyWidget": true,
+    "widget.fixMobileImageStretch": true,
+    "experiment.2503tourVsVideo": {
+      "name": "disabled",
+      "enabled": false
+    },
+    "homepage.cyberMonday": false,
+    "constructor.viewportMinimal": true,
+    "constructor.omitPacksDuringMagSaving": true,
+    "viewer.renderThreads": true,
+    "experiment.drop2025": false,
+    "constructor.mobileBrokenChange": false,
+    "viewer.paintGlassToolbar": true,
+    "constructor.limitGroupSaves": true,
+    "experiment.billingV2_address": true,
+    "constructor.ai": false,
+    "experiment.personalPriceIncrease": {
+      "name": "new",
+      "enabled": true
+    },
+    "experiment.homepageABTest": {
+      "name": "control",
+      "payload": {
+        "type": "string",
+        "value": "50"
+      },
+      "enabled": true
+    },
+    "viewer.frontChat": false,
+    "constructor.xFrameHeaders": false,
+    "experiment.businessToAdvancedTitle": {
+      "name": "yes",
+      "enabled": true
+    },
+    "widget.formTimestamp": true,
+    "viewer.identicalCanonical": true,
+    "experiment.pricingRedesign": {
+      "name": "new",
+      "enabled": true
+    },
+    "experiment.mainStorytelling": {
+      "name": "disabled",
+      "enabled": false
+    },
+    "promo.templatesWebinar": false,
+    "constructor.newUploadLimits": true,
+    "sales.drop2025": false,
+    "constructor.styleSizesPreview": true,
+    "constructor.optimizeFullMag": true,
+    "constructor.saveMixedGroup": true,
+    "integration.firstpromoterScript": true,
+    "constructor.globalFeature": true,
+    "viewer.OptimizeEcwidCheckout": true,
+    "viewer.next": false,
+    "experiment.freelancerPriceIncrease": {
+      "name": "new",
+      "enabled": true
+    },
+    "constructor.activateWidgetCreationSyncInTeamwork": true,
+    "integration.emailProvider.bounceHandling": true,
+    "sales.summer2025": false
+  },
+  "isCountryInEU": false,
+  "config": {
+    "isProd": true,
+    "isProdBuild": true,
+    "stripe_live": true,
+    "STRIPE_TEST_PUBLIC_KEY": "pk_test_jUUcZjJTPacN2s7Bs6j2F0Va",
+    "STRIPE_LIVE_PUBLIC_KEY": "pk_live_4WmkUqmpy589CuOX7zOhAnU3",
+    "fontslist_short": "//st-p.rmcdn.net/fonts/fontslist_short.json",
+    "fontslist": "//st-p.rmcdn.net/fonts/fontslist.json",
+    "fontsimgs": "//st-p.rmcdn.net/fonts/",
+    "readymag_host": "https://readymag.com",
+    "readymag_viewer_host": "https://readymag.website",
+    "readymag_sockets_host": "sockets.readymag.com",
+    "readymag_auth_host": "https://my.readymag.com",
+    "readymag_auth_next_host": "https://auth-next.readymag.com",
+    "readymag_embed_host": "https://embed.readymag.com",
+    "readymag_lambda_host": "https://i-p.rmcdn.net",
+    "readymag_videos_cdn": "https://v-p.rmcdn.net",
+    "readymag_video_files_origin": "https://v-p.rmcdn1.net",
+    "readymag_assets_cdn": "https://st-p.rmcdn.net",
+    "content_cdn_origin": "c-p.rmcdn.net",
+    "favicon": {
+      "default": "/dist/img/favicons/favicon.ico",
+      "touch": "/dist/img/favicons/apple-touch-icon-precomposed.png",
+      "touch_144": "/dist/img/favicons/apple-touch-icon-144x144-precomposed.png",
+      "touch_114": "/dist/img/favicons/apple-touch-icon-114x114-precomposed.png",
+      "touch_72": "/dist/img/favicons/apple-touch-icon-72x72-precomposed.png"
+    },
+    "GA_ID": "UA-110571495-2",
+    "GA4_ID": "G-4MHCHDVPXV",
+    "GOOGLE_ADS_ID": "AW-963910923",
+    "GOOGLE_CONVERSION_LABEL_REGISTRATION": "iGBtCP76u9QDEIu60MsD",
+    "GTM_ID": "GTM-NPR9HT7",
+    "GOOGLE_OPTIMIZE_ID": "GTM-PTJ6HZR",
+    "linkedInPartnerId": "4866241",
+    "fbPixelId": "1449790745970690",
+    "openaiPixelId": "9t6gHYrFzVMMV1LWB7GPDC",
+    "spotifyPixelId": "179d0ff6f1c347beb35d2d67eb8f2419",
+    "BREVO_CLIENT_KEY": "pis323wd6v6x2e3scccjdm2a",
+    "TIKTOK_PIXEL_ID": "CQMAT8BC77U3Q8QKJ06G",
+    "TIKTOK_PIXEL_US_ID": "CVILVC3C77U1BR7NA8DG",
+    "ampId": "bef553e84dfb01a0da595c3a636436f6",
+    "productVisitZones": [
+      "profile",
+      "public",
+      "editor"
+    ],
+    "FACEBOOK_APP_ID": "955357184504374",
+    "FACEBOOK_API_VERSION": "2.3",
+    "FACEBOOK_PIXEL_ID": "166690417336028",
+    "SOUNDCLOUD_API": "73d56f812402c7229878245f61a366fb",
+    "SUPPORT_MAIL": "support@readymag.com",
+    "HELLO_MAIL": "hello@readymag.com",
+    "EDU_MAIL": "edu@readymag.com",
+    "NOREPLY_MAIL": "no-reply@readymag.com",
+    "FORMS_ACCEPTED_MIMES": [
+      "image/*",
+      "video/*",
+      "audio/*",
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.oasis.opendocument.text",
+      "application/vnd.oasis.opendocument.presentation",
+      "application/vnd.oasis.opendocument.spreadsheet",
+      "application/vnd.ms-powerpoint",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "application/vnd.ms-excel",
+      "application/x-iwork-keynote-sffkey",
+      "application/x-iwork-pages-sffpages",
+      "application/x-iwork-numbers-sffnumbers"
+    ],
+    "RECAPTCHA_SITEKEY": "6Ld0r_cZAAAAAFKkweesCokUIuWgfYUIORFV0Xfj",
+    "RELEASE": "436e810b",
+    "featureFlags": {
+      "experiment.subscriptionAddons": true,
+      "widget.anomalyMonitoring": false,
+      "constructor.onboardingSurvey": false,
+      "viewer.nextPreview": false,
+      "viewer.monitorForLoopBlocks": false,
+      "billing.localCurrency": {
+        "name": "disabled",
+        "enabled": false
+      },
+      "constructor.onboardingSurveyAfter15MinInEditor": false,
+      "constructor.onboardingSurveyLearnPanelToYoutube": false,
+      "constructor.activateNewStackPanel": false,
+      "widget.putNotPatch": true,
+      "viewer.nextCaching": true,
+      "constructor.onboardingSurveyLearnPanelToHelp": false,
+      "constructor.onboardingSurveyProductTourComplete": false,
+      "constructor.deselectWidgetOnEsc": false,
+      "constructor.onboardingSurveyProductTourIncomplete": false,
+      "widget.viewportProxyNoUnsetEqual": true,
+      "integration.emailProvider.postmark": true,
+      "promo.blackFriday": false,
+      "integration.entriSellVersionV3": false,
+      "viewer.nextSwitcher": true,
+      "constructor.disableViewportBackgroundCascading": true,
+      "constructor.borderAlwaysVisible": true,
+      "viewer.figmaPluginMentions": true,
+      "widget.transactionalRasterize": true,
+      "homepage.blackFriday": false,
+      "promo.cyberMonday": false,
+      "integration.emailProvider.database": false,
+      "constructor.guidesPerUser": true,
+      "viewer.brokenLegacyWidget": true,
+      "widget.fixMobileImageStretch": true,
+      "experiment.2503tourVsVideo": {
+        "name": "disabled",
+        "enabled": false
+      },
+      "homepage.cyberMonday": false,
+      "constructor.viewportMinimal": true,
+      "constructor.omitPacksDuringMagSaving": true,
+      "viewer.renderThreads": true,
+      "experiment.drop2025": false,
+      "constructor.mobileBrokenChange": false,
+      "viewer.paintGlassToolbar": true,
+      "constructor.limitGroupSaves": true,
+      "experiment.billingV2_address": true,
+      "constructor.ai": false,
+      "experiment.personalPriceIncrease": {
+        "name": "new",
+        "enabled": true
+      },
+      "experiment.homepageABTest": {
+        "name": "control",
+        "payload": {
+          "type": "string",
+          "value": "50"
+        },
+        "enabled": true
+      },
+      "viewer.frontChat": false,
+      "constructor.xFrameHeaders": false,
+      "experiment.businessToAdvancedTitle": {
+        "name": "yes",
+        "enabled": true
+      },
+      "widget.formTimestamp": true,
+      "viewer.identicalCanonical": true,
+      "experiment.pricingRedesign": {
+        "name": "new",
+        "enabled": true
+      },
+      "experiment.mainStorytelling": {
+        "name": "disabled",
+        "enabled": false
+      },
+      "promo.templatesWebinar": false,
+      "constructor.newUploadLimits": true,
+      "sales.drop2025": false,
+      "constructor.styleSizesPreview": true,
+      "constructor.optimizeFullMag": true,
+      "constructor.saveMixedGroup": true,
+      "integration.firstpromoterScript": true,
+      "constructor.globalFeature": true,
+      "viewer.OptimizeEcwidCheckout": true,
+      "viewer.next": false,
+      "experiment.freelancerPriceIncrease": {
+        "name": "new",
+        "enabled": true
+      },
+      "constructor.activateWidgetCreationSyncInTeamwork": true,
+      "integration.emailProvider.bounceHandling": true,
+      "sales.summer2025": false
+    },
+    "statsigBootstrap": {
+      "feature_gates": {
+        "freelancer_trial_ending": {
+          "name": "freelancer_trial_ending",
+          "rule_id": "default",
+          "secondary_exposures": [],
+          "id_type": "userID",
+          "value": false
+        },
+        "birthday_drop_2026": {
+          "name": "birthday_drop_2026",
+          "rule_id": "64dIo7Satx6Od547qTnH7x:0.00:2",
+          "secondary_exposures": [],
+          "id_type": "stableID",
+          "value": false
+        },
+        "freelancer_trial": {
+          "name": "freelancer_trial",
+          "rule_id": "disabled",
+          "secondary_exposures": [],
+          "id_type": "userID",
+          "value": false
+        },
+        "30off_14_19d_eligible": {
+          "name": "30off_14_19d_eligible",
+          "rule_id": "disabled",
+          "secondary_exposures": [],
+          "id_type": "userID",
+          "value": false
+        }
+      },
+      "dynamic_configs": {
+        "main_page-1st_sept_2026": {
+          "name": "main_page-1st_sept_2026",
+          "rule_id": "inlineTargetingRules",
+          "secondary_exposures": [],
+          "id_type": "stableID",
+          "value": {},
+          "is_device_based": true,
+          "is_experiment_active": false,
+          "is_user_in_experiment": false
+        },
+        "warm_welcome": {
+          "name": "warm_welcome",
+          "rule_id": "inlineTargetingRules",
+          "secondary_exposures": [],
+          "id_type": "userID",
+          "value": {},
+          "is_device_based": false,
+          "is_experiment_active": true,
+          "is_user_in_experiment": false
+        },
+        "test-tast": {
+          "name": "test-tast",
+          "rule_id": "default",
+          "secondary_exposures": [],
+          "id_type": "userID",
+          "value": {
+            "lorem": "ipsum"
+          },
+          "is_device_based": false,
+          "passed": false
+        },
+        "fourth_mainpage_exp": {
+          "name": "fourth_mainpage_exp",
+          "rule_id": "launchedGroup",
+          "secondary_exposures": [],
+          "id_type": "stableID",
+          "value": {
+            "group": "control"
+          },
+          "is_device_based": true,
+          "group_name": "Control",
+          "is_experiment_active": false,
+          "is_user_in_experiment": false
+        },
+        "dynamic-exp": {
+          "name": "dynamic-exp",
+          "rule_id": "default",
+          "secondary_exposures": [],
+          "id_type": "stableID",
+          "value": {
+            "timeout_ms": 3000,
+            "label": "8888888"
+          },
+          "is_device_based": true,
+          "passed": false
+        },
+        "rm_new-exp": {
+          "name": "rm_new-exp",
+          "rule_id": "prestart",
+          "secondary_exposures": [],
+          "id_type": "stableID",
+          "value": {},
+          "is_device_based": true,
+          "is_experiment_active": false,
+          "is_user_in_experiment": false
+        },
+        "config_birthday_drop_2026": {
+          "name": "config_birthday_drop_2026",
+          "rule_id": "default",
+          "secondary_exposures": [
+            {
+              "gate": "birthday_drop_2026",
+              "gateValue": "false",
+              "ruleID": "64dIo7Satx6Od547qTnH7x:0.00:2"
+            }
+          ],
+          "id_type": "stableID",
+          "value": {},
+          "is_device_based": true,
+          "passed": false
+        }
+      },
+      "layer_configs": {},
+      "time": 1792587875570,
+      "has_updates": true,
+      "hash_used": "none",
+      "user": {
+        "customIDs": {
+          "stableID": "77276171-8796-4025-b486-dd84d62718a2"
+        },
+        "ip": "66.249.91.194",
+        "userAgent": "Google-Jetski-Antigravity",
+        "custom": {
+          "has_rm_device_id": "false",
+          "fourth_mainpage_enrolled": "false",
+          "deviceTs": 1793067065163,
+          "country": "US",
+          "hasCompletedProfile": "false",
+          "third_mainpage_enrolled": "false"
+        },
+        "statsigEnvironment": {
+          "tier": "production"
+        }
+      },
+      "sdkInfo": {
+        "sdkType": "statsig-server-core-node",
+        "sdkVersion": "0.19.8",
+        "sessionId": "d08f85e1-126a-4d8d-8516-48f6378ca73e"
+      },
+      "sdkParams": {},
+      "evaluated_keys": {
+        "customIDs": {
+          "stableID": "77276171-8796-4025-b486-dd84d62718a2"
+        }
+      },
+      "param_stores": {
+        "test-test": {
+          "tmp": {
+            "name": "tmp",
+            "ref_type": "static",
+            "param_type": "string",
+            "value": "LOREM"
+          }
+        }
+      },
+      "can_record_session": true,
+      "session_recording_rate": 1,
+      "recording_blocked": false,
+      "session_recording_privacy_settings": {
+        "privacy_mode": "min"
+      }
+    },
+    "statsigClientKey": "client-tTWtVWrqp9KZasoIL0fVh3VLaBAxiUw9cm1BZzO1VeC",
+    "visitorCurrency": "usd"
+  }
+}

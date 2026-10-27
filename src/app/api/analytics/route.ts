@@ -33,11 +33,11 @@ export async function GET(req: Request) {
       orderBy: { timestamp: "asc" },
     });
 
-    const pageviews = events.filter((e) => e.eventType === "page_view").length;
-    const uniqueSessions = new Set(events.map((e) => e.sessionId)).size;
-    const ctaClicks = events.filter((e) => e.eventType === "cta_click").length;
-    const formStarts = events.filter((e) => e.eventType === "idea_form_start").length;
-    const formSubmissions = events.filter((e) => e.eventType === "idea_form_submit").length;
+    const pageviews = events.filter((e: any) => e.eventType === "page_view").length;
+    const uniqueSessions = new Set(events.map((e: any) => e.sessionId)).size;
+    const ctaClicks = events.filter((e: any) => e.eventType === "cta_click").length;
+    const formStarts = events.filter((e: any) => e.eventType === "idea_form_start").length;
+    const formSubmissions = events.filter((e: any) => e.eventType === "idea_form_submit").length;
 
     const conversionRate = formStarts > 0 ? ((formSubmissions / formStarts) * 100).toFixed(1) : "0.0";
 
@@ -45,7 +45,7 @@ export async function GET(req: Request) {
     const sectionCounts: Record<string, number> = {};
     const deviceCounts: Record<string, number> = { desktop: 0, mobile: 0, tablet: 0 };
 
-    for (const e of events) {
+    for (const e of events as any[]) {
       if (e.sectionId) {
         sectionCounts[e.sectionId] = (sectionCounts[e.sectionId] || 0) + 1;
       }
