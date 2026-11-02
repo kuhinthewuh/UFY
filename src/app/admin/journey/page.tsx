@@ -6,9 +6,11 @@ import JourneyAdminClient from "./JourneyAdminClient";
 export const dynamic = "force-dynamic";
 
 export default async function AdminJourneyPage() {
-  const nodes = await prisma.journeyNode.findMany({
-    orderBy: { displayOrder: "asc" },
-  });
+  const nodes = await prisma.journeyNode
+    .findMany({
+      orderBy: { displayOrder: "asc" },
+    })
+    .catch(() => []);
 
   return (
     <div>

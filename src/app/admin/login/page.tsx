@@ -2,12 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Lock, ArrowRight, ShieldCheck, AlertCircle, ArrowLeft } from "lucide-react";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState("admin@ufy.org");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -29,8 +27,7 @@ export default function AdminLoginPage() {
         throw new Error(data.error || "Authentication failed");
       }
 
-      router.push("/admin/overview");
-      router.refresh();
+      window.location.href = "/admin/overview";
     } catch (err: any) {
       setError(err.message || "Failed to sign in. Please verify your credentials.");
     } finally {
@@ -133,8 +130,9 @@ export default function AdminLoginPage() {
               id="admin-email"
               type="email"
               required
+              autoComplete="email"
               className="form-input"
-              placeholder="admin@ufy.org"
+              placeholder="Enter your admin email..."
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />

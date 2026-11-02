@@ -6,9 +6,11 @@ import ImpactAdminClient from "./ImpactAdminClient";
 export const dynamic = "force-dynamic";
 
 export default async function AdminImpactPage() {
-  const metrics = await prisma.impactMetric.findMany({
-    orderBy: { displayOrder: "asc" },
-  });
+  const metrics = await prisma.impactMetric
+    .findMany({
+      orderBy: { displayOrder: "asc" },
+    })
+    .catch(() => []);
 
   return (
     <div>

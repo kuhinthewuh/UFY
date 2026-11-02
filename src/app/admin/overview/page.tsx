@@ -21,55 +21,76 @@ import {
 export const dynamic = "force-dynamic";
 
 async function getOverviewData() {
-  const [
-    teamCount,
-    programsCount,
-    ideasTotal,
-    ideasNew,
-    journeyCount,
-    impactCount,
-    galleryCount,
-    videosCount,
-    volunteersCount,
-    lettersTotal,
-    lettersPendingHours,
-    latestIdeas,
-    settings,
-  ] = await Promise.all([
-    prisma.teamMember.count({ where: { isPublished: true } }),
-    prisma.program.count({ where: { isPublished: true } }),
-    prisma.ideaSubmission.count(),
-    prisma.ideaSubmission.count({ where: { status: "NEW" } }),
-    prisma.journeyNode.count(),
-    prisma.impactMetric.count(),
-    prisma.galleryPhoto.count(),
-    prisma.educationalVideo.count(),
-    prisma.volunteer.count(),
-    prisma.affirmationLetter.count(),
-    prisma.affirmationLetter.count({ where: { hoursStatus: "PENDING" } }),
-    prisma.ideaSubmission.findMany({
-      take: 4,
-      orderBy: { createdAt: "desc" },
-    }),
-    prisma.siteSettings.findUnique({ where: { id: "global" } }),
-  ]);
+  try {
+    const [
+      teamCount,
+      programsCount,
+      ideasTotal,
+      ideasNew,
+      journeyCount,
+      impactCount,
+      galleryCount,
+      videosCount,
+      volunteersCount,
+      lettersTotal,
+      lettersPendingHours,
+      latestIdeas,
+      settings,
+    ] = await Promise.all([
+      prisma.teamMember.count({ where: { isPublished: true } }).catch(() => 0),
+      prisma.program.count({ where: { isPublished: true } }).catch(() => 0),
+      prisma.ideaSubmission.count().catch(() => 0),
+      prisma.ideaSubmission.count({ where: { status: "NEW" } }).catch(() => 0),
+      prisma.journeyNode.count().catch(() => 0),
+      prisma.impactMetric.count().catch(() => 0),
+      prisma.galleryPhoto.count().catch(() => 0),
+      prisma.educationalVideo.count().catch(() => 0),
+      prisma.volunteer.count().catch(() => 0),
+      prisma.affirmationLetter.count().catch(() => 0),
+      prisma.affirmationLetter.count({ where: { hoursStatus: "PENDING" } }).catch(() => 0),
+      prisma.ideaSubmission
+        .findMany({
+          take: 4,
+          orderBy: { createdAt: "desc" },
+        })
+        .catch(() => []),
+      prisma.siteSettings.findUnique({ where: { id: "global" } }).catch(() => null),
+    ]);
 
-  return {
-    teamCount,
-    programsCount,
-    ideasTotal,
-    ideasNew,
-    journeyCount,
-    impactCount,
-    galleryCount,
-    videosCount,
-    educatedCount: settings?.videosEducatedCount ?? 0,
-    volunteersCount,
-    lettersTotal,
-    lettersPendingHours,
-    latestIdeas,
-    settings,
-  };
+    return {
+      teamCount,
+      programsCount,
+      ideasTotal,
+      ideasNew,
+      journeyCount,
+      impactCount,
+      galleryCount,
+      videosCount,
+      educatedCount: settings?.videosEducatedCount ?? 0,
+      volunteersCount,
+      lettersTotal,
+      lettersPendingHours,
+      latestIdeas,
+      settings,
+    };
+  } catch {
+    return {
+      teamCount: 0,
+      programsCount: 0,
+      ideasTotal: 0,
+      ideasNew: 0,
+      journeyCount: 0,
+      impactCount: 0,
+      galleryCount: 0,
+      videosCount: 0,
+      educatedCount: 0,
+      volunteersCount: 0,
+      lettersTotal: 0,
+      lettersPendingHours: 0,
+      latestIdeas: [],
+      settings: null,
+    };
+  }
 }
 
 export default async function AdminOverviewPage() {
