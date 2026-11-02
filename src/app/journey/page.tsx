@@ -17,10 +17,12 @@ export const metadata: Metadata = {
 export default async function JourneyPage() {
   const [{ settings, navItems }, nodes] = await Promise.all([
     getPublicChromeData(),
-    prisma.journeyNode.findMany({
-      where: { isPublished: true },
-      orderBy: { displayOrder: "asc" },
-    }),
+    prisma.journeyNode
+      .findMany({
+        where: { isPublished: true },
+        orderBy: { displayOrder: "asc" },
+      })
+      .catch(() => []),
   ]);
 
   const title = settings?.journeyTitle || "Our Community Journey";

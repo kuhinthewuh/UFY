@@ -18,25 +18,29 @@ export const metadata: Metadata = {
 export default async function VirtualLettersPage() {
   const [{ settings, navItems }, letters, volunteerSession] = await Promise.all([
     getPublicChromeData(),
-    prisma.affirmationLetter.findMany({
-      where: { status: "APPROVED" },
-      orderBy: { createdAt: "desc" },
-      take: 48,
-    }),
-    getCurrentVolunteer(),
+    prisma.affirmationLetter
+      .findMany({
+        where: { status: "APPROVED" },
+        orderBy: { createdAt: "desc" },
+        take: 48,
+      })
+      .catch(() => []),
+    getCurrentVolunteer().catch(() => null),
   ]);
 
   let currentVolunteer = null;
   if (volunteerSession) {
-    currentVolunteer = await prisma.volunteer.findUnique({
-      where: { id: volunteerSession.id },
-      select: {
-        id: true,
-        fullName: true,
-        email: true,
-        totalVerifiedHours: true,
-      },
-    });
+    currentVolunteer = await prisma.volunteer
+      .findUnique({
+        where: { id: volunteerSession.id },
+        select: {
+          id: true,
+          fullName: true,
+          email: true,
+          totalVerifiedHours: true,
+        },
+      })
+      .catch(() => null);
   }
 
   const title = settings?.lettersTitle || "Virtual Letters & Affirmations";

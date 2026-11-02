@@ -17,11 +17,13 @@ export const metadata: Metadata = {
 export default async function ProposePage() {
   const [{ settings, navItems }, acceptedIdeas] = await Promise.all([
     getPublicChromeData(),
-    prisma.ideaSubmission.findMany({
-      where: { status: "ACCEPTED" },
-      orderBy: { createdAt: "desc" },
-      take: 6,
-    }),
+    prisma.ideaSubmission
+      .findMany({
+        where: { status: "ACCEPTED" },
+        orderBy: { createdAt: "desc" },
+        take: 6,
+      })
+      .catch(() => []),
   ]);
 
   const inboxEmail = settings?.ufyInboxEmail || settings?.contactEmail || "ideas@upforyouth.org";

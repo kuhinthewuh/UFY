@@ -17,10 +17,12 @@ export const metadata: Metadata = {
 export default async function ImpactPage() {
   const [{ settings, navItems }, metrics] = await Promise.all([
     getPublicChromeData(),
-    prisma.impactMetric.findMany({
-      where: { isPublished: true },
-      orderBy: { displayOrder: "asc" },
-    }),
+    prisma.impactMetric
+      .findMany({
+        where: { isPublished: true },
+        orderBy: { displayOrder: "asc" },
+      })
+      .catch(() => []),
   ]);
 
   const title = settings?.impactTitle || "Our Community Impact";

@@ -1,20 +1,30 @@
 import prisma from "@/lib/prisma";
 
 export async function getPublicChromeData() {
-  const [settings, theme, navItems] = await Promise.all([
-    prisma.siteSettings.findUnique({ where: { id: "global" } }),
-    prisma.themeSettings.findUnique({ where: { id: "global" } }),
-    prisma.navigationItem.findMany({
-      where: { isVisible: true },
-      orderBy: { displayOrder: "asc" },
-    }),
-  ]);
+  try {
+    const [settings, theme, navItems] = await Promise.all([
+      prisma.siteSettings.findUnique({ where: { id: "global" } }).catch(() => null),
+      prisma.themeSettings.findUnique({ where: { id: "global" } }).catch(() => null),
+      prisma.navigationItem
+        .findMany({
+          where: { isVisible: true },
+          orderBy: { displayOrder: "asc" },
+        })
+        .catch(() => []),
+    ]);
 
-  return {
-    settings,
-    theme,
-    navItems,
-  };
+    return {
+      settings,
+      theme,
+      navItems,
+    };
+  } catch {
+    return {
+      settings: null,
+      theme: null,
+      navItems: [],
+    };
+  }
 }
 
 export function extractYoutubeId(url: string): string | null {

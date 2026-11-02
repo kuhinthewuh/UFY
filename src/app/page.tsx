@@ -7,32 +7,44 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   const [settings, theme, navItems, sections, programs, teamMembers, impactMetrics, featuredLetters] =
     await Promise.all([
-      prisma.siteSettings.findUnique({ where: { id: "global" } }),
-      prisma.themeSettings.findUnique({ where: { id: "global" } }),
-      prisma.navigationItem.findMany({
-        where: { isVisible: true },
-        orderBy: { displayOrder: "asc" },
-      }),
-      prisma.pageSection.findMany({
-        orderBy: { displayOrder: "asc" },
-      }),
-      prisma.program.findMany({
-        where: { isPublished: true },
-        orderBy: { displayOrder: "asc" },
-      }),
-      prisma.teamMember.findMany({
-        where: { isPublished: true },
-        orderBy: { displayOrder: "asc" },
-      }),
-      prisma.impactMetric.findMany({
-        where: { isPublished: true },
-        orderBy: { displayOrder: "asc" },
-      }),
-      prisma.affirmationLetter.findMany({
-        where: { status: "APPROVED", isFeaturedOnHome: true },
-        orderBy: { createdAt: "desc" },
-        take: 8,
-      }),
+      prisma.siteSettings.findUnique({ where: { id: "global" } }).catch(() => null),
+      prisma.themeSettings.findUnique({ where: { id: "global" } }).catch(() => null),
+      prisma.navigationItem
+        .findMany({
+          where: { isVisible: true },
+          orderBy: { displayOrder: "asc" },
+        })
+        .catch(() => []),
+      prisma.pageSection
+        .findMany({
+          orderBy: { displayOrder: "asc" },
+        })
+        .catch(() => []),
+      prisma.program
+        .findMany({
+          where: { isPublished: true },
+          orderBy: { displayOrder: "asc" },
+        })
+        .catch(() => []),
+      prisma.teamMember
+        .findMany({
+          where: { isPublished: true },
+          orderBy: { displayOrder: "asc" },
+        })
+        .catch(() => []),
+      prisma.impactMetric
+        .findMany({
+          where: { isPublished: true },
+          orderBy: { displayOrder: "asc" },
+        })
+        .catch(() => []),
+      prisma.affirmationLetter
+        .findMany({
+          where: { status: "APPROVED", isFeaturedOnHome: true },
+          orderBy: { createdAt: "desc" },
+          take: 8,
+        })
+        .catch(() => []),
     ]);
 
   const limit = settings?.teamDisplayCount || 6;

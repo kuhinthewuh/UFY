@@ -18,19 +18,21 @@ export const metadata: Metadata = {
 export default async function VolunteerPage() {
   const [{ settings, navItems }, session] = await Promise.all([
     getPublicChromeData(),
-    getCurrentVolunteer(),
+    getCurrentVolunteer().catch(() => null),
   ]);
 
   let initialVolunteer = null;
   if (session) {
-    const vol = await prisma.volunteer.findUnique({
-      where: { id: session.id },
-      include: {
-        letters: {
-          orderBy: { createdAt: "desc" },
+    const vol = await prisma.volunteer
+      .findUnique({
+        where: { id: session.id },
+        include: {
+          letters: {
+            orderBy: { createdAt: "desc" },
+          },
         },
-      },
-    });
+      })
+      .catch(() => null);
     if (vol) {
       const pendingHours = vol.letters
         .filter((l) => l.hoursStatus === "PENDING")

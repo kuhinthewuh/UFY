@@ -17,10 +17,12 @@ export const metadata: Metadata = {
 export default async function TeamPage() {
   const [{ settings, theme, navItems }, members] = await Promise.all([
     getPublicChromeData(),
-    prisma.teamMember.findMany({
-      where: { isPublished: true },
-      orderBy: { displayOrder: "asc" },
-    }),
+    prisma.teamMember
+      .findMany({
+        where: { isPublished: true },
+        orderBy: { displayOrder: "asc" },
+      })
+      .catch(() => []),
   ]);
 
   const title = settings?.teamTitle || "Meet Our Youth Leaders";

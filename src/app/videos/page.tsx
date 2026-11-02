@@ -17,10 +17,12 @@ export const metadata: Metadata = {
 export default async function EducationalVideosPage() {
   const [{ settings, navItems }, videos] = await Promise.all([
     getPublicChromeData(),
-    prisma.educationalVideo.findMany({
-      where: { isPublished: true },
-      orderBy: [{ isFeatured: "desc" }, { displayOrder: "asc" }],
-    }),
+    prisma.educationalVideo
+      .findMany({
+        where: { isPublished: true },
+        orderBy: [{ isFeatured: "desc" }, { displayOrder: "asc" }],
+      })
+      .catch(() => []),
   ]);
 
   const title = settings?.videosTitle || "Educational Videos";

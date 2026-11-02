@@ -17,10 +17,12 @@ export const metadata: Metadata = {
 export default async function GalleryPage() {
   const [{ settings, navItems }, photos] = await Promise.all([
     getPublicChromeData(),
-    prisma.galleryPhoto.findMany({
-      where: { isPublished: true },
-      orderBy: { displayOrder: "asc" },
-    }),
+    prisma.galleryPhoto
+      .findMany({
+        where: { isPublished: true },
+        orderBy: { displayOrder: "asc" },
+      })
+      .catch(() => []),
   ]);
 
   const title = settings?.galleryTitle || "Moments in Motion";
