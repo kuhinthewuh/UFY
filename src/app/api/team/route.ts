@@ -17,14 +17,28 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    const { name, role, bio, pronouns, department, photoUrl, focalPointX, focalPointY, linkUrl, linkType, displayOrder, isPublished } = body;
+    const {
+      name,
+      role,
+      bio,
+      pronouns,
+      department,
+      photoUrl,
+      focalPointX,
+      focalPointY,
+      pegColor,
+      linkUrl,
+      linkType,
+      displayOrder,
+      isPublished,
+    } = body;
 
     if (!name || !role || !bio) {
       return NextResponse.json({ error: "Name, role, and biography are required" }, { status: 400 });
     }
 
     const maxOrder = await prisma.teamMember.aggregate({ _max: { displayOrder: true } });
-    const nextOrder = displayOrder !== undefined ? displayOrder : (maxOrder._max.displayOrder || 0) + 1;
+    const nextOrder = displayOrder !== undefined ? Number(displayOrder) : (maxOrder._max.displayOrder || 0) + 1;
 
     const member = await prisma.teamMember.create({
       data: {
@@ -36,6 +50,7 @@ export async function POST(req: Request) {
         photoUrl: photoUrl || null,
         focalPointX: focalPointX ?? 50,
         focalPointY: focalPointY ?? 50,
+        pegColor: pegColor || "#e0c7a8",
         linkUrl: linkUrl ? linkUrl.trim() : null,
         linkType: linkType || null,
         displayOrder: nextOrder,

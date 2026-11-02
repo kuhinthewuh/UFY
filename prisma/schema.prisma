@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -23,22 +23,59 @@ model AdminUser {
 
 model SiteSettings {
   id                    String   @id @default("global")
-  siteTitle             String   @default("UFY — Youth-Led Action & Learning")
-  siteDescription       String   @default("A youth-focused platform dedicated to knowledge, community action, health education, and youth-led initiatives.")
+  siteTitle             String   @default("UFY — Up for Youth | Youth-Led Action, Care & Learning")
+  siteDescription       String   @default("Up for Youth (UFY) is a youth-driven movement uplifting communities through letters for hospitalized children, hands-on first-aid & CPR workshops, educational videos, and neighborhood book drives.")
+  brandTagline          String   @default("Up for Youth")
   logoUrl               String?
   logoHeight            Int      @default(36)
   logoWidth             Int      @default(120)
-  primaryCtaLabel       String   @default("Propose an Idea")
-  primaryCtaUrl         String   @default("#submit-idea")
+  primaryCtaLabel       String   @default("Get Involved")
+  primaryCtaUrl         String   @default("/volunteer")
   primaryCtaVisible     Boolean  @default(true)
-  footerMissionText     String   @default("UFY connects young changemakers with real tools, workshops, and community-driven initiatives to shape healthier and more informed neighborhoods.")
-  contactEmail          String?
-  socialInstagram       String?
+
+  // Homepage Hero & Global Customizations
+  heroEyebrow           String   @default("ufy — up for youth\nyouth community initiative")
+  heroMarqueeText       String   @default("ufy")
+  heroSticker1          String   @default("manteca, ca • youth hq\nestablished for youth")
+  heroSticker2          String   @default("get involved to help")
+  heroSticker2Url       String   @default("/volunteer")
+  heroSticker3          String   @default("up for youth • tangible care")
+  impactBannerText      String   @default("thank you for standing with Up for Youth!\nevery virtual letter written, workshop hosted, and book donated\nupdates our live Manteca & global community counters.")
+
+  // Subpage Titles & Subtitles
+  journeyTitle          String   @default("Our Event Journey")
+  journeySubtitle       String   @default("Follow Up for Youth's winding expedition trail of hospital visits, student CPR trainings, and neighborhood literacy drives.")
+  impactTitle           String   @default("Our Community Impact")
+  impactSubtitle        String   @default("Live verified metrics capturing smiles delivered, lives safeguarded, and neighborhood books distributed by Up for Youth.")
+  galleryTitle          String   @default("Moments in Motion")
+  gallerySubtitle       String   @default("Spin, drag, and tap through our interactive 3D Dome Gallery of hospital care visits, youth CPR certifications, and Up for Youth changemakers in Manteca and beyond.")
+  teamTitle             String   @default("Meet Our Youth Leaders")
+  teamSubtitle          String   @default("Passionate student organizers leading compassionate health literacy, pediatric comfort, and community care at Up for Youth.")
+  proposeTitle          String   @default("UFY Community Mailbox")
+  proposeSubtitle       String   @default("Drop your boldest initiative, workshop request, or school chapter proposal directly into the Up for Youth inbox.")
+  videosTitle           String   @default("Educational Videos")
+  videosSubtitle        String   @default("Bite-sized, peer-taught first-aid tutorials, CPR rhythm guides, and youth wellness lessons crafted by Up for Youth educators.")
+  videosEducatedCount   Int      @default(0)
+  videosGridColumns     Int      @default(3) // 2 or 3 columns default
+  volunteerTitle        String   @default("Join Up for Youth Volunteers")
+  volunteerSubtitle     String   @default("Create your free UFY volunteer account to earn verified service hours writing virtual letters, facilitating CPR workshops, or leading a school chapter.")
+  lettersTitle          String   @default("Virtual Letters & Affirmations")
+  lettersSubtitle       String   @default("Write a warm message for hospitalized kids and peers—earn verified volunteer hours with an account, or drop an instant note of sunshine for someone's day.")
+  hoursPerLetter        Float    @default(0.25)
+  autoApproveLetters    Boolean  @default(false)
+
+  // Footer & Contact
+  footerMissionText     String   @default("Up for Youth (UFY) connects young changemakers with real first-aid training, hospital letter drives, educational videos, and community micro-libraries.")
+  footerLocationText    String   @default("MANTECA, CA • UP FOR YOUTH (UFY)")
+  footerColumnsJson     String?  // Optional custom JSON override for footer columns
+  contactEmail          String?  @default("hello@ufy.org")
+  ufyInboxEmail         String   @default("ideas@ufy.org")
+  socialInstagram       String?  @default("https://instagram.com/ufy_youth")
   socialTwitter         String?
   socialLinkedin        String?
-  socialYoutube         String?
+  socialYoutube         String?  @default("https://youtube.com")
   socialGithub          String?
-  copyrightText         String   @default("© 2026 UFY. All rights reserved.")
+  copyrightText         String   @default("© 2026 Up for Youth (UFY). All rights reserved.")
   privacyNotice         String   @default("We respect youth privacy. We never share your personal information or sell data.")
   enableReducedMotion   Boolean  @default(false)
   teamDisplayCount      Int      @default(6)
@@ -49,18 +86,131 @@ model SiteSettings {
 }
 
 model ThemeSettings {
-  id                String   @id @default("global")
-  headingFont       String   @default("Space Grotesk") // "Space Grotesk", "Syne", "Outfit", "Plus Jakarta Sans", "Inter"
-  bodyFont          String   @default("Inter")         // "Inter", "Plus Jakarta Sans", "Space Grotesk"
-  primaryColor      String   @default("#7629f0")
-  secondaryColor    String   @default("#ffffff")
-  buttonRadius      String   @default("14px")          // "0px", "8px", "14px", "24px", "9999px"
-  buttonStyle       String   @default("solid")         // "solid", "outline", "soft"
-  typeScale         String   @default("expressive")    // "compact", "balanced", "expressive"
-  baseSpacing       String   @default("balanced")      // "compact", "balanced", "relaxed"
-  containerMaxWidth String   @default("1240px")
-  animationLevel    String   @default("playful")       // "subtle", "playful", "minimal"
-  updatedAt         DateTime @updatedAt
+  id                   String   @id @default("global")
+  headingFont          String   @default("Plus Jakarta Sans") // "Space Grotesk", "Syne", "Outfit", "Plus Jakarta Sans", "Inter"
+  bodyFont             String   @default("Inter")             // "Inter", "Plus Jakarta Sans", "Space Grotesk", "Outfit"
+  bgColor              String   @default("#f7f4fc")
+  cardBgColor          String   @default("#ffffff")
+  primaryColor         String   @default("#7629f0")
+  secondaryColor       String   @default("#ffffff")
+  accentColor          String   @default("#8e48ff")
+  darkColor            String   @default("#140529")
+  footerBgColor        String   @default("#0d0519")
+  buttonRadius         String   @default("9999px")            // "0px", "8px", "14px", "24px", "9999px"
+  buttonStyle          String   @default("solid")             // "solid", "outline", "soft"
+  typeScale            String   @default("expressive")        // "compact", "balanced", "expressive"
+  baseSpacing          String   @default("spacious")          // "compact", "balanced", "relaxed", "spacious"
+  containerMaxWidth    String   @default("100%")              // Edge to edge default
+  headingLetterSpacing String   @default("-0.03em")
+  marqueeSpeed         Int      @default(28)                  // seconds
+  enableDuotone        Boolean  @default(true)
+  fontDetailingJson    String?  @default("{}")
+  animationLevel       String   @default("playful")           // "subtle", "playful", "minimal"
+  updatedAt            DateTime @updatedAt
+}
+
+model JourneyNode {
+  id           String   @id @default(uuid())
+  title        String
+  dateLabel    String
+  location     String
+  category     String   @default("Hospital Action") // "Hospital Action", "First-Aid CPR", "Book Drive", "Milestone", "Community Outreach"
+  description  String
+  stats        String?  // e.g. "350 Letters Delivered"
+  imageUrl     String?
+  badgeLabel   String?  // e.g. "Milestone", "First Edition", "Major Partner"
+  isHighlight  Boolean  @default(false)
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ImpactMetric {
+  id           String   @id @default(uuid())
+  label        String   // e.g. "Hospital Letters Delivered"
+  targetValue  Int      @default(0)
+  currentValue Int      @default(0)
+  prefix       String?  @default("")
+  suffix       String?  @default("")
+  subtitle     String?  // e.g. "Handcrafted cards delivered directly to pediatric bedsides"
+  icon         String   @default("Heart") // "Heart", "Activity", "BookOpen", "Users", "Award", "Clock", "Play"
+  color        String   @default("#7629f0")
+  isLive       Boolean  @default(true)
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model GalleryPhoto {
+  id           String   @id @default(uuid())
+  imageUrl     String
+  caption      String
+  dateLabel    String?
+  location     String?
+  orientation  String   @default("portrait") // "portrait" or "landscape"
+  tiltAngle    Float    @default(0)          // -4 to +4 deg
+  pegColor     String   @default("#e0c7a8")  // wood, purple, gold, dark
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model EducationalVideo {
+  id           String   @id @default(uuid())
+  title        String
+  category     String   @default("First-Aid & CPR")
+  description  String
+  youtubeUrl   String
+  thumbnailUrl String?
+  duration     String?  @default("4:30")
+  instructor   String?  @default("UFY Peer Educator")
+  viewsCount   Int      @default(0)
+  isFeatured   Boolean  @default(false)
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Volunteer {
+  id                 String              @id @default(uuid())
+  email              String              @unique
+  passwordHash       String
+  fullName           String
+  schoolOrOrg        String?
+  city               String              @default("Manteca, CA")
+  phone              String?
+  interests          String              @default("Virtual Letters, Workshops")
+  bio                String?
+  status             String              @default("ACTIVE") // "ACTIVE", "PENDING", "SUSPENDED"
+  totalVerifiedHours Float               @default(0)
+  bonusHours         Float               @default(0)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  letters            AffirmationLetter[]
+}
+
+model AffirmationLetter {
+  id               String     @id @default(uuid())
+  authorName       String     @default("A UFY Friend")
+  recipientTag     String     @default("For Hospitalized Youth") // "For Hospitalized Youth", "For Someone Having a Tough Day", "For Fellow Students", "Open Sunshine"
+  message          String
+  stationeryColor  String     @default("#ffffff") // "#ffffff", "#f8f4fe", "#fef3c7", "#fce7f3", "#e0f2fe"
+  stampStyle       String     @default("heart")   // "heart", "star", "sun", "sparkle"
+  volunteerId      String?
+  volunteer        Volunteer? @relation(fields: [volunteerId], references: [id], onDelete: SetNull)
+  minutesSpent     Int        @default(15)
+  hoursAwarded     Float      @default(0)
+  hoursStatus      String     @default("NONE")    // "NONE" (public affirmation), "PENDING", "VERIFIED", "REJECTED"
+  status           String     @default("APPROVED") // "PENDING", "APPROVED", "ARCHIVED"
+  heartsCount      Int        @default(1)
+  isFeaturedOnHome Boolean    @default(true)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
 }
 
 model NavigationItem {
@@ -77,14 +227,14 @@ model NavigationItem {
 
 model PageSection {
   id              String   @id @default(uuid())
-  sectionKey      String   @unique // "hero", "mission", "programs", "team", "community-idea", "accepted-ideas", "footer", or custom
+  sectionKey      String   @unique // "hero", "initiatives", "affirmations", "leaders", "impact", or custom
   title           String
   subtitle        String?
   contentJson     String   // Stores structured components, text blocks, highlights, settings
   layoutVariation String   @default("default")
   displayOrder    Int      @default(0)
   isVisible       Boolean  @default(true)
-  backgroundMode  String   @default("white") // "white", "purple", "subtle-tint", "dark-purple"
+  backgroundMode  String   @default("transparent") // "transparent", "white", "purple", "subtle-tint", "dark-purple"
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
@@ -97,6 +247,7 @@ model TeamMember {
   pronouns     String?
   department   String?
   photoUrl     String?
+  pegColor     String   @default("#e0c7a8")
   focalPointX  Int      @default(50)
   focalPointY  Int      @default(50)
   linkUrl      String?
@@ -113,6 +264,9 @@ model Program {
   category     String
   summary      String
   description  String
+  impactStat   String?  @default("Active Community Initiative")
+  ctaLabel     String?  @default("get involved")
+  accentColor  String?  @default("#7629f0")
   imageUrl     String?
   status       String   @default("active") // "active", "upcoming", "completed", "proposed"
   dateLabel    String?
@@ -163,7 +317,7 @@ model IdeaSubmission {
 
 model AnalyticsEvent {
   id             String   @id @default(uuid())
-  eventType      String   // page_view, section_view, cta_click, idea_form_start, idea_form_submit
+  eventType      String   // page_view, section_view, cta_click, idea_form_start, idea_form_submit, video_watch, letter_sent
   path           String   @default("/")
   sectionId      String?
   targetLabel    String?
@@ -178,7 +332,7 @@ model SiteRevision {
   revisionNumber Int        @default(1)
   title          String
   description    String?
-  snapshotJson   String     // Complete JSON snapshot of sections, team, programs, theme, nav, settings
+  snapshotJson   String     // Complete JSON snapshot of sections, team, programs, theme, nav, settings, journey, impact, gallery, videos
   createdById    String?
   createdBy      AdminUser? @relation(fields: [createdById], references: [id], onDelete: SetNull)
   createdAt      DateTime   @default(now())

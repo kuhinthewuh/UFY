@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Sparkles, ArrowUpRight, User, Plus } from "lucide-react";
+import { Award, ArrowUpRight, User, Plus } from "lucide-react";
 import { TeamMemberData, PageSectionData } from "@/lib/types";
 
 interface TeamSectionProps {
@@ -28,7 +28,7 @@ export default function TeamSection({
       name: "Sophia Chen",
       role: "Executive Director & Peer Lead",
       pronouns: "she/her",
-      bio: "Second-year health sciences student leading pediatric first-aid outreach and curriculum across Montreal schools.",
+      bio: "Second-year health sciences student leading pediatric first-aid outreach and curriculum across MANTECA, CA schools.",
       department: "Leadership",
       photoUrl: null,
     },
@@ -74,7 +74,7 @@ export default function TeamSection({
           {section?.title || "THE MINDS BEHIND UFY."}
         </h2>
         <p style={{ color: "var(--text-muted)", fontSize: "1.15rem", maxWidth: 740, lineHeight: 1.6 }}>
-          UFY is completely conceived and run by young changemakers in Montreal, supported by professional medical advisors.
+          UFY is completely conceived and run by young changemakers in MANTECA, CA, supported by professional medical advisors.
         </p>
       </div>
 

@@ -6,14 +6,16 @@ import {
   Users,
   Compass,
   Inbox,
-  BarChart3,
   Edit3,
   CheckCircle,
-  Clock,
   ArrowRight,
   ShieldCheck,
   Eye,
-  Sparkles,
+  Award,
+  GraduationCap,
+  MailOpen,
+  HeartHandshake,
+  Palette,
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -24,8 +26,13 @@ async function getOverviewData() {
     programsCount,
     ideasTotal,
     ideasNew,
-    pageviewsCount,
-    uniqueSessions,
+    journeyCount,
+    impactCount,
+    galleryCount,
+    videosCount,
+    volunteersCount,
+    lettersTotal,
+    lettersPendingHours,
     latestIdeas,
     settings,
   ] = await Promise.all([
@@ -33,11 +40,13 @@ async function getOverviewData() {
     prisma.program.count({ where: { isPublished: true } }),
     prisma.ideaSubmission.count(),
     prisma.ideaSubmission.count({ where: { status: "NEW" } }),
-    prisma.analyticsEvent.count({ where: { eventType: "page_view" } }),
-    prisma.analyticsEvent.findMany({
-      select: { sessionId: true },
-      distinct: ["sessionId"],
-    }),
+    prisma.journeyNode.count(),
+    prisma.impactMetric.count(),
+    prisma.galleryPhoto.count(),
+    prisma.educationalVideo.count(),
+    prisma.volunteer.count(),
+    prisma.affirmationLetter.count(),
+    prisma.affirmationLetter.count({ where: { hoursStatus: "PENDING" } }),
     prisma.ideaSubmission.findMany({
       take: 4,
       orderBy: { createdAt: "desc" },
@@ -50,8 +59,14 @@ async function getOverviewData() {
     programsCount,
     ideasTotal,
     ideasNew,
-    pageviewsCount,
-    uniqueVisitors: uniqueSessions.length,
+    journeyCount,
+    impactCount,
+    galleryCount,
+    videosCount,
+    educatedCount: settings?.videosEducatedCount ?? 0,
+    volunteersCount,
+    lettersTotal,
+    lettersPendingHours,
     latestIdeas,
     settings,
   };
@@ -62,41 +77,71 @@ export default async function AdminOverviewPage() {
 
   const statCards = [
     {
-      title: "Page Views (Real)",
-      value: data.pageviewsCount,
-      subtitle: `${data.uniqueVisitors} unique sessions recorded`,
-      icon: Eye,
-      link: "/admin/analytics",
+      title: "People Educated (Live)",
+      value: data.educatedCount.toLocaleString(),
+      subtitle: `${data.videosCount} educational video modules`,
+      icon: GraduationCap,
+      link: "/admin/videos",
+      badge: "Live",
+    },
+    {
+      title: "Virtual Letters & Wall",
+      value: data.lettersTotal,
+      subtitle: `${data.lettersPendingHours} letters awaiting hour check`,
+      icon: MailOpen,
+      link: "/admin/letters",
+      badge: data.lettersPendingHours > 0 ? `${data.lettersPendingHours} Pending` : null,
+    },
+    {
+      title: "UFY Volunteers",
+      value: data.volunteersCount,
+      subtitle: "Registered student accounts",
+      icon: HeartHandshake,
+      link: "/admin/volunteers",
     },
     {
       title: "Community Proposals",
       value: data.ideasTotal,
-      subtitle: `${data.ideasNew} awaiting moderation review`,
+      subtitle: `${data.ideasNew} new in mailbox queue`,
       icon: Inbox,
       link: "/admin/inbox",
       badge: data.ideasNew > 0 ? `${data.ideasNew} New` : null,
     },
     {
-      title: "Active Initiatives",
-      value: data.programsCount,
-      subtitle: "Published workshops & libraries",
-      icon: Compass,
-      link: "/admin/programs",
-    },
-    {
-      title: "Team Members",
+      title: "Team Organizers",
       value: data.teamCount,
-      subtitle: `Configured limit: ${data.settings?.teamDisplayCount || 6}`,
+      subtitle: "Published leader polaroids",
       icon: Users,
       link: "/admin/team",
+    },
+    {
+      title: "Journey Milestones",
+      value: data.journeyCount,
+      subtitle: "Stops along winding trail map",
+      icon: Compass,
+      link: "/admin/journey",
+    },
+    {
+      title: "Impact Counters",
+      value: data.impactCount,
+      subtitle: "Live verified metrics",
+      icon: Award,
+      link: "/admin/impact",
+    },
+    {
+      title: "Clothesline Polaroids",
+      value: data.galleryCount,
+      subtitle: "Gallery exhibition frames",
+      icon: Eye,
+      link: "/admin/gallery",
     },
   ];
 
   return (
     <div>
       <AdminHeader
-        title="Administrative Overview"
-        subtitle="Real-time site health, community engagement & quick management shortcuts"
+        title="Up for Youth (UFY) — Studio Overview"
+        subtitle="100% no-code control over every page, color, font, video, volunteer account, and community counter"
       />
 
       <div style={{ padding: "32px" }}>
@@ -104,8 +149,8 @@ export default async function AdminOverviewPage() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: "24px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(235px, 1fr))",
+            gap: "20px",
             marginBottom: "36px",
           }}
         >
@@ -119,17 +164,16 @@ export default async function AdminOverviewPage() {
                   backgroundColor: "#ffffff",
                   border: "1.5px solid var(--ufy-purple-100)",
                   borderRadius: "18px",
-                  padding: "24px",
+                  padding: "22px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "12px",
+                  gap: "10px",
                   transition: "all var(--transition-fast)",
                   boxShadow: "var(--shadow-subtle)",
                 }}
-                className="overview-stat-card"
               >
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--ufy-purple-800)" }}>
+                  <span style={{ fontSize: "0.86rem", fontWeight: 700, color: "var(--ufy-purple-800)" }}>
                     {stat.title}
                   </span>
                   <div
@@ -148,8 +192,8 @@ export default async function AdminOverviewPage() {
                   </div>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "baseline", gap: "12px" }}>
-                  <span style={{ fontSize: "2.2rem", fontWeight: 800, color: "var(--ufy-purple-950)" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
+                  <span style={{ fontSize: "2.1rem", fontWeight: 800, color: "var(--ufy-purple-950)" }}>
                     {stat.value}
                   </span>
                   {stat.badge && (
@@ -159,7 +203,7 @@ export default async function AdminOverviewPage() {
                         color: "#ffffff",
                         padding: "2px 8px",
                         borderRadius: "12px",
-                        fontSize: "0.75rem",
+                        fontSize: "0.72rem",
                         fontWeight: 700,
                       }}
                     >
@@ -168,7 +212,7 @@ export default async function AdminOverviewPage() {
                   )}
                 </div>
 
-                <span style={{ fontSize: "0.82rem", color: "var(--ufy-purple-700)" }}>{stat.subtitle}</span>
+                <span style={{ fontSize: "0.8rem", color: "var(--ufy-purple-700)" }}>{stat.subtitle}</span>
               </Link>
             );
           })}
@@ -183,7 +227,6 @@ export default async function AdminOverviewPage() {
           }}
           className="overview-split"
         >
-          {/* Latest Ideas for Review */}
           <div
             style={{
               backgroundColor: "#ffffff",
@@ -201,7 +244,7 @@ export default async function AdminOverviewPage() {
                   Recent Community Proposals
                 </h2>
                 <p style={{ fontSize: "0.85rem", color: "var(--ufy-purple-700)" }}>
-                  Latest ideas submitted by young people & community members
+                  Ideas dropped into the Up for Youth mailbox (/propose)
                 </p>
               </div>
 
@@ -216,7 +259,7 @@ export default async function AdminOverviewPage() {
                   color: "var(--ufy-primary)",
                 }}
               >
-                <span>View Inbox</span>
+                <span>Open Inbox</span>
                 <ArrowRight size={15} />
               </Link>
             </div>
@@ -224,7 +267,7 @@ export default async function AdminOverviewPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {data.latestIdeas.length === 0 ? (
                 <div style={{ padding: "24px", textAlign: "center", color: "var(--ufy-purple-700)", fontSize: "0.9rem" }}>
-                  No proposals submitted yet. Visitors can submit ideas through the public portal!
+                  No proposals submitted yet.
                 </div>
               ) : (
                 data.latestIdeas.map((idea: any) => (
@@ -277,9 +320,7 @@ export default async function AdminOverviewPage() {
             </div>
           </div>
 
-          {/* Quick Launch & Security Status */}
           <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-            {/* Quick Actions */}
             <div
               style={{
                 backgroundColor: "#ffffff",
@@ -289,7 +330,7 @@ export default async function AdminOverviewPage() {
               }}
             >
               <h2 style={{ fontSize: "1.2rem", fontWeight: 800, color: "var(--ufy-purple-950)", marginBottom: "16px" }}>
-                Quick Actions
+                Native Site Builder Shortcuts
               </h2>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -303,35 +344,34 @@ export default async function AdminOverviewPage() {
                 </Link>
 
                 <Link
-                  href="/admin/team"
-                  className="btn btn-outline-purple"
-                  style={{ justifyContent: "flex-start", padding: "12px 18px" }}
-                >
-                  <Users size={18} />
-                  <span>Manage Team Members ({data.teamCount})</span>
-                </Link>
-
-                <Link
-                  href="/admin/programs"
-                  className="btn btn-outline-purple"
-                  style={{ justifyContent: "flex-start", padding: "12px 18px" }}
-                >
-                  <Compass size={18} />
-                  <span>Manage Programs & Workshops</span>
-                </Link>
-
-                <Link
                   href="/admin/theme"
                   className="btn btn-outline-purple"
                   style={{ justifyContent: "flex-start", padding: "12px 18px" }}
                 >
-                  <Sparkles size={18} />
-                  <span>Customize Fonts & Theme</span>
+                  <Palette size={18} />
+                  <span>Customize Every Color, Font &amp; Width</span>
+                </Link>
+
+                <Link
+                  href="/admin/videos"
+                  className="btn btn-outline-purple"
+                  style={{ justifyContent: "flex-start", padding: "12px 18px" }}
+                >
+                  <GraduationCap size={18} />
+                  <span>Manage Educational Videos &amp; Counter</span>
+                </Link>
+
+                <Link
+                  href="/admin/letters"
+                  className="btn btn-outline-purple"
+                  style={{ justifyContent: "flex-start", padding: "12px 18px" }}
+                >
+                  <MailOpen size={18} />
+                  <span>Moderate Virtual Letters &amp; Hours</span>
                 </Link>
               </div>
             </div>
 
-            {/* Launch Readiness Card */}
             <div
               style={{
                 backgroundColor: "var(--ufy-purple-50)",
@@ -343,22 +383,22 @@ export default async function AdminOverviewPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
                 <ShieldCheck size={20} style={{ color: "var(--ufy-primary)" }} />
                 <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--ufy-purple-950)" }}>
-                  Platform Health
+                  Platform &amp; Database Status
                 </h3>
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "0.85rem", color: "var(--ufy-purple-900)" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                   <CheckCircle size={15} style={{ color: "var(--ufy-primary)" }} />
-                  <span>SQLite database synced and persistent</span>
+                  <span>Prisma ORM wired across all 14 live tables</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                   <CheckCircle size={15} style={{ color: "var(--ufy-primary)" }} />
-                  <span>Strict UFY palette enforced (#7629f0 & #ffffff)</span>
+                  <span>Full aesthetic &amp; copy controls live without code</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                   <CheckCircle size={15} style={{ color: "var(--ufy-primary)" }} />
-                  <span>Session auth active with HTTP-only cookies</span>
+                  <span>Admin &amp; Volunteer HTTP-only JWT cookies active</span>
                 </div>
               </div>
 
@@ -367,7 +407,7 @@ export default async function AdminOverviewPage() {
                   href="/admin/settings"
                   style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--ufy-primary)", textDecoration: "underline" }}
                 >
-                  Open Launch Checklist →
+                  Open All Page Settings &amp; DB Connection Guide →
                 </Link>
               </div>
             </div>
@@ -377,4 +417,3 @@ export default async function AdminOverviewPage() {
     </div>
   );
 }
-

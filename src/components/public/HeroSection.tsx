@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, HeartPulse, ShieldCheck, BookOpen } from "lucide-react";
+import { ArrowRight, Award, HeartPulse, ShieldCheck, BookOpen } from "lucide-react";
 import { PageSectionData } from "@/lib/types";
 
 interface HeroSectionProps {
@@ -35,7 +35,7 @@ export default function HeroSection({ section, onOpenSoumission }: HeroSectionPr
     "COMMUNITY IDEA INCUBATOR",
     "PEER-TO-PEER WORKSHOPS",
     "HEALTH LITERACY FOR ALL",
-    "MONTREAL & BEYOND",
+    "MANTECA, CA & BEYOND",
   ];
 
   return (
@@ -54,7 +54,7 @@ export default function HeroSection({ section, onOpenSoumission }: HeroSectionPr
             />
             {content.badgeText}
           </span>
-          <span className="tok-tag-white">MONTREAL // EST. 2026</span>
+          <span className="tok-tag-white">MANTECA, CA // EST. 2026</span>
           <span className="tok-tag-white">NON-PROFIT // YOUTH-LED</span>
         </div>
 
@@ -77,7 +77,7 @@ export default function HeroSection({ section, onOpenSoumission }: HeroSectionPr
             onClick={onOpenSoumission}
           >
             {content.primaryButtonText}
-            <Sparkles size={16} style={{ marginLeft: 10 }} />
+            <Award size={16} style={{ marginLeft: 10 }} />
           </button>
 
           <Link href="#programs" className="tok-btn-secondary">

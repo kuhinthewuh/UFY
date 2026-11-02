@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Sparkles, CheckCircle, ArrowUpRight } from "lucide-react";
+import { Award, CheckCircle, ArrowUpRight } from "lucide-react";
 import { IdeaSubmissionData, PageSectionData } from "@/lib/types";
 
 interface AcceptedIdeasProps {

@@ -24,9 +24,8 @@ export async function POST(req: Request) {
 
     const snapshot = JSON.parse(revision.snapshotJson);
 
-    // Restore Settings
     if (snapshot.settings) {
-      const { id: _, ...settingsData } = snapshot.settings;
+      const { id: _id, updatedAt: _u, ...settingsData } = snapshot.settings;
       await prisma.siteSettings.upsert({
         where: { id: "global" },
         update: settingsData,
@@ -34,9 +33,8 @@ export async function POST(req: Request) {
       });
     }
 
-    // Restore Theme
     if (snapshot.theme) {
-      const { id: _, ...themeData } = snapshot.theme;
+      const { id: _id, updatedAt: _u, ...themeData } = snapshot.theme;
       await prisma.themeSettings.upsert({
         where: { id: "global" },
         update: themeData,
@@ -44,7 +42,6 @@ export async function POST(req: Request) {
       });
     }
 
-    // Restore Sections
     if (Array.isArray(snapshot.sections)) {
       for (const s of snapshot.sections) {
         await prisma.pageSection.upsert({
@@ -72,30 +69,59 @@ export async function POST(req: Request) {
       }
     }
 
-    // Restore Team Members
     if (Array.isArray(snapshot.team)) {
       await prisma.teamMember.deleteMany({});
       for (const member of snapshot.team) {
-        const { id: _, createdAt: __, updatedAt: ___, ...memberData } = member;
+        const { id: _id, createdAt: _c, updatedAt: _u, ...memberData } = member;
         await prisma.teamMember.create({ data: memberData });
       }
     }
 
-    // Restore Programs
     if (Array.isArray(snapshot.programs)) {
       await prisma.program.deleteMany({});
       for (const prog of snapshot.programs) {
-        const { id: _, createdAt: __, updatedAt: ___, ...progData } = prog;
+        const { id: _id, createdAt: _c, updatedAt: _u, ...progData } = prog;
         await prisma.program.create({ data: progData });
       }
     }
 
-    // Restore Navigation
     if (Array.isArray(snapshot.navigation)) {
       await prisma.navigationItem.deleteMany({});
       for (const nav of snapshot.navigation) {
-        const { id: _, createdAt: __, updatedAt: ___, ...navData } = nav;
+        const { id: _id, createdAt: _c, updatedAt: _u, ...navData } = nav;
         await prisma.navigationItem.create({ data: navData });
+      }
+    }
+
+    if (Array.isArray(snapshot.journeyNodes)) {
+      await prisma.journeyNode.deleteMany({});
+      for (const node of snapshot.journeyNodes) {
+        const { id: _id, createdAt: _c, updatedAt: _u, ...nodeData } = node;
+        await prisma.journeyNode.create({ data: nodeData });
+      }
+    }
+
+    if (Array.isArray(snapshot.impactMetrics)) {
+      await prisma.impactMetric.deleteMany({});
+      for (const metric of snapshot.impactMetrics) {
+        const { id: _id, createdAt: _c, updatedAt: _u, ...metricData } = metric;
+        await prisma.impactMetric.create({ data: metricData });
+      }
+    }
+
+    if (Array.isArray(snapshot.galleryPhotos)) {
+      await prisma.galleryPhoto.deleteMany({});
+      for (const photo of snapshot.galleryPhotos) {
+        const { id: _id, createdAt: _c, updatedAt: _u, ...photoData } = photo;
+        await prisma.galleryPhoto.create({ data: photoData });
+      }
+    }
+
+    if (Array.isArray(snapshot.educationalVideos)) {
+      await prisma.educationalVideo.deleteMany({});
+      for (const video of snapshot.educationalVideos) {
+        const { id: _id, createdAt: _c, updatedAt: _u, ...videoData } = video;
+        await prisma.educationalVideo.create({ data: videoData });
       }
     }
 

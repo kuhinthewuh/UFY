@@ -15,7 +15,6 @@ import {
   Lock,
   ArrowRight,
   ShieldCheck,
-  Sparkles,
 } from "lucide-react";
 import { IdeaSubmissionData } from "@/lib/types";
 
@@ -165,8 +164,8 @@ export default function IdeaInboxPage() {
                   borderRadius: "var(--radius-full)",
                   fontSize: "0.82rem",
                   fontWeight: 700,
-                  backgroundColor: statusFilter === "st" ? "var(--ufy-primary)" : "#ffffff",
-                  color: statusFilter === st ? "var(--ufy-primary)" : "var(--ufy-purple-800)",
+                  backgroundColor: statusFilter === st ? "var(--ufy-primary)" : "#ffffff",
+                  color: statusFilter === st ? "#ffffff" : "var(--ufy-purple-800)",
                   border: statusFilter === st ? "2px solid var(--ufy-primary)" : "1px solid var(--ufy-purple-200)",
                 }}
               >

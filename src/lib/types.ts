@@ -2,14 +2,48 @@ export interface SiteSettingsData {
   id: string;
   siteTitle: string;
   siteDescription: string;
+  brandTagline: string;
   logoUrl: string | null;
   logoHeight: number;
   logoWidth: number;
   primaryCtaLabel: string;
   primaryCtaUrl: string;
   primaryCtaVisible: boolean;
+
+  heroEyebrow: string;
+  heroMarqueeText: string;
+  heroSticker1: string;
+  heroSticker2: string;
+  heroSticker2Url: string;
+  heroSticker3: string;
+  impactBannerText: string;
+
+  journeyTitle: string;
+  journeySubtitle: string;
+  impactTitle: string;
+  impactSubtitle: string;
+  galleryTitle: string;
+  gallerySubtitle: string;
+  teamTitle: string;
+  teamSubtitle: string;
+  proposeTitle: string;
+  proposeSubtitle: string;
+  videosTitle: string;
+  videosSubtitle: string;
+  videosEducatedCount: number;
+  videosGridColumns: number;
+  volunteerTitle: string;
+  volunteerSubtitle: string;
+  lettersTitle: string;
+  lettersSubtitle: string;
+  hoursPerLetter: number;
+  autoApproveLetters: boolean;
+
   footerMissionText: string;
+  footerLocationText: string;
+  footerColumnsJson?: string | null;
   contactEmail: string | null;
+  ufyInboxEmail: string;
   socialInstagram: string | null;
   socialTwitter: string | null;
   socialLinkedin: string | null;
@@ -19,7 +53,7 @@ export interface SiteSettingsData {
   privacyNotice: string;
   enableReducedMotion: boolean;
   teamDisplayCount: number;
-  teamPresentationStyle: 'editorial' | 'grid' | 'offset';
+  teamPresentationStyle: "editorial" | "grid" | "offset";
   isPublished: boolean;
   publishedAt: string;
   updatedAt: string;
@@ -29,8 +63,17 @@ export interface ThemeSettingsData {
   id: string;
   headingFont: string;
   bodyFont: string;
+  bgColor: string;
+  cardBgColor: string;
   primaryColor: string;
   secondaryColor: string;
+  accentColor: string;
+  darkColor: string;
+  footerBgColor: string;
+  headingLetterSpacing: string;
+  marqueeSpeed: number;
+  enableDuotone: boolean;
+  fontDetailingJson?: string | null;
   buttonRadius: string;
   buttonStyle: string;
   typeScale: string;
@@ -59,7 +102,7 @@ export interface PageSectionData {
   layoutVariation: string;
   displayOrder: number;
   isVisible: boolean;
-  backgroundMode: 'white' | 'purple' | 'subtle-tint' | 'dark-purple';
+  backgroundMode: "transparent" | "white" | "purple" | "subtle-tint" | "dark-purple";
   updatedAt: string;
 }
 
@@ -71,6 +114,7 @@ export interface TeamMemberData {
   pronouns: string | null;
   department: string | null;
   photoUrl: string | null;
+  pegColor?: string;
   focalPointX: number;
   focalPointY: number;
   linkUrl: string | null;
@@ -85,12 +129,69 @@ export interface ProgramData {
   category: string;
   summary: string;
   description: string;
+  impactStat?: string | null;
+  ctaLabel?: string | null;
+  accentColor?: string | null;
   imageUrl: string | null;
-  status: 'active' | 'upcoming' | 'completed' | 'proposed';
+  status: "active" | "upcoming" | "completed" | "proposed";
   dateLabel: string | null;
   externalUrl: string | null;
   displayOrder: number;
   isPublished: boolean;
+}
+
+export interface EducationalVideoData {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  youtubeUrl: string;
+  thumbnailUrl: string | null;
+  duration: string | null;
+  instructor: string | null;
+  viewsCount: number;
+  isFeatured: boolean;
+  displayOrder: number;
+  isPublished: boolean;
+}
+
+export interface VolunteerData {
+  id: string;
+  email: string;
+  fullName: string;
+  schoolOrOrg: string | null;
+  city: string;
+  phone: string | null;
+  interests: string;
+  bio: string | null;
+  status: "ACTIVE" | "PENDING" | "SUSPENDED";
+  totalVerifiedHours: number;
+  bonusHours: number;
+  createdAt: string;
+  letters?: AffirmationLetterData[];
+}
+
+export interface AffirmationLetterData {
+  id: string;
+  authorName: string;
+  recipientTag: string;
+  message: string;
+  stationeryColor: string;
+  stampStyle: string;
+  volunteerId: string | null;
+  volunteer?: {
+    id: string;
+    fullName: string;
+    email: string;
+    schoolOrOrg: string | null;
+  } | null;
+  minutesSpent: number;
+  hoursAwarded: number;
+  hoursStatus: "NONE" | "PENDING" | "VERIFIED" | "REJECTED";
+  status: "PENDING" | "APPROVED" | "ARCHIVED";
+  heartsCount: number;
+  isFeaturedOnHome: boolean;
+  createdAt: string;
 }
 
 export interface MediaAssetData {
@@ -119,7 +220,14 @@ export interface IdeaSubmissionData {
   problemAddressed: string;
   proposedApproach: string | null;
   submitterEmail: string | null;
-  status: 'NEW' | 'UNDER_REVIEW' | 'NEEDS_CLARIFICATION' | 'ACCEPTED' | 'IN_PROGRESS' | 'COMPLETED' | 'DECLINED';
+  status:
+    | "NEW"
+    | "UNDER_REVIEW"
+    | "NEEDS_CLARIFICATION"
+    | "ACCEPTED"
+    | "IN_PROGRESS"
+    | "COMPLETED"
+    | "DECLINED";
   internalNotes: string | null;
   linkedOutcome: string | null;
   isPubliclyDisplayed: boolean;

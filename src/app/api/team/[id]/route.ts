@@ -21,6 +21,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
         ...(body.photoUrl !== undefined && { photoUrl: body.photoUrl || null }),
         ...(body.focalPointX !== undefined && { focalPointX: Number(body.focalPointX) }),
         ...(body.focalPointY !== undefined && { focalPointY: Number(body.focalPointY) }),
+        ...(body.pegColor !== undefined && { pegColor: body.pegColor || "#e0c7a8" }),
         ...(body.linkUrl !== undefined && { linkUrl: body.linkUrl ? body.linkUrl.trim() : null }),
         ...(body.linkType !== undefined && { linkType: body.linkType || null }),
         ...(body.displayOrder !== undefined && { displayOrder: Number(body.displayOrder) }),

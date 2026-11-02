@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ArrowUp, Sparkles, Send, Check } from "lucide-react";
+import { ArrowUpRight, ArrowUp, Award, Send, Check } from "lucide-react";
 import { SiteSettingsData, NavigationItemData } from "@/lib/types";
 
 interface FooterProps {
@@ -105,10 +105,10 @@ export default function Footer({ settings, navItems, onOpenSoumission }: FooterP
 
         {/* Col 3: Information & Soumission CTA */}
         <div>
-          <span className="tok-footer__tag">CONTACT // MONTREAL HQ</span>
+          <span className="tok-footer__tag">CONTACT // MANTECA, CA HQ</span>
           <div style={{ color: "var(--text-muted)", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 24 }}>
             <p style={{ color: "#ffffff", fontWeight: 700, marginBottom: 4 }}>UFY YOUTH ACTION</p>
-            <p>Montreal, Quebec, Canada</p>
+            <p>Manteca, California, USA</p>
             <p>hello@ufy.org</p>
             <p>+1 (514) 840-0000</p>
           </div>
@@ -120,7 +120,7 @@ export default function Footer({ settings, navItems, onOpenSoumission }: FooterP
             style={{ width: "100%", padding: "14px 24px" }}
           >
             REQUEST A PROPOSAL
-            <Sparkles size={16} style={{ marginLeft: 8 }} />
+            <Award size={16} style={{ marginLeft: 8 }} />
           </button>
         </div>
       </div>
@@ -140,7 +140,7 @@ export default function Footer({ settings, navItems, onOpenSoumission }: FooterP
 
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
           <span style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>
-            MONTREAL • QUEBEC • CANADA
+            MANTECA, CA • QUEBEC • CANADA
           </span>
 
           <button

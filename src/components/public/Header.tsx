@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Sparkles, X, Volume2 } from "lucide-react";
+import { ArrowUpRight, Award, X, Volume2 } from "lucide-react";
 import { NavigationItemData, SiteSettingsData } from "@/lib/types";
 
 interface HeaderProps {
@@ -79,7 +79,7 @@ export default function Header({ settings, navItems, onOpenSoumission }: HeaderP
             style={{ padding: "12px 24px", fontSize: "13px" }}
           >
             PROPOSE AN IDEA
-            <Sparkles size={14} style={{ marginLeft: 8 }} />
+            <Award size={14} style={{ marginLeft: 8 }} />
           </button>
 
           {/* Hamburger toggle */}
@@ -162,7 +162,7 @@ export default function Header({ settings, navItems, onOpenSoumission }: HeaderP
             <div style={{ color: "var(--text-muted)", fontSize: 13, marginBottom: 4 }}>
               YOUTH HEADQUARTERS
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700 }}>MONTREAL, QC // CANADA</div>
+            <div style={{ fontSize: 15, fontWeight: 700 }}>MANTECA, CA // USA</div>
           </div>
 
           <button

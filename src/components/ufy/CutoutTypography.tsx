@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useId } from "react";
 
 interface CutoutTypographyProps {
   text: string;
   className?: string;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "hero";
   primaryColor?: string;
   secondaryColor?: string;
   accentColor?: string;
@@ -16,92 +16,104 @@ export default function CutoutTypography({
   text,
   className = "",
   size = "lg",
-  primaryColor = "#7629f0",
-  secondaryColor = "#140529",
-  accentColor = "#8e48ff",
-  dashColor = "#7629f0",
+  primaryColor = "var(--ufy-primary-purple, #7629f0)",
+  dashColor = "var(--ufy-primary-purple, #7629f0)",
 }: CutoutTypographyProps) {
-  const letters = text.split("");
+  const rawId = useId();
+  const filterId = `cutout-shadow-${rawId.replace(/:/g, "")}`;
+  const cleanText = (text || "ufy").trim();
 
-  // Determine height and font size based on scale
   const fontSizes = {
-    sm: { height: 70, size: 55, y: 50 },
-    md: { height: 110, size: 85, y: 80 },
-    lg: { height: 160, size: 125, y: 125 },
-    xl: { height: 210, size: 165, y: 165 },
+    sm: { height: 84, size: 54, y: 42 },
+    md: { height: 124, size: 82, y: 62 },
+    lg: { height: 172, size: 116, y: 88 },
+    xl: { height: 236, size: 164, y: 122 },
+    hero: { height: 280, size: 204, y: 146 },
   };
 
   const { height, size: fSize, y } = fontSizes[size];
   const charWidth = fSize * 0.62;
-  const totalWidth = Math.max(300, letters.length * charWidth + 50);
-
-  const colors = [primaryColor, secondaryColor, accentColor, primaryColor, secondaryColor];
+  const totalWidth = Math.max(260, Math.ceil(cleanText.length * charWidth + 88));
+  const centerX = totalWidth / 2;
 
   return (
     <svg
+      width={totalWidth}
+      height={height}
       viewBox={`0 0 ${totalWidth} ${height}`}
-      style={{ height: `${height}px`, width: "auto", display: "inline-block" }}
-      className={`overflow-visible select-none ${className}`}
+      style={{
+        width: size === "hero" ? `${totalWidth}px` : "100%",
+        maxWidth: size === "hero" ? "none" : `${totalWidth}px`,
+        height: size === "hero" ? `${height}px` : "auto",
+        maxHeight: `${height}px`,
+        display: "block",
+        marginLeft: "auto",
+        marginRight: "auto",
+      }}
+      className={`overflow-visible select-none mx-auto ${className}`}
       role="img"
-      aria-label={text}
+      aria-label={cleanText}
     >
       <defs>
-        <filter id="cutout-shadow" x="-10%" y="-10%" width="130%" height="130%">
-          <feDropShadow dx="3" dy="4" stdDeviation="0" floodColor="rgba(0,0,0,0.15)" />
+        <filter id={filterId} x="-15%" y="-15%" width="135%" height="135%">
+          <feDropShadow dx="3" dy="4" stdDeviation="0" floodColor="rgba(20,5,41,0.18)" />
         </filter>
       </defs>
 
       {/* Layer 1: Dashed Cut-Out Offset Outline (Readymag Stamp Stitch Effect) */}
       <text
-        x="26"
-        y={y + 6}
-        fontFamily="'Plus Jakarta Sans', 'Outfit', sans-serif"
+        x={centerX + 5}
+        y={y + 5}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontFamily="var(--font-heading, 'Plus Jakarta Sans', 'Outfit', sans-serif)"
         fontWeight="900"
         fontSize={fSize}
-        letterSpacing="-0.04em"
+        letterSpacing="-0.02em"
+        wordSpacing="0.16em"
         fill="none"
         stroke={dashColor}
         strokeWidth="2.5"
         strokeDasharray="6 6"
         strokeLinecap="round"
       >
-        {text}
+        {cleanText}
       </text>
 
       {/* Layer 2: White Paper Border Cut-Out */}
       <text
-        x="20"
+        x={centerX}
         y={y}
-        fontFamily="'Plus Jakarta Sans', 'Outfit', sans-serif"
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontFamily="var(--font-heading, 'Plus Jakarta Sans', 'Outfit', sans-serif)"
         fontWeight="900"
         fontSize={fSize}
-        letterSpacing="-0.04em"
+        letterSpacing="-0.02em"
+        wordSpacing="0.16em"
         fill="#ffffff"
         stroke="#ffffff"
-        strokeWidth={Math.max(8, fSize * 0.1)}
+        strokeWidth={Math.max(10, fSize * 0.11)}
         strokeLinejoin="round"
-        filter="url(#cutout-shadow)"
+        filter={`url(#${filterId})`}
       >
-        {text}
+        {cleanText}
       </text>
 
-      {/* Layer 3: Colored Letters with Alternating Palette */}
+      {/* Layer 3: Crisp Single-Color Cut-Out Letters (Solid Purple or Black for 100% Word Readability) */}
       <text
-        x="20"
+        x={centerX}
         y={y}
-        fontFamily="'Plus Jakarta Sans', 'Outfit', sans-serif"
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontFamily="var(--font-heading, 'Plus Jakarta Sans', 'Outfit', sans-serif)"
         fontWeight="900"
         fontSize={fSize}
-        letterSpacing="-0.04em"
+        letterSpacing="-0.02em"
+        wordSpacing="0.16em"
+        fill={primaryColor}
       >
-        {letters.map((char, idx) => (
-          <tspan
-            key={idx}
-            fill={colors[idx % colors.length]}
-          >
-            {char}
-          </tspan>
-        ))}
+        {cleanText}
       </text>
     </svg>
   );

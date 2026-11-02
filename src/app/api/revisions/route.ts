@@ -30,14 +30,28 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { title, description } = body;
 
-    // Capture complete snapshot of current database state
-    const [settings, theme, sections, team, programs, navigation] = await Promise.all([
+    const [
+      settings,
+      theme,
+      sections,
+      team,
+      programs,
+      navigation,
+      journeyNodes,
+      impactMetrics,
+      galleryPhotos,
+      educationalVideos,
+    ] = await Promise.all([
       prisma.siteSettings.findUnique({ where: { id: "global" } }),
       prisma.themeSettings.findUnique({ where: { id: "global" } }),
       prisma.pageSection.findMany({ orderBy: { displayOrder: "asc" } }),
       prisma.teamMember.findMany({ orderBy: { displayOrder: "asc" } }),
       prisma.program.findMany({ orderBy: { displayOrder: "asc" } }),
       prisma.navigationItem.findMany({ orderBy: { displayOrder: "asc" } }),
+      prisma.journeyNode.findMany({ orderBy: { displayOrder: "asc" } }),
+      prisma.impactMetric.findMany({ orderBy: { displayOrder: "asc" } }),
+      prisma.galleryPhoto.findMany({ orderBy: { displayOrder: "asc" } }),
+      prisma.educationalVideo.findMany({ orderBy: { displayOrder: "asc" } }),
     ]);
 
     const snapshot = {
@@ -47,6 +61,10 @@ export async function POST(req: Request) {
       team,
       programs,
       navigation,
+      journeyNodes,
+      impactMetrics,
+      galleryPhotos,
+      educationalVideos,
       snapshotTimestamp: new Date().toISOString(),
     };
 
@@ -56,13 +74,12 @@ export async function POST(req: Request) {
       data: {
         revisionNumber: count + 1,
         title: title ? title.trim() : `Published Revision #${count + 1}`,
-        description: description ? description.trim() : "Live website publication",
+        description: description ? description.trim() : "Live Up for Youth website publication",
         snapshotJson: JSON.stringify(snapshot),
         createdById: admin.id,
       },
     });
 
-    // Update published timestamp
     await prisma.siteSettings.update({
       where: { id: "global" },
       data: {

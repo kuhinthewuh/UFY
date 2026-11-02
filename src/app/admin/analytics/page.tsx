@@ -9,7 +9,7 @@ import {
   Eye,
   Users,
   MousePointer,
-  Sparkles,
+  Award,
   Inbox,
   Percent,
   Monitor,
@@ -184,7 +184,7 @@ export default function AnalyticsDashboardPage() {
           >
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
               <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--ufy-purple-700)" }}>Submissions</span>
-              <Sparkles size={18} style={{ color: "var(--ufy-primary)" }} />
+              <Award size={18} style={{ color: "var(--ufy-primary)" }} />
             </div>
             <div style={{ fontSize: "2.2rem", fontWeight: 800, color: "var(--ufy-purple-950)" }}>
               {metrics.formSubmissions}

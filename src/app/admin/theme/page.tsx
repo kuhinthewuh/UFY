@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminHeader from "@/components/admin/AdminHeader";
-import { Palette, RotateCcw, Save, CheckCircle, Sparkles } from "lucide-react";
+import { Palette, RotateCcw, Save, CheckCircle } from "lucide-react";
 import { ThemeSettingsData } from "@/lib/types";
 
 export default function ThemeStudioPage() {
@@ -35,10 +35,9 @@ export default function ThemeStudioPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(theme),
       });
-      const data = await res.json();
       if (res.ok) {
         setSaved(true);
-        setMessage("Theme settings saved! Published website reflects the new typography & styles.");
+        setMessage("All colors, fonts, marquee speed, and layout widths are now live across the public website!");
         setTimeout(() => setSaved(false), 3500);
       }
     } catch {
@@ -49,7 +48,11 @@ export default function ThemeStudioPage() {
   };
 
   const handleRestore = async () => {
-    if (!confirm("Are you sure you want to reset all typography and theme styles to original UFY brand defaults?")) {
+    if (
+      !confirm(
+        "Reset all colors, fonts, and layout settings to the Up for Youth signature palette (#f7f4fc lilac, #7629f0 purple, 100% edge-to-edge)?"
+      )
+    ) {
       return;
     }
     setSaving(true);
@@ -63,7 +66,7 @@ export default function ThemeStudioPage() {
       if (data.theme) {
         setTheme(data.theme);
         setSaved(true);
-        setMessage("Restored original UFY brand defaults successfully!");
+        setMessage("Restored Up for Youth signature aesthetic defaults!");
         setTimeout(() => setSaved(false), 3500);
       }
     } catch {}
@@ -73,16 +76,60 @@ export default function ThemeStudioPage() {
   if (loading || !theme) {
     return (
       <div style={{ padding: "40px", textAlign: "center", color: "var(--ufy-purple-700)" }}>
-        Loading theme studio...
+        Loading Aesthetic &amp; Color Studio...
       </div>
     );
   }
 
+  const colorControls: Array<{
+    key: keyof ThemeSettingsData;
+    label: string;
+    hint: string;
+    fallback: string;
+  }> = [
+    {
+      key: "bgColor",
+      label: "Page Canvas Background",
+      hint: "Dotted lilac canvas behind all pages",
+      fallback: "#f7f4fc",
+    },
+    {
+      key: "primaryColor",
+      label: "Primary Brand Color",
+      hint: "Buttons, cutout outlines, badges & wires",
+      fallback: "#7629f0",
+    },
+    {
+      key: "accentColor",
+      label: "Bright Accent Color",
+      hint: "Marquee highlights, trails & hover states",
+      fallback: "#8e48ff",
+    },
+    {
+      key: "darkColor",
+      label: "Primary Ink / Heading Color",
+      hint: "Headings, card borders & shadows",
+      fallback: "#140529",
+    },
+    {
+      key: "cardBgColor",
+      label: "Card & Polaroid Surface",
+      hint: "Background of cards, modals & frames",
+      fallback: "#ffffff",
+    },
+    {
+      key: "footerBgColor",
+      label: "Footer Background",
+      hint: "Full-bleed footer surface color",
+      fallback: "#140529",
+    },
+  ];
+
   return (
     <div>
       <AdminHeader
-        title="Typography & Theme Studio"
-        subtitle="Control headline and body fonts, button radii, type scales, and brand presentation"
+        title="Colors, Fonts & Aesthetic Studio"
+        subtitle="Customize every color, typeface, marquee speed, polaroid filter, and edge-to-edge width across Up for Youth"
         actions={
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <button
@@ -91,7 +138,7 @@ export default function ThemeStudioPage() {
               style={{ padding: "8px 16px", fontSize: "0.85rem" }}
             >
               <RotateCcw size={15} />
-              <span>Restore UFY Brand</span>
+              <span>Restore UFY Palette</span>
             </button>
 
             <button
@@ -103,12 +150,12 @@ export default function ThemeStudioPage() {
               {saved ? (
                 <>
                   <CheckCircle size={15} />
-                  <span>Saved!</span>
+                  <span>Saved Live!</span>
                 </>
               ) : (
                 <>
                   <Save size={15} />
-                  <span>{saving ? "Saving..." : "Save Theme"}</span>
+                  <span>{saving ? "Saving..." : "Save Aesthetic"}</span>
                 </>
               )}
             </button>
@@ -116,7 +163,7 @@ export default function ThemeStudioPage() {
         }
       />
 
-      <div style={{ padding: "32px", maxWidth: "1100px" }}>
+      <div style={{ padding: "32px" }}>
         {message && (
           <div
             style={{
@@ -125,7 +172,7 @@ export default function ThemeStudioPage() {
               color: "var(--ufy-purple-950)",
               borderRadius: "14px",
               padding: "14px 20px",
-              marginBottom: "28px",
+              marginBottom: "24px",
               fontSize: "0.92rem",
               fontWeight: 600,
             }}
@@ -134,46 +181,88 @@ export default function ThemeStudioPage() {
           </div>
         )}
 
-        {/* Brand Constraint Alert */}
+        {/* Full Global Color Palette Pickers */}
         <div
           style={{
-            backgroundColor: "var(--ufy-purple-50)",
-            border: "1.5px solid var(--ufy-purple-200)",
-            borderRadius: "16px",
-            padding: "20px 24px",
-            marginBottom: "32px",
-            display: "flex",
-            alignItems: "center",
-            gap: "14px",
+            backgroundColor: "#ffffff",
+            border: "1.5px solid var(--ufy-purple-100)",
+            borderRadius: "20px",
+            padding: "28px",
+            marginBottom: "28px",
+            boxShadow: "var(--shadow-subtle)",
           }}
         >
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
+            <Palette size={20} style={{ color: "var(--ufy-primary)" }} />
+            <h2 style={{ fontSize: "1.22rem", fontWeight: 800, color: "var(--ufy-purple-950)" }}>
+              Global Color Palette Controls
+            </h2>
+          </div>
+          <p style={{ fontSize: "0.86rem", color: "var(--ufy-purple-700)", marginBottom: "22px" }}>
+            Click any swatch or enter a HEX value to recolor the entire Up for Youth website instantaneously via CSS variables.
+          </p>
+
           <div
             style={{
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              backgroundColor: "var(--ufy-primary)",
-              color: "#ffffff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: "18px",
             }}
           >
-            <Sparkles size={18} />
-          </div>
-          <div>
-            <h4 style={{ fontSize: "0.98rem", fontWeight: 700, color: "var(--ufy-purple-950)" }}>
-              Strict Brand Color Palette Enforced
-            </h4>
-            <p style={{ fontSize: "0.88rem", color: "var(--ufy-purple-800)", marginTop: "2px" }}>
-              Primary: <strong>#7629f0 (UFY Purple)</strong> • Secondary: <strong>#ffffff (White)</strong>.
-              Arbitrary colors are restricted to maintain brand integrity and high visual prestige.
-            </p>
+            {colorControls.map((ctrl) => {
+              const currentVal = (theme[ctrl.key] as string) || ctrl.fallback;
+              return (
+                <div
+                  key={ctrl.key}
+                  style={{
+                    border: "1.5px solid var(--ufy-purple-100)",
+                    borderRadius: "16px",
+                    padding: "16px",
+                    backgroundColor: "var(--ufy-purple-25)",
+                  }}
+                >
+                  <label className="form-label" style={{ marginBottom: "2px" }}>
+                    {ctrl.label}
+                  </label>
+                  <p style={{ fontSize: "0.76rem", color: "var(--ufy-purple-700)", marginBottom: "10px" }}>
+                    {ctrl.hint}
+                  </p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <input
+                      type="color"
+                      value={currentVal}
+                      onChange={(e) => setTheme({ ...theme, [ctrl.key]: e.target.value })}
+                      style={{
+                        width: "44px",
+                        height: "42px",
+                        borderRadius: "10px",
+                        border: "1.5px solid #cbd5e1",
+                        cursor: "pointer",
+                        padding: "2px",
+                        backgroundColor: "#ffffff",
+                      }}
+                    />
+                    <input
+                      type="text"
+                      className="form-input"
+                      value={currentVal}
+                      onChange={(e) => setTheme({ ...theme, [ctrl.key]: e.target.value })}
+                      style={{ fontFamily: "monospace", fontWeight: 700 }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "28px" }} className="theme-grid">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))",
+            gap: "28px",
+          }}
+        >
           {/* Typography Panel */}
           <div
             style={{
@@ -183,77 +272,74 @@ export default function ThemeStudioPage() {
               padding: "28px",
               display: "flex",
               flexDirection: "column",
-              gap: "20px",
+              gap: "18px",
             }}
           >
             <h2 style={{ fontSize: "1.2rem", fontWeight: 800, color: "var(--ufy-purple-950)" }}>
-              Typography System
+              Typography &amp; Type Scale
             </h2>
 
-            <div className="form-group">
+            <div className="form-group" style={{ marginBottom: 0 }}>
               <label className="form-label">Display / Headline Font</label>
               <select
                 className="form-select"
                 value={theme.headingFont}
                 onChange={(e) => setTheme({ ...theme, headingFont: e.target.value })}
               >
-                <option value="Space Grotesk">Space Grotesk (Editorial & Expressive)</option>
-                <option value="Syne">Syne (Bold, Geometric & Sculptural)</option>
-                <option value="Outfit">Outfit (Clean, Modern & Friendly)</option>
-                <option value="Plus Jakarta Sans">Plus Jakarta Sans (Contemporary Agency)</option>
-                <option value="Inter">Inter (Functional & Ultra-Crisp)</option>
+                <option value="Plus Jakarta Sans">Plus Jakarta Sans (UFY Signature Geometric)</option>
+                <option value="Space Grotesk">Space Grotesk (Editorial &amp; Expressive)</option>
+                <option value="Outfit">Outfit (Clean &amp; Rounded)</option>
+                <option value="Syne">Syne (Bold &amp; Avant-Garde)</option>
+                <option value="Inter">Inter (Crisp Neo-Grotesque)</option>
               </select>
             </div>
 
-            <div className="form-group">
+            <div className="form-group" style={{ marginBottom: 0 }}>
               <label className="form-label">Body Text Font</label>
               <select
                 className="form-select"
                 value={theme.bodyFont}
                 onChange={(e) => setTheme({ ...theme, bodyFont: e.target.value })}
               >
-                <option value="Inter">Inter (Recommended for High Readability)</option>
-                <option value="Plus Jakarta Sans">Plus Jakarta Sans (Warm & Approachable)</option>
-                <option value="Space Grotesk">Space Grotesk (Playful Tech)</option>
+                <option value="Plus Jakarta Sans">Plus Jakarta Sans (Warm &amp; Cohesive)</option>
+                <option value="Inter">Inter (Ultra-Crisp Reading)</option>
+                <option value="Outfit">Outfit (Friendly &amp; Clean)</option>
+                <option value="Space Grotesk">Space Grotesk (Playful Editorial)</option>
               </select>
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Type Scale Multiplier</label>
-              <select
-                className="form-select"
-                value={theme.typeScale}
-                onChange={(e) => setTheme({ ...theme, typeScale: e.target.value })}
-              >
-                <option value="compact">Compact (Slightly Smaller Headings)</option>
-                <option value="balanced">Balanced (Standard Proportions)</option>
-                <option value="expressive">Expressive (Striking, Impactful Titles)</option>
-              </select>
-            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+              <div>
+                <label className="form-label">Headline Letter Spacing</label>
+                <select
+                  className="form-select"
+                  value={theme.headingLetterSpacing || "-0.03em"}
+                  onChange={(e) => setTheme({ ...theme, headingLetterSpacing: e.target.value })}
+                >
+                  <option value="-0.04em">Super Tight (-0.04em)</option>
+                  <option value="-0.03em">UFY Signature (-0.03em)</option>
+                  <option value="-0.02em">Editorial Crisp (-0.02em)</option>
+                  <option value="0em">Normal (0em)</option>
+                  <option value="0.03em">Wide (+0.03em)</option>
+                </select>
+              </div>
 
-            {/* Typography Live Preview */}
-            <div
-              style={{
-                marginTop: "12px",
-                padding: "20px",
-                backgroundColor: "var(--ufy-purple-25)",
-                border: "1px dashed var(--ufy-purple-200)",
-                borderRadius: "14px",
-              }}
-            >
-              <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--ufy-primary)", textTransform: "uppercase" }}>
-                Typography Preview
-              </span>
-              <h3 style={{ fontFamily: theme.headingFont, fontSize: "1.5rem", fontWeight: 800, color: "var(--ufy-purple-950)", marginTop: "6px" }}>
-                Youth Action. Real Knowledge.
-              </h3>
-              <p style={{ fontFamily: theme.bodyFont, fontSize: "0.92rem", color: "var(--ufy-purple-800)", marginTop: "6px", lineHeight: 1.5 }}>
-                UFY equips young people with hands-on first-aid workshops and community mini-libraries.
-              </p>
+              <div>
+                <label className="form-label">Type Scale</label>
+                <select
+                  className="form-select"
+                  value={theme.typeScale}
+                  onChange={(e) => setTheme({ ...theme, typeScale: e.target.value })}
+                >
+                  <option value="expressive">Expressive (Bold Display)</option>
+                  <option value="balanced">Balanced (Standard)</option>
+                  <option value="compact">Compact</option>
+                </select>
+              </div>
             </div>
           </div>
 
-          {/* Component & UI Controls */}
+          {/* Layout Width, Marquee Speed & Polaroid Treatments */}
           <div
             style={{
               backgroundColor: "#ffffff",
@@ -262,79 +348,179 @@ export default function ThemeStudioPage() {
               padding: "28px",
               display: "flex",
               flexDirection: "column",
-              gap: "20px",
+              gap: "18px",
             }}
           >
             <h2 style={{ fontSize: "1.2rem", fontWeight: 800, color: "var(--ufy-purple-950)" }}>
-              UI & Component Styling
+              Edge-to-Edge Layout, Motion &amp; Polaroids
             </h2>
 
-            <div className="form-group">
+            <div>
+              <label className="form-label">Site Container Max Width</label>
+              <select
+                className="form-select"
+                value={theme.containerMaxWidth}
+                onChange={(e) => setTheme({ ...theme, containerMaxWidth: e.target.value })}
+              >
+                <option value="100%">100% — True Edge-to-Edge Full Span (Recommended)</option>
+                <option value="1680px">1680px — Ultra-Wide Studio Canvas</option>
+                <option value="1440px">1440px — Wide Editorial</option>
+                <option value="1280px">1280px — Framed Container</option>
+              </select>
+            </div>
+
+            <div>
               <label className="form-label">Button Corner Radius</label>
               <select
                 className="form-select"
                 value={theme.buttonRadius}
                 onChange={(e) => setTheme({ ...theme, buttonRadius: e.target.value })}
               >
-                <option value="0px">0px (Sharp Brutalist Edges)</option>
-                <option value="8px">8px (Subtle Rounded)</option>
-                <option value="14px">14px (Recommended UFY Default)</option>
-                <option value="24px">24px (Pronounced Rounded)</option>
-                <option value="9999px">9999px (Full Pill)</option>
+                <option value="9999px">9999px (Full Pill — UFY Signature)</option>
+                <option value="16px">16px (Rounded Soft)</option>
+                <option value="10px">10px (Architectural)</option>
+                <option value="0px">0px (Sharp Brutalist)</option>
               </select>
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Button Presentation Style</label>
-              <select
-                className="form-select"
-                value={theme.buttonStyle}
-                onChange={(e) => setTheme({ ...theme, buttonStyle: e.target.value })}
+            <div>
+              <label
+                className="form-label"
+                style={{ display: "flex", justifyContent: "space-between" }}
               >
-                <option value="solid">Solid Saturated Purple</option>
-                <option value="outline">Architectural Outline</option>
-                <option value="soft">Soft Tinted Purple</option>
-              </select>
+                <span>Hero Auto-Scroll Sign Speed (Seconds per Loop)</span>
+                <span style={{ color: "var(--ufy-primary)", fontFamily: "monospace" }}>
+                  {theme.marqueeSpeed ?? 28}s
+                </span>
+              </label>
+              <input
+                type="range"
+                min={10}
+                max={60}
+                step={2}
+                value={theme.marqueeSpeed ?? 28}
+                onChange={(e) => setTheme({ ...theme, marqueeSpeed: Number(e.target.value) })}
+                style={{ width: "100%", accentColor: "var(--ufy-primary)" }}
+              />
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "#64748b" }}>
+                <span>10s (Fast Energetic)</span>
+                <span>60s (Calm Drift)</span>
+              </div>
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Container Max Width</label>
-              <select
-                className="form-select"
-                value={theme.containerMaxWidth}
-                onChange={(e) => setTheme({ ...theme, containerMaxWidth: e.target.value })}
-              >
-                <option value="1140px">1140px (Compact)</option>
-                <option value="1240px">1240px (Standard UFY Spacing)</option>
-                <option value="1360px">1360px (Expansive Canvas)</option>
-              </select>
-            </div>
-
-            {/* Button Preview */}
             <div
               style={{
-                marginTop: "12px",
-                padding: "20px",
-                backgroundColor: "var(--ufy-purple-25)",
-                border: "1px dashed var(--ufy-purple-200)",
-                borderRadius: "14px",
                 display: "flex",
                 alignItems: "center",
-                gap: "14px",
+                justifyContent: "space-between",
+                padding: "14px 16px",
+                borderRadius: "14px",
+                backgroundColor: "var(--ufy-purple-25)",
+                border: "1px solid var(--ufy-purple-100)",
               }}
             >
-              <button
-                className="btn btn-primary"
-                style={{ borderRadius: theme.buttonRadius }}
+              <div>
+                <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--ufy-purple-950)" }}>
+                  Artistic Purple Duotone on Leader Polaroids
+                </div>
+                <div style={{ fontSize: "0.78rem", color: "var(--ufy-purple-700)" }}>
+                  Toggle between Readymag purple duotone portraits or full natural color photos
+                </div>
+              </div>
+              <input
+                type="checkbox"
+                checked={theme.enableDuotone ?? true}
+                onChange={(e) => setTheme({ ...theme, enableDuotone: e.target.checked })}
+                style={{ width: "20px", height: "20px", accentColor: "var(--ufy-primary)", cursor: "pointer" }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Live Interactive Preview Strip */}
+        <div
+          style={{
+            marginTop: "28px",
+            padding: "32px",
+            borderRadius: "24px",
+            backgroundColor: theme.bgColor || "#f7f4fc",
+            border: `2px dashed ${theme.primaryColor || "#7629f0"}`,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+            <Palette size={16} style={{ color: theme.primaryColor || "#7629f0" }} />
+            <span
+              style={{
+                fontSize: "0.78rem",
+                fontWeight: 800,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                color: theme.primaryColor || "#7629f0",
+              }}
+            >
+              Live Aesthetic Preview
+            </span>
+          </div>
+
+          <div
+            style={{
+              backgroundColor: theme.cardBgColor || "#ffffff",
+              borderRadius: "22px",
+              padding: "28px",
+              border: `2px solid ${theme.darkColor || "#140529"}`,
+              boxShadow: `6px 8px 0px ${theme.darkColor || "#140529"}`,
+            }}
+          >
+            <h3
+              style={{
+                fontFamily: theme.headingFont,
+                letterSpacing: theme.headingLetterSpacing || "-0.03em",
+                fontSize: "2rem",
+                fontWeight: 900,
+                color: theme.darkColor || "#140529",
+                marginBottom: "8px",
+              }}
+            >
+              Up for Youth — Compassion in Motion.
+            </h3>
+            <p
+              style={{
+                fontFamily: theme.bodyFont,
+                fontSize: "0.98rem",
+                color: theme.darkColor || "#140529",
+                opacity: 0.82,
+                marginBottom: "18px",
+                maxWidth: "700px",
+              }}
+            >
+              Every hue, typeface, container width, and button curve you adjust above updates the entire public website dynamically.
+            </p>
+            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <span
+                style={{
+                  backgroundColor: theme.primaryColor || "#7629f0",
+                  color: "#ffffff",
+                  padding: "10px 22px",
+                  borderRadius: theme.buttonRadius || "9999px",
+                  fontWeight: 800,
+                  fontSize: "0.86rem",
+                }}
               >
-                Primary Button
-              </button>
-              <button
-                className="btn btn-outline-purple"
-                style={{ borderRadius: theme.buttonRadius }}
+                Primary CTA Preview
+              </span>
+              <span
+                style={{
+                  backgroundColor: "transparent",
+                  color: theme.primaryColor || "#7629f0",
+                  border: `2px solid ${theme.primaryColor || "#7629f0"}`,
+                  padding: "8px 20px",
+                  borderRadius: theme.buttonRadius || "9999px",
+                  fontWeight: 800,
+                  fontSize: "0.86rem",
+                }}
               >
-                Outline Button
-              </button>
+                Secondary Outline Preview
+              </span>
             </div>
           </div>
         </div>
@@ -342,4 +528,3 @@ export default function ThemeStudioPage() {
     </div>
   );
 }
-

@@ -19,11 +19,21 @@ import {
   LogOut,
   ExternalLink,
   Edit3,
+  Camera,
+  MapPin,
+  Activity,
+  GraduationCap,
+  MailOpen,
+  HeartHandshake,
 } from "lucide-react";
 
 export default function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
+
+  if (pathname === "/admin/login") {
+    return null;
+  }
 
   const handleLogout = async () => {
     try {
@@ -33,26 +43,47 @@ export default function AdminSidebar() {
     } catch {}
   };
 
-  const navItems = [
-    { label: "Overview", path: "/admin/overview", icon: LayoutDashboard },
-    { label: "Visual Editor", path: "/admin/editor", icon: Edit3 },
-    { label: "Page Sections", path: "/admin/sections", icon: Layers },
-    { label: "Typography & Theme", path: "/admin/theme", icon: Palette },
-    { label: "Media Library", path: "/admin/media", icon: ImageIcon },
-    { label: "Team Management", path: "/admin/team", icon: Users },
-    { label: "Programs & Initiatives", path: "/admin/programs", icon: Compass },
-    { label: "Idea Inbox", path: "/admin/inbox", icon: Inbox },
-    { label: "Analytics", path: "/admin/analytics", icon: BarChart3 },
-    { label: "Navigation & Footer", path: "/admin/navigation", icon: MenuIcon },
-    { label: "Site Settings", path: "/admin/settings", icon: Settings },
-    { label: "Publishing & Revisions", path: "/admin/revisions", icon: History },
-    { label: "Users & Security", path: "/admin/users", icon: Shield },
+  const navGroups = [
+    {
+      heading: "Site Builder & Design",
+      items: [
+        { label: "Overview", path: "/admin/overview", icon: LayoutDashboard },
+        { label: "Visual Page Builder", path: "/admin/editor", icon: Edit3 },
+        { label: "Colors, Fonts & Theme", path: "/admin/theme", icon: Palette },
+        { label: "All Page Copy & Settings", path: "/admin/settings", icon: Settings },
+        { label: "Homepage Sections", path: "/admin/sections", icon: Layers },
+        { label: "Navigation & Footer", path: "/admin/navigation", icon: MenuIcon },
+      ],
+    },
+    {
+      heading: "Public Pages & Content",
+      items: [
+        { label: "Educational Videos", path: "/admin/videos", icon: GraduationCap },
+        { label: "Virtual Letters Wall", path: "/admin/letters", icon: MailOpen },
+        { label: "Volunteers & Hours", path: "/admin/volunteers", icon: HeartHandshake },
+        { label: "Programs & Initiatives", path: "/admin/programs", icon: Compass },
+        { label: "Our Team & Pegs", path: "/admin/team", icon: Users },
+        { label: "Journey Trail Map", path: "/admin/journey", icon: MapPin },
+        { label: "Impact Live Counters", path: "/admin/impact", icon: Activity },
+        { label: "Polaroid Gallery", path: "/admin/gallery", icon: Camera },
+        { label: "Idea Mailbox Inbox", path: "/admin/inbox", icon: Inbox },
+      ],
+    },
+    {
+      heading: "Assets & Operations",
+      items: [
+        { label: "Media Library", path: "/admin/media", icon: ImageIcon },
+        { label: "Analytics", path: "/admin/analytics", icon: BarChart3 },
+        { label: "Publishing & Revisions", path: "/admin/revisions", icon: History },
+        { label: "Admins & Security", path: "/admin/users", icon: Shield },
+      ],
+    },
   ];
 
   return (
     <aside
       style={{
-        width: "270px",
+        width: "276px",
         backgroundColor: "var(--ufy-purple-950)",
         color: "#ffffff",
         display: "flex",
@@ -67,7 +98,7 @@ export default function AdminSidebar() {
       {/* Brand Header */}
       <div
         style={{
-          padding: "24px 20px",
+          padding: "22px 20px",
           borderBottom: "1px solid var(--ufy-purple-900)",
           display: "flex",
           alignItems: "center",
@@ -84,18 +115,20 @@ export default function AdminSidebar() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontWeight: 800,
-              fontSize: "1.1rem",
+              fontWeight: 900,
+              fontSize: "0.95rem",
               color: "#ffffff",
             }}
           >
-            U
+            ufy
           </div>
           <div>
-            <div style={{ fontWeight: 800, fontSize: "1.15rem", letterSpacing: "-0.02em", color: "#ffffff" }}>
-              UFY Admin
+            <div style={{ fontWeight: 800, fontSize: "1.05rem", letterSpacing: "-0.02em", color: "#ffffff" }}>
+              Up for Youth
             </div>
-            <div style={{ fontSize: "0.75rem", color: "var(--ufy-purple-300)" }}>Control Center</div>
+            <div style={{ fontSize: "0.72rem", color: "var(--ufy-purple-300)" }}>
+              Admin Site Studio
+            </div>
           </div>
         </Link>
 
@@ -111,71 +144,76 @@ export default function AdminSidebar() {
             display: "flex",
             alignItems: "center",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ufy-purple-300)")}
         >
           <ExternalLink size={16} />
         </a>
       </div>
 
-      {/* Navigation Links Scrollable */}
+      {/* Grouped Navigation Links */}
       <nav
         style={{
           flexGrow: 1,
           overflowY: "auto",
-          padding: "16px 12px",
+          padding: "14px 12px",
           display: "flex",
           flexDirection: "column",
-          gap: "4px",
+          gap: "18px",
         }}
       >
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname === item.path || (item.path !== "/admin" && pathname.startsWith(item.path));
-          return (
-            <Link
-              key={item.path}
-              href={item.path}
+        {navGroups.map((group) => (
+          <div key={group.heading} style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+            <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                padding: "10px 14px",
-                borderRadius: "10px",
-                fontSize: "0.92rem",
-                fontWeight: isActive ? 700 : 500,
-                color: isActive ? "#ffffff" : "var(--ufy-purple-100)",
-                backgroundColor: isActive ? "var(--ufy-primary)" : "transparent",
-                transition: "all var(--transition-fast)",
-              }}
-              onMouseEnter={(e) => {
-                if (!isActive) {
-                  e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.08)";
-                  e.currentTarget.style.color = "#ffffff";
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!isActive) {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.color = "var(--ufy-purple-100)";
-                }
+                fontSize: "0.68rem",
+                fontWeight: 800,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                color: "var(--ufy-purple-300)",
+                padding: "0 12px 6px 12px",
+                opacity: 0.8,
               }}
             >
-              <Icon size={18} style={{ color: isActive ? "#ffffff" : "var(--ufy-purple-300)" }} />
-              <span>{item.label}</span>
-            </Link>
-          );
-        })}
+              {group.heading}
+            </div>
+            {group.items.map((item) => {
+              const Icon = item.icon;
+              const isActive =
+                pathname === item.path ||
+                (item.path !== "/admin" && pathname.startsWith(item.path));
+              return (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "11px",
+                    padding: "9px 12px",
+                    borderRadius: "10px",
+                    fontSize: "0.88rem",
+                    fontWeight: isActive ? 700 : 500,
+                    color: isActive ? "#ffffff" : "var(--ufy-purple-100)",
+                    backgroundColor: isActive ? "var(--ufy-primary)" : "transparent",
+                    transition: "all var(--transition-fast)",
+                  }}
+                >
+                  <Icon
+                    size={17}
+                    style={{ color: isActive ? "#ffffff" : "var(--ufy-purple-300)", flexShrink: 0 }}
+                  />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+        ))}
       </nav>
 
       {/* Footer / Logout */}
       <div
         style={{
-          padding: "16px 14px",
+          padding: "14px",
           borderTop: "1px solid var(--ufy-purple-900)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
         }}
       >
         <button
@@ -185,20 +223,11 @@ export default function AdminSidebar() {
             alignItems: "center",
             gap: "8px",
             color: "var(--ufy-purple-200)",
-            fontSize: "0.88rem",
+            fontSize: "0.86rem",
             fontWeight: 600,
             padding: "8px 12px",
             borderRadius: "8px",
             width: "100%",
-            transition: "all var(--transition-fast)",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
-            e.currentTarget.style.color = "#ffffff";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "transparent";
-            e.currentTarget.style.color = "var(--ufy-purple-200)";
           }}
         >
           <LogOut size={16} />

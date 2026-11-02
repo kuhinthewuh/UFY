@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import confetti from "canvas-confetti";
-import { Sparkles, Send, CheckCircle, AlertCircle, ArrowUpRight } from "lucide-react";
+import { Award, Send, CheckCircle, AlertCircle, ArrowUpRight } from "lucide-react";
 import { PageSectionData } from "@/lib/types";
 
 interface CommunityIdeaFormProps {

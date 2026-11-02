@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ArrowUpRight, HeartPulse, BookOpen, Sparkles, Shield, Compass, Lightbulb } from "lucide-react";
+import { ArrowUpRight, HeartPulse, BookOpen, Award, Shield, Compass, Lightbulb } from "lucide-react";
 import { PageSectionData } from "@/lib/types";
 
 interface MissionSectionProps {
@@ -46,7 +46,7 @@ export default function MissionSection({ section, onSelectTrack }: MissionSectio
       category: "Educational Cards & Zines",
       desc: "Youth-illustrated comic primers and infographic pocket cards that demystify chronic conditions, allergies, and pediatric first-response.",
       tag: "CREATIVE ADVOCACY",
-      icon: Sparkles,
+      icon: Award,
     },
     {
       num: "04",

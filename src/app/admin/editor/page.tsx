@@ -18,7 +18,6 @@ import {
   Save,
   CheckCircle,
   Settings,
-  Sparkles,
 } from "lucide-react";
 import { PageSectionData } from "@/lib/types";
 
@@ -147,7 +146,7 @@ export default function VisualEditorPage() {
       layoutVariation: "default",
       displayOrder: sections.length + 1,
       isVisible: true,
-      backgroundMode: "white",
+      backgroundMode: "transparent",
       updatedAt: new Date().toISOString(),
     };
     const updated = [...sections, newSection];
@@ -628,6 +627,7 @@ export default function VisualEditorPage() {
                   value={selectedSection.backgroundMode}
                   onChange={(e) => handleUpdateSelected("backgroundMode", e.target.value)}
                 >
+                  <option value="transparent">Dotted Lilac Canvas (UFY Signature)</option>
                   <option value="white">Pure White (#ffffff)</option>
                   <option value="purple">Saturated UFY Purple (#7629f0)</option>
                   <option value="subtle-tint">Subtle Purple Tint (#f8f4fe)</option>

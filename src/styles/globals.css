@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* UFY Core Brand Color Palette */
+  /* UFY — Up for Youth Core Brand Color Palette (Dynamically Overridable via Admin Theme Studio) */
   --ufy-bg: #f7f4fc;
   --ufy-dark-violet: #140529;
   --ufy-primary-purple: #7629f0;
@@ -13,6 +13,72 @@
   --ufy-deep-violet: #5c18c9;
   --ufy-footer-obsidian: #0d0519;
   --ufy-white: #ffffff;
+  --ufy-card-bg: #ffffff;
+
+  /* UFY Primary & State Colors */
+  --ufy-primary: #7629f0;
+  --ufy-primary-hover: #651ed6;
+  --ufy-primary-active: #5416b3;
+  --ufy-purple: #7629f0;
+  --ufy-purple-bright: #8e48ff;
+
+  /* Tonal Purple Palette (Used across Admin & Components) */
+  --ufy-purple-950: #140529;
+  --ufy-purple-900: #200843;
+  --ufy-purple-850: #2d0b60;
+  --ufy-purple-800: #3c0f7f;
+  --ufy-purple-700: #5416b3;
+  --ufy-purple-600: #651ed6;
+  --ufy-purple-500: #7629f0;
+  --ufy-purple-400: #9353f4;
+  --ufy-purple-300: #b483f8;
+  --ufy-purple-200: #d4b8fc;
+  --ufy-purple-150: #e3cffd;
+  --ufy-purple-100: #ebdffe;
+  --ufy-purple-50: #f8f4fe;
+  --ufy-purple-25: #fcfbfe;
+
+  /* Semantic UI Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f4fe;
+  --bg-tertiary: #ebdffe;
+  --bg-hero: #7629f0;
+  --bg-card: #ffffff;
+
+  --text-primary: #140529;
+  --text-secondary: #5416b3;
+  --text-muted: #651ed6;
+  --text-inverse: #ffffff;
+  --text-inverse-muted: #ebdffe;
+
+  --border-subtle: #ebdffe;
+  --border-strong: #d4b8fc;
+  --border-focus: #7629f0;
+
+  /* Layout & Typography Tokens */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  --btn-radius: 9999px;
+  --container-max-width: 100%;
+  --heading-tracking: -0.03em;
+  --marquee-speed: 28s;
+  --type-scale-mult: 1;
+
+  --font-heading: 'Plus Jakarta Sans', 'Space Grotesk', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --shadow-subtle: 0 4px 18px rgba(20, 5, 41, 0.06);
+  --shadow-card: 0 10px 32px rgba(118, 41, 240, 0.09);
+  --shadow-hover: 0 18px 44px rgba(118, 41, 240, 0.18);
+  --shadow-glow: 0 0 38px rgba(118, 41, 240, 0.28);
+
+  --transition-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 420ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Reset and Global Base */
@@ -31,14 +97,20 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body);
   background-color: var(--ufy-bg);
-  background-image: radial-gradient(rgba(118, 41, 240, 0.035) 1px, transparent 0);
-  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(118, 41, 240, 0.055) 1.25px, transparent 0);
+  background-size: 26px 26px;
   color: var(--ufy-dark-violet);
-  line-height: 1.5;
+  line-height: 1.55;
   overflow-x: hidden;
   min-height: 100vh;
+}
+
+/* Accessible and High Contrast Headers */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: var(--heading-tracking, -0.025em);
 }
 
 /* Text Selection */
@@ -50,48 +122,44 @@ body {
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 9px;
+  height: 9px;
 }
 ::-webkit-scrollbar-track {
   background: #ede7f6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #7629f0;
-  border-radius: 4px;
+  background: var(--ufy-primary-purple);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #5c18c9;
+  background: var(--ufy-deep-violet);
 }
 
-/* Container Utility */
+/* Edge-to-Edge Expansive Container Utility */
 .ufy-container {
   width: 100%;
-  max-width: 1360px;
+  max-width: var(--container-max-width, 100%);
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding-left: clamp(1.25rem, 3.5vw, 4.5rem);
+  padding-right: clamp(1.25rem, 3.5vw, 4.5rem);
 }
 
-@media (min-width: 640px) {
-  .ufy-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-/* Artsy Dashed Frame Boxes (Readymag signature stamp container) */
+/* Artsy Dashed Frame Boxes (Readymag stamp aesthetic) */
 .ufy-dashed-box {
-  border: 2px dashed rgba(118, 41, 240, 0.45);
-  background: transparent;
+  border: 2px dashed rgba(118, 41, 240, 0.48);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(2px);
   position: relative;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .ufy-dashed-box:hover {
-  border-color: rgba(118, 41, 240, 0.7);
+  border-color: rgba(118, 41, 240, 0.78);
+  background: rgba(255, 255, 255, 0.5);
 }
 
-/* Infinite Left-to-Right Marquee for Giant Cut-Out Typography */
+/* Seamless Infinite Left-to-Right Cutout Typography Marquee */
 @keyframes marqueeLeftToRight {
   0% {
     transform: translate3d(-50%, 0, 0);
@@ -104,7 +172,7 @@ body {
 .animate-marquee-lr {
   display: flex !important;
   width: max-content !important;
-  animation: marqueeLeftToRight 28s linear infinite !important;
+  animation: marqueeLeftToRight var(--marquee-speed, 28s) linear infinite !important;
   will-change: transform;
 }
 
@@ -115,122 +183,220 @@ body {
 /* Artsy Tilted Sticker Cards */
 .ufy-sticker {
   display: inline-block;
-  padding: 1rem 1.5rem;
+  padding: 1.05rem 1.65rem;
   font-size: 1.05rem;
   line-height: 1.35;
-  border-radius: 2px;
-  box-shadow: 4px 6px 0px rgba(20, 5, 41, 0.18);
+  border-radius: 4px;
+  box-shadow: 5px 7px 0px rgba(20, 5, 41, 0.2);
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
   user-select: none;
 }
 
 .ufy-sticker-black {
-  background-color: #140529;
+  background-color: var(--ufy-dark-violet);
   color: #ffffff;
 }
 
 .ufy-sticker-purple {
-  background-color: #7629f0;
+  background-color: var(--ufy-primary-purple);
   color: #ffffff;
-  box-shadow: 4px 6px 0px rgba(118, 41, 240, 0.3);
+  box-shadow: 5px 7px 0px rgba(20, 5, 41, 0.26);
 }
 
 .ufy-sticker-violet {
-  background-color: #8e48ff;
+  background-color: var(--ufy-bright-violet);
   color: #ffffff;
-  box-shadow: 4px 6px 0px rgba(142, 72, 255, 0.3);
+  box-shadow: 5px 7px 0px rgba(20, 5, 41, 0.22);
 }
 
 /* Diagonalized Rotations */
-.ufy-tilt-neg3 {
-  transform: rotate(-3deg);
-}
-.ufy-tilt-neg3:hover {
-  transform: rotate(-1deg) scale(1.02);
-}
+.ufy-tilt-neg3 { transform: rotate(-3deg); }
+.ufy-tilt-neg3:hover { transform: rotate(-0.5deg) scale(1.03); }
+.ufy-tilt-pos3 { transform: rotate(3deg); }
+.ufy-tilt-pos3:hover { transform: rotate(0.5deg) scale(1.03); }
+.ufy-tilt-neg1 { transform: rotate(-1.5deg); }
+.ufy-tilt-neg1:hover { transform: rotate(0.5deg) scale(1.03); }
+.ufy-tilt-neg5 { transform: rotate(-4.5deg); }
+.ufy-tilt-neg5:hover { transform: rotate(-1deg) scale(1.03); }
+.ufy-tilt-neg6 { transform: rotate(-5.5deg); }
+.ufy-tilt-neg6:hover { transform: rotate(-1.5deg) scale(1.03); }
+.ufy-tilt-pos5 { transform: rotate(4.5deg); }
+.ufy-tilt-pos5:hover { transform: rotate(1deg) scale(1.03); }
+.ufy-tilt-pos6 { transform: rotate(5.5deg); }
+.ufy-tilt-pos6:hover { transform: rotate(1.5deg) scale(1.03); }
 
-.ufy-tilt-pos3 {
-  transform: rotate(3deg);
-}
-.ufy-tilt-pos3:hover {
-  transform: rotate(5deg) scale(1.02);
-}
-
-.ufy-tilt-neg1 {
-  transform: rotate(-1deg);
-}
-.ufy-tilt-neg1:hover {
-  transform: rotate(1deg) scale(1.02);
-}
-
-.ufy-tilt-neg5 {
-  transform: rotate(-5deg);
-}
-.ufy-tilt-neg5:hover {
-  transform: rotate(-2deg) scale(1.02);
-}
-
-.ufy-tilt-neg6 {
-  transform: rotate(-6deg);
-}
-.ufy-tilt-neg6:hover {
-  transform: rotate(-2deg) scale(1.02);
-}
-
-.ufy-tilt-pos5 {
-  transform: rotate(5deg);
-}
-.ufy-tilt-pos5:hover {
-  transform: rotate(1deg) scale(1.02);
-}
-
-.ufy-tilt-pos6 {
-  transform: rotate(6deg);
-}
-.ufy-tilt-pos6:hover {
-  transform: rotate(2deg) scale(1.02);
-}
-
-/* Artsy Polaroid Cards for Leaders */
+/* Artsy Polaroid Cards for Leaders & Gallery */
 .ufy-polaroid-frame {
   background-color: #ffffff;
-  padding: 10px;
+  padding: 14px 14px 24px 14px;
   display: inline-block;
-  box-shadow: 0 10px 25px -5px rgba(20, 5, 41, 0.15), 0 8px 10px -6px rgba(20, 5, 41, 0.1);
-  border: 1px solid rgba(20, 5, 41, 0.08);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  box-shadow: 0 14px 32px -6px rgba(20, 5, 41, 0.18), 0 6px 14px -4px rgba(20, 5, 41, 0.1);
+  border: 1px solid rgba(20, 5, 41, 0.1);
+  border-radius: 3px;
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.32s ease;
 }
 
 .ufy-polaroid-frame:hover {
-  box-shadow: 0 20px 30px -8px rgba(118, 41, 240, 0.28);
+  box-shadow: 0 24px 48px -8px rgba(118, 41, 240, 0.32);
 }
 
-/* Artsy Duotone Filters for Youth Leader Portraits */
+/* Artsy Duotone Filters */
 .ufy-duotone-purple {
-  filter: grayscale(100%) brightness(95%) sepia(100%) hue-rotate(225deg) saturate(320%) contrast(115%);
-  transition: filter 0.35s ease;
+  filter: grayscale(100%) brightness(96%) sepia(100%) hue-rotate(225deg) saturate(310%) contrast(112%);
+  transition: filter 0.4s ease, transform 0.45s ease;
 }
-
+.group:hover .ufy-duotone-purple,
 .ufy-duotone-purple:hover {
-  filter: grayscale(0%) contrast(100%);
+  filter: grayscale(0%) contrast(102%);
 }
 
 .ufy-duotone-violet {
-  filter: grayscale(100%) brightness(95%) sepia(100%) hue-rotate(245deg) saturate(360%) contrast(115%);
-  transition: filter 0.35s ease;
+  filter: grayscale(100%) brightness(96%) sepia(100%) hue-rotate(245deg) saturate(340%) contrast(112%);
+  transition: filter 0.4s ease, transform 0.45s ease;
 }
-
+.group:hover .ufy-duotone-violet,
 .ufy-duotone-violet:hover {
-  filter: grayscale(0%) contrast(100%);
+  filter: grayscale(0%) contrast(102%);
 }
 
-/* Interactive Badge Tilt */
-.ufy-badge-tape {
-  position: relative;
-  box-shadow: 2px 3px 0px rgba(20, 5, 41, 0.15);
-  transition: transform 0.2s ease;
+/* Treasure Map Trail Curving Dotted Line */
+.trail-path-svg {
+  filter: drop-shadow(0 4px 10px rgba(118, 41, 240, 0.2));
 }
 
-.ufy-badge-tape:hover {
-  transform: scale(1.05);
+.trail-dotted-line {
+  stroke-dasharray: 10 9;
+  animation: trailFlow 18s linear infinite;
+}
+
+@keyframes trailFlow {
+  from {
+    stroke-dashoffset: 190;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* High Contrast Form & Admin Elements (Strict Guard Against White-on-White) */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #d4b8fc;
+  background-color: #ffffff !important;
+  color: #140529 !important;
+  font-size: 0.94rem;
+  font-family: var(--font-body);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+  color: #7c6896 !important;
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--ufy-primary-purple);
+  box-shadow: 0 0 0 3px rgba(118, 41, 240, 0.18);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #140529;
+  margin-bottom: 6px;
+}
+
+/* Unified Public & Admin Buttons */
+.btn,
+.btn-primary,
+.btn-outline,
+.btn-outline-purple,
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--btn-radius, 9999px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  line-height: 1.25;
+}
+
+.btn-primary {
+  padding: 12px 24px;
+  background-color: var(--ufy-primary-purple);
+  color: #ffffff !important;
+  border: 2px solid var(--ufy-primary-purple);
+  box-shadow: 0 4px 16px rgba(118, 41, 240, 0.28);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--ufy-primary-hover);
+  border-color: var(--ufy-primary-hover);
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 24px rgba(118, 41, 240, 0.38);
+}
+
+.btn-outline {
+  padding: 12px 24px;
+  background-color: #ffffff;
+  color: var(--ufy-dark-violet) !important;
+  border: 2px solid var(--ufy-primary-purple);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: #f8f4fe;
+  color: var(--ufy-primary-purple) !important;
+  transform: translateY(-1px);
+}
+
+.btn-outline-purple {
+  padding: 9px 18px;
+  background-color: #ffffff;
+  color: #140529 !important;
+  border: 1.5px solid #d4b8fc;
+  box-shadow: 0 2px 6px rgba(20, 5, 41, 0.04);
+}
+
+.btn-outline-purple:hover:not(:disabled) {
+  background-color: #f8f4fe;
+  border-color: var(--ufy-primary-purple);
+  color: var(--ufy-primary-purple) !important;
+}
+
+.btn-white {
+  padding: 9px 18px;
+  background-color: #ffffff;
+  color: #140529 !important;
+  border: 1.5px solid #e5e7eb;
+}
+
+.btn-white:hover:not(:disabled) {
+  background-color: #f9fafb;
+  border-color: #d4b8fc;
+}
+
+/* Responsive Admin Grids */
+@media (max-width: 1024px) {
+  .overview-split,
+  .inbox-split,
+  .nav-split,
+  .media-split,
+  .analytics-split,
+  .revisions-split,
+  .theme-grid,
+  .publish-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

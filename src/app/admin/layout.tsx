@@ -5,8 +5,12 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const headersList = headers();
   const pathname = headersList.get("x-pathname") || "";
+  const isLoginPage = pathname === "/admin/login";
 
-  // The login page manages its own fullscreen layout
+  if (isLoginPage) {
+    return <div className="min-h-screen w-full">{children}</div>;
+  }
+
   return (
     <div style={{ display: "flex", minHeight: "100vh", backgroundColor: "var(--ufy-purple-25)" }}>
       <AdminSidebar />

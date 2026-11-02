@@ -2,94 +2,162 @@
 
 import React from "react";
 import Link from "next/link";
+import { HeartHandshake, Mail, ArrowUpRight } from "lucide-react";
 
-interface UfyFooterProps {
-  onOpenModal: () => void;
+interface FooterColumn {
+  title: string;
+  links: Array<{ label: string; href: string }>;
 }
 
-export default function UfyFooter({ onOpenModal }: UfyFooterProps) {
-  const columns = [
+interface UfyFooterProps {
+  onOpenModal?: () => void;
+  settings?: {
+    brandTagline?: string | null;
+    footerMissionText?: string | null;
+    footerLocationText?: string | null;
+    footerColumnsJson?: string | null;
+    contactEmail?: string | null;
+    ufyInboxEmail?: string | null;
+    socialInstagram?: string | null;
+    socialYoutube?: string | null;
+    socialLinkedin?: string | null;
+    socialGithub?: string | null;
+    copyrightText?: string | null;
+    privacyNotice?: string | null;
+  } | null;
+}
+
+export default function UfyFooter({ settings }: UfyFooterProps) {
+  const contactEmail = settings?.contactEmail || "hello@ufy.org";
+  const inboxEmail = settings?.ufyInboxEmail || "ideas@ufy.org";
+  const instagramUrl = settings?.socialInstagram || "https://instagram.com/ufy_youth";
+
+  let columns: FooterColumn[] = [
     {
-      title: "organization",
+      title: "explore ufy",
       links: [
-        { label: "about ufy", href: "#hero" },
-        { label: "student leadership", href: "#leaders" },
-        { label: "our mission", href: "#initiatives" },
-        { label: "montreal chapter", href: "#hero" },
-        { label: "terms of service", href: "#" },
-        { label: "privacy policy", href: "#" },
+        { label: "home — up for youth", href: "/" },
+        { label: "educational videos", href: "/videos" },
+        { label: "virtual letters & affirmations", href: "/letters" },
+        { label: "volunteer sign-up & hours", href: "/volunteer" },
+        { label: "past event journey", href: "/journey" },
       ],
     },
     {
-      title: "initiatives",
+      title: "community & proof",
       links: [
-        { label: "letters for hospitalized kids", href: "#letters" },
-        { label: "community first-aid & cpr", href: "#workshops" },
-        { label: "library book donations", href: "#libraries" },
-        { label: "pediatric health zines", href: "#initiatives" },
-        { label: "school workshop tour", href: "#workshops" },
+        { label: "live impact counters", href: "/impact" },
+        { label: "meet our youth leaders", href: "/team" },
+        { label: "3d dome photo gallery", href: "/gallery" },
+        { label: "propose an idea dossier", href: "/propose" },
       ],
     },
     {
-      title: "get involved",
+      title: "flagship programs",
       links: [
-        { label: "write encouraging cards", href: "#letters" },
-        { label: "host a first-aid session", href: "#workshops" },
-        { label: "donate children's books", href: "#libraries" },
-        { label: "become a ufy ambassador", href: "#impact" },
-        { label: "join volunteer crew", href: "#impact" },
+        { label: "hospitalized youth letters", href: "/letters" },
+        { label: "peer first-aid & cpr clinics", href: "/videos" },
+        { label: "neighborhood book drives", href: "/#initiatives" },
+        { label: "school chapter incubator", href: "/volunteer" },
       ],
     },
     {
-      title: "resources",
+      title: "connect & admin",
       links: [
-        { label: "cpr quick-reference card", href: "#" },
-        { label: "choking & bleeding guides", href: "#" },
-        { label: "book drop locations", href: "#" },
-        { label: "zine downloads (pdf)", href: "#" },
-        { label: "youth health faq", href: "#" },
-      ],
-    },
-    {
-      title: "connect",
-      links: [
-        { label: "instagram @ufy_youth", href: "https://instagram.com/ufy_youth" },
-        { label: "montreal youth hub", href: "#" },
-        { label: "email: hello@ufy.org", href: "mailto:hello@ufy.org" },
-        { label: "phone: +1 (514) 840-0000", href: "tel:+15148400000" },
-        { label: "admin cms portal", href: "/admin/login" },
+        { label: "instagram @ufy_youth", href: instagramUrl },
+        { label: `proposals: ${inboxEmail}`, href: "/propose" },
+        { label: `general: ${contactEmail}`, href: `mailto:${contactEmail}` },
+        { label: "admin site builder portal", href: "/admin/login" },
       ],
     },
   ];
 
+  if (settings?.footerColumnsJson) {
+    try {
+      const parsed = JSON.parse(settings.footerColumnsJson);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        columns = parsed;
+      }
+    } catch {}
+  }
+
   return (
-    <footer className="bg-[#0d0519] text-neutral-300 pt-16 pb-12 px-6 sm:px-12 mt-16 border-t border-[#7629f0]/30">
-      <div className="max-w-[1360px] mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12 mb-14">
+    <footer
+      style={{ backgroundColor: "var(--ufy-footer-obsidian, #0d0519)" }}
+      className="text-neutral-300 pt-16 pb-12 mt-20 border-t-2 border-[#7629f0]/40 w-full text-center"
+    >
+      <div className="ufy-container">
+        {/* Top Centered Brand Mission Strip */}
+        <div className="flex flex-col items-center justify-center gap-6 pb-12 mb-12 border-b border-white/10 text-center">
+          <div className="max-w-2xl flex flex-col items-center">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-3">
+              <div
+                style={{ backgroundColor: "var(--ufy-primary-purple, #7629f0)" }}
+                className="w-10 h-10 rounded-full flex items-center justify-center text-white font-black text-sm border-2 border-white/80"
+              >
+                ufy
+              </div>
+              <div className="text-center sm:text-left">
+                <div className="text-white font-black text-lg tracking-tight leading-none">
+                  Up for Youth (UFY)
+                </div>
+                <div className="text-xs font-mono text-[#b483f8] mt-0.5">
+                  Youth-Led Action · Health Literacy · Community Care
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-neutral-300/90 leading-relaxed text-center">
+              {settings?.footerMissionText ||
+                "Up for Youth (UFY) connects young changemakers with real first-aid training, hospital letter drives, educational videos, and community micro-libraries."}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/volunteer"
+              style={{ backgroundColor: "var(--ufy-primary-purple, #7629f0)" }}
+              className="px-6 py-3 rounded-full text-white font-extrabold text-sm shadow-lg hover:opacity-95 transition-all inline-flex items-center justify-center gap-2"
+            >
+              <HeartHandshake size={16} />
+              <span>Sign Up to Volunteer</span>
+            </Link>
+            <Link
+              href="/letters"
+              className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/20 font-bold text-sm transition-all inline-flex items-center justify-center gap-2"
+            >
+              <Mail size={15} className="text-[#b483f8]" />
+              <span>Write a Virtual Letter</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Centered Link Columns */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 mb-12 text-center">
           {columns.map((col) => (
-            <div key={col.title}>
-              <h4 className="text-[13px] font-bold text-[#8e48ff] mb-4 lowercase tracking-tight uppercase">
+            <div key={col.title} className="flex flex-col items-center">
+              <h4 className="text-[12px] font-extrabold text-[#b483f8] mb-4 uppercase tracking-widest font-mono text-center">
                 {col.title}
               </h4>
-              <ul className="space-y-2">
+              <ul className="space-y-2.5 flex flex-col items-center">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    {link.href.startsWith("#") ? (
-                      <Link
-                        href={link.href}
-                        className="text-[13px] text-neutral-300 hover:text-white transition-colors lowercase"
-                      >
-                        {link.label}
-                      </Link>
-                    ) : (
+                    {link.href.startsWith("http") || link.href.startsWith("mailto") ? (
                       <a
                         href={link.href}
                         target={link.href.startsWith("http") ? "_blank" : undefined}
                         rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="text-[13px] text-neutral-300 hover:text-white transition-colors lowercase"
+                        className="text-[13.5px] text-neutral-300 hover:text-white transition-colors inline-flex items-center justify-center gap-1"
+                      >
+                        <span>{link.label}</span>
+                        {link.href.startsWith("http") && <ArrowUpRight size={12} className="opacity-60" />}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="text-[13.5px] text-neutral-300 hover:text-white transition-colors"
                       >
                         {link.label}
-                      </a>
+                      </Link>
                     )}
                   </li>
                 ))}
@@ -98,15 +166,18 @@ export default function UfyFooter({ onOpenModal }: UfyFooterProps) {
           ))}
         </div>
 
-        <div className="pt-8 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-neutral-400">
+        {/* Bottom Legal & Location Bar */}
+        <div className="pt-8 border-t border-white/10 flex flex-col items-center justify-center gap-2 text-[12px] text-neutral-400 text-center">
+          <div className="font-mono text-[11px] text-[#b483f8]">
+            <span>{settings?.footerLocationText || "MANTECA, CA • UP FOR YOUTH (UFY)"}</span>
+          </div>
           <div>
-            © 2026 UFY Organization — Youth-Led Compassionate Community Action. Registered Canadian Non-Profit.
+            {settings?.copyrightText ||
+              "© 2026 Up for Youth (UFY). All rights reserved."}
           </div>
-          <div className="flex items-center gap-4 font-mono text-[11px] text-[#8e48ff]">
-            <span>MONTREAL, QC</span>
-            <span>✦</span>
-            <span>HEALTH EDUCATION &amp; LITERACY</span>
-          </div>
+          {settings?.privacyNotice && (
+            <div className="text-[11px] text-neutral-500">{settings.privacyNotice}</div>
+          )}
         </div>
       </div>
     </footer>

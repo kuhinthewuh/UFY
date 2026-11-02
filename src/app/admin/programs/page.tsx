@@ -2,14 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import AdminHeader from "@/components/admin/AdminHeader";
-import { Compass, Plus, MoveUp, MoveDown, Trash2, Edit2, Save, CheckCircle, ExternalLink } from "lucide-react";
+import { Plus, MoveUp, MoveDown, Trash2, Edit2, CheckCircle } from "lucide-react";
 import { ProgramData } from "@/lib/types";
 
 export default function ProgramsAdminPage() {
   const [programs, setPrograms] = useState<ProgramData[]>([]);
   const [editingProgram, setEditingProgram] = useState<ProgramData | null>(null);
   const [isNew, setIsNew] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savedMessage, setSavedMessage] = useState<string | null>(null);
 
@@ -23,7 +22,6 @@ export default function ProgramsAdminPage() {
       const data = await res.json();
       if (data.programs) setPrograms(data.programs);
     } catch {}
-    setLoading(false);
   };
 
   const handleMoveUp = async (idx: number) => {
@@ -107,7 +105,7 @@ export default function ProgramsAdminPage() {
 
       setEditingProgram(null);
       setIsNew(false);
-      setSavedMessage("Program saved successfully!");
+      setSavedMessage("Initiative saved and updated on homepage!");
       setTimeout(() => setSavedMessage(null), 3000);
     } catch {}
     setSaving(false);
@@ -118,13 +116,16 @@ export default function ProgramsAdminPage() {
     setEditingProgram({
       id: "new",
       title: "",
-      category: "Health Education",
+      category: "Youth Health",
       summary: "",
       description: "",
+      impactStat: "Active UFY Chapter Initiative",
+      ctaLabel: "get involved",
+      accentColor: "#7629f0",
       imageUrl: "",
       status: "active",
-      dateLabel: "Ongoing Workshops",
-      externalUrl: "#submit-idea",
+      dateLabel: "Ongoing",
+      externalUrl: "/volunteer",
       displayOrder: programs.length + 1,
       isPublished: true,
     });
@@ -134,16 +135,16 @@ export default function ProgramsAdminPage() {
     <div>
       <AdminHeader
         title="Programs & Initiatives"
-        subtitle="Manage real youth workshops, book drives, and health education initiatives"
+        subtitle="Manage homepage initiative cards, impact badges, accent colors, and action links"
         actions={
           <button onClick={handleAddNew} className="btn btn-primary" style={{ padding: "8px 18px", fontSize: "0.85rem" }}>
             <Plus size={16} />
-            <span>Add Program</span>
+            <span>Add Initiative</span>
           </button>
         }
       />
 
-      <div style={{ padding: "32px", maxWidth: "1100px" }}>
+      <div style={{ padding: "32px", maxWidth: "1150px" }}>
         {savedMessage && (
           <div
             style={{
@@ -185,6 +186,14 @@ export default function ProgramsAdminPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
                   <span
                     style={{
+                      width: "12px",
+                      height: "12px",
+                      borderRadius: "50%",
+                      backgroundColor: program.accentColor || "#7629f0",
+                    }}
+                  />
+                  <span
+                    style={{
                       fontSize: "0.78rem",
                       fontWeight: 700,
                       padding: "2px 8px",
@@ -195,22 +204,9 @@ export default function ProgramsAdminPage() {
                   >
                     {program.category}
                   </span>
-                  <span
-                    style={{
-                      fontSize: "0.75rem",
-                      fontWeight: 600,
-                      padding: "2px 8px",
-                      borderRadius: "6px",
-                      backgroundColor: "var(--ufy-purple-50)",
-                      color: "var(--ufy-primary)",
-                      textTransform: "capitalize",
-                    }}
-                  >
-                    {program.status}
-                  </span>
-                  {program.dateLabel && (
-                    <span style={{ fontSize: "0.8rem", color: "var(--ufy-purple-700)" }}>
-                      • {program.dateLabel}
+                  {program.impactStat && (
+                    <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--ufy-primary)" }}>
+                      • {program.impactStat}
                     </span>
                   )}
                 </div>
@@ -218,7 +214,7 @@ export default function ProgramsAdminPage() {
                 <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--ufy-purple-950)" }}>
                   {program.title}
                 </h3>
-                <p style={{ fontSize: "0.9rem", color: "var(--ufy-purple-800)", marginTop: "4px", maxWidth: "600px" }}>
+                <p style={{ fontSize: "0.9rem", color: "var(--ufy-purple-800)", marginTop: "4px", maxWidth: "640px" }}>
                   {program.summary}
                 </p>
               </div>
@@ -229,7 +225,6 @@ export default function ProgramsAdminPage() {
                   disabled={idx === 0}
                   className="btn btn-outline-purple"
                   style={{ padding: "6px 10px", opacity: idx === 0 ? 0.3 : 1 }}
-                  title="Move Up"
                 >
                   <MoveUp size={15} />
                 </button>
@@ -239,7 +234,6 @@ export default function ProgramsAdminPage() {
                   disabled={idx === programs.length - 1}
                   className="btn btn-outline-purple"
                   style={{ padding: "6px 10px", opacity: idx === programs.length - 1 ? 0.3 : 1 }}
-                  title="Move Down"
                 >
                   <MoveDown size={15} />
                 </button>
@@ -260,7 +254,6 @@ export default function ProgramsAdminPage() {
                   onClick={() => handleDelete(program.id)}
                   className="btn btn-outline-purple"
                   style={{ padding: "6px 10px" }}
-                  title="Delete program"
                 >
                   <Trash2 size={15} />
                 </button>
@@ -269,15 +262,11 @@ export default function ProgramsAdminPage() {
           ))}
         </div>
 
-        {/* Modal */}
         {editingProgram && (
           <div
             style={{
               position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
+              inset: 0,
               backgroundColor: "rgba(20, 5, 41, 0.6)",
               backdropFilter: "blur(4px)",
               display: "flex",
@@ -292,32 +281,50 @@ export default function ProgramsAdminPage() {
                 backgroundColor: "#ffffff",
                 borderRadius: "24px",
                 width: "100%",
-                maxWidth: "640px",
+                maxWidth: "660px",
                 padding: "36px",
                 maxHeight: "90vh",
                 overflowY: "auto",
                 border: "1.5px solid var(--ufy-purple-200)",
-                boxShadow: "0 24px 60px rgba(0,0,0,0.25)",
               }}
             >
               <h2 style={{ fontSize: "1.35rem", fontWeight: 800, color: "var(--ufy-purple-950)", marginBottom: "20px" }}>
-                {isNew ? "Create New Initiative" : `Edit Program: ${editingProgram.title}`}
+                {isNew ? "Create New Initiative" : `Edit Initiative: ${editingProgram.title}`}
               </h2>
 
               <form onSubmit={handleSaveProgram} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <div className="form-group">
-                  <label className="form-label">Program Title *</label>
-                  <input
-                    type="text"
-                    required
-                    className="form-input"
-                    value={editingProgram.title}
-                    onChange={(e) => setEditingProgram({ ...editingProgram, title: e.target.value })}
-                  />
+                <div style={{ display: "grid", gridTemplateColumns: "1.3fr 0.7fr", gap: "14px" }}>
+                  <div>
+                    <label className="form-label">Initiative Title *</label>
+                    <input
+                      type="text"
+                      required
+                      className="form-input"
+                      value={editingProgram.title}
+                      onChange={(e) => setEditingProgram({ ...editingProgram, title: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label className="form-label">Card Accent Color</label>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <input
+                        type="color"
+                        value={editingProgram.accentColor || "#7629f0"}
+                        onChange={(e) => setEditingProgram({ ...editingProgram, accentColor: e.target.value })}
+                        style={{ width: "42px", height: "42px", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                      />
+                      <input
+                        type="text"
+                        className="form-input"
+                        value={editingProgram.accentColor || "#7629f0"}
+                        onChange={(e) => setEditingProgram({ ...editingProgram, accentColor: e.target.value })}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
-                  <div className="form-group">
+                  <div>
                     <label className="form-label">Category *</label>
                     <input
                       type="text"
@@ -328,25 +335,22 @@ export default function ProgramsAdminPage() {
                     />
                   </div>
 
-                  <div className="form-group">
-                    <label className="form-label">Status</label>
-                    <select
-                      className="form-select"
-                      value={editingProgram.status}
-                      onChange={(e) => setEditingProgram({ ...editingProgram, status: e.target.value as any })}
-                    >
-                      <option value="active">Active</option>
-                      <option value="upcoming">Upcoming</option>
-                      <option value="completed">Completed</option>
-                      <option value="proposed">Proposed</option>
-                    </select>
+                  <div>
+                    <label className="form-label">Impact Badge Stat</label>
+                    <input
+                      type="text"
+                      className="form-input"
+                      placeholder="e.g. 3,400+ Cards Delivered"
+                      value={editingProgram.impactStat || ""}
+                      onChange={(e) => setEditingProgram({ ...editingProgram, impactStat: e.target.value })}
+                    />
                   </div>
                 </div>
 
-                <div className="form-group">
-                  <label className="form-label">Card Summary (Shown on public page) *</label>
+                <div>
+                  <label className="form-label">Card Summary (Homepage Card Text) *</label>
                   <textarea
-                    rows={2}
+                    rows={3}
                     required
                     className="form-textarea"
                     value={editingProgram.summary}
@@ -354,46 +358,50 @@ export default function ProgramsAdminPage() {
                   />
                 </div>
 
-                <div className="form-group">
-                  <label className="form-label">Detailed Description</label>
-                  <textarea
-                    rows={4}
-                    className="form-textarea"
-                    value={editingProgram.description}
-                    onChange={(e) => setEditingProgram({ ...editingProgram, description: e.target.value })}
-                  />
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
-                  <div className="form-group">
-                    <label className="form-label">Date or Period Label</label>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px" }}>
+                  <div>
+                    <label className="form-label">CTA Button Label</label>
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="e.g. Ongoing • Bi-weekly"
-                      value={editingProgram.dateLabel || ""}
-                      onChange={(e) => setEditingProgram({ ...editingProgram, dateLabel: e.target.value })}
+                      value={editingProgram.ctaLabel || "get involved"}
+                      onChange={(e) => setEditingProgram({ ...editingProgram, ctaLabel: e.target.value })}
                     />
                   </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Action / Link URL</label>
+                  <div>
+                    <label className="form-label">Action Link URL</label>
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="#submit-idea"
+                      placeholder="/letters or /volunteer"
                       value={editingProgram.externalUrl || ""}
                       onChange={(e) => setEditingProgram({ ...editingProgram, externalUrl: e.target.value })}
                     />
                   </div>
+                  <div>
+                    <label className="form-label">Date / Frequency</label>
+                    <input
+                      type="text"
+                      className="form-input"
+                      value={editingProgram.dateLabel || ""}
+                      onChange={(e) => setEditingProgram({ ...editingProgram, dateLabel: e.target.value })}
+                    />
+                  </div>
                 </div>
 
-                <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px", marginTop: "14px" }}>
-                  <button
-                    type="button"
-                    onClick={() => setEditingProgram(null)}
-                    className="btn btn-outline-purple"
-                  >
+                <div>
+                  <label className="form-label">Optional Card Photo URL</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    placeholder="/uploads/workshop.jpg"
+                    value={editingProgram.imageUrl || ""}
+                    onChange={(e) => setEditingProgram({ ...editingProgram, imageUrl: e.target.value })}
+                  />
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px", marginTop: "10px" }}>
+                  <button type="button" onClick={() => setEditingProgram(null)} className="btn btn-outline-purple">
                     Cancel
                   </button>
                   <button type="submit" disabled={saving} className="btn btn-primary">

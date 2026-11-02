@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ArrowUpRight, Sparkles, HeartPulse, BookOpen, ShieldCheck, Calendar, Users, Award } from "lucide-react";
+import { ArrowUpRight, HeartPulse, BookOpen, ShieldCheck, Calendar, Users, Award } from "lucide-react";
 import { ProgramData, PageSectionData } from "@/lib/types";
 
 interface ProgramsSectionProps {
@@ -20,7 +20,7 @@ export default function ProgramsSection({ programs, section, onOpenSoumission }:
       title: "Metro CPR & First Aid Blitz",
       category: "First Aid & CPR",
       summary: "Peer-led emergency CPR and first-aid training.",
-      description: "An intensive peer-led initiative certifying high school students across Montreal in emergency CPR, automated external defibrillator (AED) operation, and severe bleed control.",
+      description: "An intensive peer-led initiative certifying high school students across MANTECA, CA in emergency CPR, automated external defibrillator (AED) operation, and severe bleed control.",
       stats: [
         { val: "540+", label: "Youth Certified" },
         { val: "18", label: "School Campuses" },
@@ -67,7 +67,7 @@ export default function ProgramsSection({ programs, section, onOpenSoumission }:
           {section?.title || "FEATURED UFY INITIATIVES."}
         </h2>
         <p style={{ color: "var(--text-muted)", fontSize: "1.15rem", maxWidth: 740, lineHeight: 1.6 }}>
-          Explore the projects conceptualized, built, and deployed by youth leaders across Montreal and surrounding communities.
+          Explore the projects conceptualized, built, and deployed by youth leaders across MANTECA, CA and surrounding communities.
         </p>
       </div>
 
@@ -211,7 +211,7 @@ export default function ProgramsSection({ programs, section, onOpenSoumission }:
           onClick={onOpenSoumission}
         >
           SUBMIT INITIATIVE PROPOSAL
-          <Sparkles size={16} style={{ marginLeft: 8 }} />
+          <Award size={16} style={{ marginLeft: 8 }} />
         </button>
       </div>
     </section>

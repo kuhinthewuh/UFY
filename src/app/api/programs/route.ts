@@ -17,14 +17,28 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    const { title, category, summary, description, imageUrl, status, dateLabel, externalUrl, displayOrder, isPublished } = body;
+    const {
+      title,
+      category,
+      summary,
+      description,
+      impactStat,
+      ctaLabel,
+      accentColor,
+      imageUrl,
+      status,
+      dateLabel,
+      externalUrl,
+      displayOrder,
+      isPublished,
+    } = body;
 
     if (!title || !category || !summary) {
       return NextResponse.json({ error: "Title, category, and summary are required" }, { status: 400 });
     }
 
     const maxOrder = await prisma.program.aggregate({ _max: { displayOrder: true } });
-    const nextOrder = displayOrder !== undefined ? displayOrder : (maxOrder._max.displayOrder || 0) + 1;
+    const nextOrder = displayOrder !== undefined ? Number(displayOrder) : (maxOrder._max.displayOrder || 0) + 1;
 
     const program = await prisma.program.create({
       data: {
@@ -32,6 +46,9 @@ export async function POST(req: Request) {
         category: category.trim(),
         summary: summary.trim(),
         description: description ? description.trim() : summary.trim(),
+        impactStat: impactStat ? impactStat.trim() : null,
+        ctaLabel: ctaLabel ? ctaLabel.trim() : "Explore Initiative",
+        accentColor: accentColor || "#7629f0",
         imageUrl: imageUrl || null,
         status: status || "active",
         dateLabel: dateLabel ? dateLabel.trim() : null,

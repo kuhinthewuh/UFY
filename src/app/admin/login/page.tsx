@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Lock, Mail, ArrowRight, ShieldCheck, AlertCircle } from "lucide-react";
+import { Lock, ArrowRight, ShieldCheck, AlertCircle, ArrowLeft } from "lucide-react";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -42,24 +43,40 @@ export default function AdminLoginPage() {
       style={{
         minHeight: "100vh",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "var(--ufy-purple-50)",
         padding: "24px",
       }}
     >
+      <div style={{ width: "100%", maxWidth: "460px", marginBottom: "16px" }}>
+        <Link
+          href="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            color: "var(--ufy-primary)",
+          }}
+        >
+          <ArrowLeft size={15} />
+          <span>Back to Up for Youth Public Site</span>
+        </Link>
+      </div>
+
       <div
         style={{
           width: "100%",
           maxWidth: "460px",
           backgroundColor: "#ffffff",
           borderRadius: "24px",
-          border: "1.5px solid var(--ufy-purple-200)",
-          boxShadow: "0 20px 50px rgba(118, 41, 240, 0.12)",
+          border: "2px solid #140529",
+          boxShadow: "10px 14px 0px rgba(20, 5, 41, 0.9)",
           padding: "44px 36px",
         }}
       >
-        {/* Brand Header */}
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
           <div
             style={{
@@ -79,14 +96,13 @@ export default function AdminLoginPage() {
           </div>
 
           <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--ufy-purple-950)", marginBottom: "6px" }}>
-            UFY Admin Portal
+            UFY Admin Studio
           </h1>
-          <p style={{ fontSize: "0.95rem", color: "var(--ufy-purple-700)" }}>
-            Sign in to manage website content, proposals & analytics
+          <p style={{ fontSize: "0.92rem", color: "var(--ufy-purple-700)" }}>
+            Up for Youth native site builder, content manager &amp; volunteer portal control
           </p>
         </div>
 
-        {/* Error Feedback */}
         {error && (
           <div
             style={{
@@ -108,23 +124,20 @@ export default function AdminLoginPage() {
           </div>
         )}
 
-        {/* Login Form */}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label" htmlFor="admin-email">
               Admin Email
             </label>
-            <div style={{ position: "relative" }}>
-              <input
-                id="admin-email"
-                type="email"
-                required
-                className="form-input"
-                placeholder="admin@ufy.org"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+            <input
+              id="admin-email"
+              type="email"
+              required
+              className="form-input"
+              placeholder="admin@ufy.org"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
           <div className="form-group">
@@ -151,31 +164,30 @@ export default function AdminLoginPage() {
               padding: "14px",
               fontSize: "1rem",
               justifyContent: "center",
-              marginTop: "16px",
+              marginTop: "12px",
               opacity: loading ? 0.75 : 1,
             }}
           >
-            <span>{loading ? "Authenticating..." : "Sign In to Portal"}</span>
+            <span>{loading ? "Authenticating..." : "Sign In to UFY Admin"}</span>
             <ArrowRight size={18} />
           </button>
         </form>
 
-        {/* Security Notice */}
         <div
           style={{
-            marginTop: "32px",
-            paddingTop: "20px",
+            marginTop: "28px",
+            paddingTop: "18px",
             borderTop: "1px solid var(--ufy-purple-100)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             gap: "8px",
-            fontSize: "0.82rem",
+            fontSize: "0.8rem",
             color: "var(--ufy-purple-700)",
           }}
         >
           <ShieldCheck size={16} />
-          <span>Strict Session Security • Rate-Limited Authentication</span>
+          <span>Encrypted HTTP-Only Session • Up for Youth</span>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminHeader from "@/components/admin/AdminHeader";
-import { Users, Plus, MoveUp, MoveDown, Trash2, Edit2, Save, CheckCircle, Copy, AlertCircle } from "lucide-react";
+import { Plus, MoveUp, MoveDown, Trash2, Edit2, Save, CheckCircle } from "lucide-react";
 import { TeamMemberData } from "@/lib/types";
 
 export default function TeamManagementPage() {
@@ -11,7 +11,6 @@ export default function TeamManagementPage() {
   const [presentationStyle, setPresentationStyle] = useState<string>("editorial");
   const [editingMember, setEditingMember] = useState<TeamMemberData | null>(null);
   const [isNew, setIsNew] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savedMessage, setSavedMessage] = useState<string | null>(null);
 
@@ -34,20 +33,16 @@ export default function TeamManagementPage() {
         setPresentationStyle(settingsData.settings.teamPresentationStyle || "editorial");
       }
     } catch {}
-    setLoading(false);
   };
 
-  // Reorder Up
   const handleMoveUp = async (idx: number) => {
     if (idx === 0) return;
     const reordered = [...members];
     const temp = reordered[idx - 1];
     reordered[idx - 1] = reordered[idx];
     reordered[idx] = temp;
-
     setMembers(reordered);
 
-    // Save order
     await Promise.all([
       fetch(`/api/team/${reordered[idx - 1].id}`, {
         method: "PATCH",
@@ -62,14 +57,12 @@ export default function TeamManagementPage() {
     ]);
   };
 
-  // Reorder Down
   const handleMoveDown = async (idx: number) => {
     if (idx === members.length - 1) return;
     const reordered = [...members];
     const temp = reordered[idx + 1];
     reordered[idx + 1] = reordered[idx];
     reordered[idx] = temp;
-
     setMembers(reordered);
 
     await Promise.all([
@@ -86,7 +79,6 @@ export default function TeamManagementPage() {
     ]);
   };
 
-  // Delete Member
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this team member?")) return;
     try {
@@ -96,7 +88,6 @@ export default function TeamManagementPage() {
     } catch {}
   };
 
-  // Save Member Modal
   const handleSaveMember = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingMember) return;
@@ -110,9 +101,7 @@ export default function TeamManagementPage() {
           body: JSON.stringify(editingMember),
         });
         const data = await res.json();
-        if (data.member) {
-          setMembers((prev) => [...prev, data.member]);
-        }
+        if (data.member) setMembers((prev) => [...prev, data.member]);
       } else {
         const res = await fetch(`/api/team/${editingMember.id}`, {
           method: "PATCH",
@@ -127,13 +116,12 @@ export default function TeamManagementPage() {
 
       setEditingMember(null);
       setIsNew(false);
-      setSavedMessage("Team member saved successfully!");
+      setSavedMessage("Team member & clothespin polaroid updated!");
       setTimeout(() => setSavedMessage(null), 3000);
     } catch {}
     setSaving(false);
   };
 
-  // Save Display Count & Style to SiteSettings
   const handleSaveSettings = async () => {
     try {
       await fetch("/api/settings", {
@@ -144,7 +132,7 @@ export default function TeamManagementPage() {
           teamPresentationStyle: presentationStyle,
         }),
       });
-      setSavedMessage("Team display settings updated!");
+      setSavedMessage("Homepage leader display count updated!");
       setTimeout(() => setSavedMessage(null), 3000);
     } catch {}
   };
@@ -157,8 +145,9 @@ export default function TeamManagementPage() {
       role: "",
       bio: "",
       pronouns: "",
-      department: "Youth Programs",
+      department: "Youth Organizing",
       photoUrl: "",
+      pegColor: "#e0c7a8",
       focalPointX: 50,
       focalPointY: 50,
       linkUrl: "",
@@ -168,11 +157,19 @@ export default function TeamManagementPage() {
     });
   };
 
+  const pegSwatches = [
+    { label: "Natural Birch", hex: "#e0c7a8" },
+    { label: "UFY Purple", hex: "#7629f0" },
+    { label: "Bright Violet", hex: "#8e48ff" },
+    { label: "Soft Lilac", hex: "#d4b8fc" },
+    { label: "Warm Coral", hex: "#fb7185" },
+  ];
+
   return (
     <div>
       <AdminHeader
-        title="Team Management"
-        subtitle="Manage dynamic youth team records, roles, photographs, bios & presentation styles"
+        title="Our Team & Clothespin Polaroids"
+        subtitle="Manage Up for Youth leaders, portraits, clothespin peg colors, focal points & bios"
         actions={
           <button onClick={handleAddNew} className="btn btn-primary" style={{ padding: "8px 18px", fontSize: "0.85rem" }}>
             <Plus size={16} />
@@ -203,14 +200,13 @@ export default function TeamManagementPage() {
           </div>
         )}
 
-        {/* Global Presentation Settings Bar */}
         <div
           style={{
             backgroundColor: "#ffffff",
             border: "1.5px solid var(--ufy-purple-100)",
             borderRadius: "20px",
-            padding: "24px 28px",
-            marginBottom: "32px",
+            padding: "22px 28px",
+            marginBottom: "28px",
             display: "flex",
             flexWrap: "wrap",
             alignItems: "center",
@@ -221,52 +217,31 @@ export default function TeamManagementPage() {
           <div style={{ display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap" }}>
             <div>
               <label className="form-label" style={{ marginBottom: "4px" }}>
-                Members to Display on Public Site
+                Leaders Displayed on Homepage
               </label>
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <input
                   type="number"
                   min={1}
-                  max={50}
+                  max={30}
                   className="form-input"
                   style={{ width: "90px", padding: "8px 12px" }}
                   value={displayCount}
                   onChange={(e) => setDisplayCount(Number(e.target.value))}
                 />
                 <span style={{ fontSize: "0.85rem", color: "var(--ufy-purple-700)" }}>
-                  (Default: 6 slots • Currently {members.length} total members in DB)
+                  (All published members appear on <code>/team</code>)
                 </span>
               </div>
             </div>
-
-            <div>
-              <label className="form-label" style={{ marginBottom: "4px" }}>
-                Presentation Style
-              </label>
-              <select
-                className="form-select"
-                style={{ padding: "8px 14px", width: "220px" }}
-                value={presentationStyle}
-                onChange={(e) => setPresentationStyle(e.target.value)}
-              >
-                <option value="editorial">Editorial (Spacious & Typographic)</option>
-                <option value="grid">Grid (Image-Led Cards)</option>
-                <option value="offset">Offset (Playful Asymmetric Rhythm)</option>
-              </select>
-            </div>
           </div>
 
-          <button
-            onClick={handleSaveSettings}
-            className="btn btn-primary"
-            style={{ padding: "10px 20px", fontSize: "0.88rem" }}
-          >
+          <button onClick={handleSaveSettings} className="btn btn-primary" style={{ padding: "10px 20px", fontSize: "0.88rem" }}>
             <Save size={16} />
-            <span>Save Presentation</span>
+            <span>Save Homepage Count</span>
           </button>
         </div>
 
-        {/* Member Records List */}
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           {members.map((member, idx) => (
             <div
@@ -280,11 +255,9 @@ export default function TeamManagementPage() {
                 alignItems: "center",
                 justifyContent: "space-between",
                 gap: "20px",
-                boxShadow: "var(--shadow-subtle)",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-                {/* Avatar */}
                 <div
                   style={{
                     width: "52px",
@@ -299,6 +272,7 @@ export default function TeamManagementPage() {
                     fontSize: "1.2rem",
                     overflow: "hidden",
                     flexShrink: 0,
+                    border: `3px solid ${member.pegColor || "#e0c7a8"}`,
                   }}
                 >
                   {member.photoUrl ? (
@@ -337,19 +311,17 @@ export default function TeamManagementPage() {
                   </div>
 
                   <p style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--ufy-primary)" }}>
-                    {member.role} • {member.department || "Youth Team"}
+                    {member.role} • {member.department || "Up for Youth"}
                   </p>
                 </div>
               </div>
 
-              {/* Actions & Reordering */}
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <button
                   onClick={() => handleMoveUp(idx)}
                   disabled={idx === 0}
                   className="btn btn-outline-purple"
                   style={{ padding: "6px 10px", opacity: idx === 0 ? 0.3 : 1 }}
-                  title="Move Up"
                 >
                   <MoveUp size={15} />
                 </button>
@@ -359,7 +331,6 @@ export default function TeamManagementPage() {
                   disabled={idx === members.length - 1}
                   className="btn btn-outline-purple"
                   style={{ padding: "6px 10px", opacity: idx === members.length - 1 ? 0.3 : 1 }}
-                  title="Move Down"
                 >
                   <MoveDown size={15} />
                 </button>
@@ -380,7 +351,6 @@ export default function TeamManagementPage() {
                   onClick={() => handleDelete(member.id)}
                   className="btn btn-outline-purple"
                   style={{ padding: "6px 10px" }}
-                  title="Delete member"
                 >
                   <Trash2 size={15} />
                 </button>
@@ -389,15 +359,11 @@ export default function TeamManagementPage() {
           ))}
         </div>
 
-        {/* Edit / Add Member Modal */}
         {editingMember && (
           <div
             style={{
               position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
+              inset: 0,
               backgroundColor: "rgba(20, 5, 41, 0.6)",
               backdropFilter: "blur(4px)",
               display: "flex",
@@ -412,21 +378,20 @@ export default function TeamManagementPage() {
                 backgroundColor: "#ffffff",
                 borderRadius: "24px",
                 width: "100%",
-                maxWidth: "600px",
+                maxWidth: "620px",
                 padding: "36px",
                 maxHeight: "90vh",
                 overflowY: "auto",
                 border: "1.5px solid var(--ufy-purple-200)",
-                boxShadow: "0 24px 60px rgba(0,0,0,0.25)",
               }}
             >
               <h2 style={{ fontSize: "1.4rem", fontWeight: 800, color: "var(--ufy-purple-950)", marginBottom: "20px" }}>
-                {isNew ? "Add New Team Member" : `Edit Team Member: ${editingMember.name}`}
+                {isNew ? "Add Team Member" : `Edit Team Member: ${editingMember.name}`}
               </h2>
 
               <form onSubmit={handleSaveMember} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: "14px" }}>
-                  <div className="form-group">
+                  <div>
                     <label className="form-label">Full Name *</label>
                     <input
                       type="text"
@@ -436,13 +401,12 @@ export default function TeamManagementPage() {
                       onChange={(e) => setEditingMember({ ...editingMember, name: e.target.value })}
                     />
                   </div>
-
-                  <div className="form-group">
+                  <div>
                     <label className="form-label">Pronouns</label>
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="e.g. she/her, they/them"
+                      placeholder="she/her, he/him, they/them"
                       value={editingMember.pronouns || ""}
                       onChange={(e) => setEditingMember({ ...editingMember, pronouns: e.target.value })}
                     />
@@ -450,7 +414,7 @@ export default function TeamManagementPage() {
                 </div>
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
-                  <div className="form-group">
+                  <div>
                     <label className="form-label">Role or Position *</label>
                     <input
                       type="text"
@@ -460,9 +424,8 @@ export default function TeamManagementPage() {
                       onChange={(e) => setEditingMember({ ...editingMember, role: e.target.value })}
                     />
                   </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Department / Focus</label>
+                  <div>
+                    <label className="form-label">Department / Circle</label>
                     <input
                       type="text"
                       className="form-input"
@@ -472,10 +435,10 @@ export default function TeamManagementPage() {
                   </div>
                 </div>
 
-                <div className="form-group">
+                <div>
                   <label className="form-label">Short Biography *</label>
                   <textarea
-                    rows={4}
+                    rows={3}
                     required
                     className="form-textarea"
                     value={editingMember.bio}
@@ -483,19 +446,47 @@ export default function TeamManagementPage() {
                   />
                 </div>
 
-                <div className="form-group">
-                  <label className="form-label">Photo URL (or choose from Media Library)</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    placeholder="/uploads/maya-portrait.jpg"
-                    value={editingMember.photoUrl || ""}
-                    onChange={(e) => setEditingMember({ ...editingMember, photoUrl: e.target.value })}
-                  />
+                <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: "14px" }}>
+                  <div>
+                    <label className="form-label">Photo URL (or Media Library URL)</label>
+                    <input
+                      type="text"
+                      className="form-input"
+                      placeholder="/readymag_assets/speaker_1_giovanna.png"
+                      value={editingMember.photoUrl || ""}
+                      onChange={(e) => setEditingMember({ ...editingMember, photoUrl: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label className="form-label">Clothespin Peg Color</label>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", paddingTop: "4px" }}>
+                      <input
+                        type="color"
+                        value={editingMember.pegColor || "#e0c7a8"}
+                        onChange={(e) => setEditingMember({ ...editingMember, pegColor: e.target.value })}
+                        style={{ width: "36px", height: "36px", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                      />
+                      {pegSwatches.map((s) => (
+                        <button
+                          key={s.hex}
+                          type="button"
+                          title={s.label}
+                          onClick={() => setEditingMember({ ...editingMember, pegColor: s.hex })}
+                          style={{
+                            width: "26px",
+                            height: "26px",
+                            borderRadius: "50%",
+                            backgroundColor: s.hex,
+                            border: editingMember.pegColor === s.hex ? "2.5px solid #140529" : "1px solid #cbd5e1",
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
-                  <div className="form-group">
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px" }}>
+                  <div>
                     <label className="form-label">Connect Link URL</label>
                     <input
                       type="text"
@@ -505,8 +496,7 @@ export default function TeamManagementPage() {
                       onChange={(e) => setEditingMember({ ...editingMember, linkUrl: e.target.value })}
                     />
                   </div>
-
-                  <div className="form-group">
+                  <div>
                     <label className="form-label">Link Type</label>
                     <select
                       className="form-select"
@@ -514,30 +504,27 @@ export default function TeamManagementPage() {
                       onChange={(e) => setEditingMember({ ...editingMember, linkType: e.target.value })}
                     >
                       <option value="linkedin">LinkedIn</option>
-                      <option value="portfolio">Portfolio / Website</option>
-                      <option value="email">Email Address</option>
+                      <option value="portfolio">Website</option>
+                      <option value="email">Email</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="form-label">Visibility</label>
+                    <select
+                      className="form-select"
+                      value={editingMember.isPublished ? "true" : "false"}
+                      onChange={(e) =>
+                        setEditingMember({ ...editingMember, isPublished: e.target.value === "true" })
+                      }
+                    >
+                      <option value="true">Published</option>
+                      <option value="false">Hidden Draft</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="form-group">
-                  <label className="form-label">Publication Status</label>
-                  <select
-                    className="form-select"
-                    value={editingMember.isPublished ? "true" : "false"}
-                    onChange={(e) => setEditingMember({ ...editingMember, isPublished: e.target.value === "true" })}
-                  >
-                    <option value="true">Published (Visible on site)</option>
-                    <option value="false">Hidden (Draft)</option>
-                  </select>
-                </div>
-
-                <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px", marginTop: "14px" }}>
-                  <button
-                    type="button"
-                    onClick={() => setEditingMember(null)}
-                    className="btn btn-outline-purple"
-                  >
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px", marginTop: "10px" }}>
+                  <button type="button" onClick={() => setEditingMember(null)} className="btn btn-outline-purple">
                     Cancel
                   </button>
                   <button type="submit" disabled={saving} className="btn btn-primary">
