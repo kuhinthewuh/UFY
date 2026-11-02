@@ -3,10 +3,42 @@ import prisma from "@/lib/prisma";
 import { getCurrentAdmin } from "@/lib/auth";
 
 export async function GET() {
-  const settings = await prisma.siteSettings.findUnique({
-    where: { id: "global" },
+  try {
+    const settings = await prisma.siteSettings.findUnique({
+      where: { id: "global" },
+    });
+    if (settings) return NextResponse.json({ settings });
+  } catch {}
+  return NextResponse.json({
+    settings: {
+      id: "global",
+      siteTitle: "UFY — Up for Youth | Youth-Led Action, Care & Learning",
+      siteDescription:
+        "Up for Youth (UFY) is a youth-driven movement uplifting communities through letters for hospitalized children, hands-on first-aid & CPR workshops, educational videos, and neighborhood book drives.",
+      brandTagline: "Up for Youth",
+      primaryCtaLabel: "Volunteer",
+      primaryCtaUrl: "/volunteer",
+      primaryCtaVisible: true,
+      heroEyebrow: "ufy — up for youth\nyouth community initiative",
+      heroMarqueeText: "ufy",
+      heroSticker1: "manteca, ca • youth hq\nestablished for youth",
+      heroSticker2: "write a virtual letter →",
+      heroSticker2Url: "/letters",
+      heroSticker3: "100% youth-led impact",
+      impactBannerText: "Youth stepping up for hospitalized kids, campus safety & neighborhood literacy",
+      videosEducatedCount: 0,
+      videosGridColumns: 3,
+      hoursPerLetter: 0.25,
+      autoApproveLetters: true,
+      footerMissionText:
+        "Up for Youth (UFY) mobilizes student leaders in Manteca, CA and beyond to deliver uplifting hospital letters, peer-led emergency readiness education, and free neighborhood book drives.",
+      footerLocationText: "MANTECA, CA • UP FOR YOUTH (UFY)",
+      contactEmail: "hello@ufy.org",
+      ufyInboxEmail: "ideas@ufy.org",
+      copyrightText: "© 2026 UFY — Up for Youth. Built by youth, for youth.",
+      privacyNotice: "We respect youth privacy. Zero invasive tracking, zero data selling.",
+    },
   });
-  return NextResponse.json({ settings });
 }
 
 export async function PATCH(req: Request) {

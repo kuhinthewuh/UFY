@@ -3,10 +3,35 @@ import prisma from "@/lib/prisma";
 import { getCurrentAdmin } from "@/lib/auth";
 
 export async function GET() {
-  const theme = await prisma.themeSettings.findUnique({
-    where: { id: "global" },
+  try {
+    const theme = await prisma.themeSettings.findUnique({
+      where: { id: "global" },
+    });
+    if (theme) return NextResponse.json({ theme });
+  } catch {}
+  return NextResponse.json({
+    theme: {
+      id: "global",
+      headingFont: "Plus Jakarta Sans",
+      bodyFont: "Plus Jakarta Sans",
+      bgColor: "#f7f4fc",
+      primaryColor: "#7629f0",
+      secondaryColor: "#ffffff",
+      accentColor: "#8e48ff",
+      darkColor: "#140529",
+      cardBgColor: "#ffffff",
+      footerBgColor: "#140529",
+      headingLetterSpacing: "-0.03em",
+      buttonRadius: "9999px",
+      buttonStyle: "solid",
+      typeScale: "expressive",
+      baseSpacing: "balanced",
+      containerMaxWidth: "100%",
+      marqueeSpeed: 28,
+      enableDuotone: true,
+      animationLevel: "playful",
+    },
   });
-  return NextResponse.json({ theme });
 }
 
 export async function PATCH(req: Request) {
